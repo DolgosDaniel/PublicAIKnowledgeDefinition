@@ -37,7 +37,6 @@ import sys
 
 import yaml
 from jsonschema import Draft202012Validator
-from referencing import Registry, Resource
 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 SCHEMA_DIR = os.path.join(SCRIPT_DIR, "..", "paik-spec", "schema")
@@ -59,19 +58,37 @@ SECRET_PATTERNS = [
 ]
 
 
+def _compose_schema(common, kind_schema):
+    """Flatten common.schema.json's allOf/$ref into kind_schema's own properties.
+
+    jsonschema (as of 4.26, via the `referencing` library) has a real bug where a `format`
+    assertion failing inside a property that's only declared through a *cross-resource* `$ref`
+    (i.e. exactly the allOf: [{"$ref": "./common.schema.json"}] pattern the schema files use for
+    readability) makes `unevaluatedProperties` forget that $ref'd schema contributed any
+    properties at all - so a single invalid URI anywhere under `links[]` spuriously "unlocks" a
+    false "'id'/'name'/'owner'/... were unexpected" error on top of the real one. Composing the
+    schemas into one flat object before handing them to the validator sidesteps the bug entirely
+    (same-document `$ref`s to `$defs`, which this still uses for `owner`/`link`, don't trigger
+    it) without changing what's actually enforced or touching the on-disk schema files.
+    """
+    merged = dict(kind_schema)
+    merged.pop("allOf", None)
+    merged["$defs"] = {**common.get("$defs", {}), **kind_schema.get("$defs", {})}
+    merged["properties"] = {**common.get("properties", {}), **kind_schema.get("properties", {})}
+    merged["required"] = sorted(set(common.get("required", [])) | set(kind_schema.get("required", [])))
+    return merged
+
+
 def load_validators():
     schemas = {}
     for f in glob.glob(os.path.join(SCHEMA_DIR, "*.schema.json")):
         with open(f, encoding="utf-8") as fh:
             s = json.load(fh)
         schemas[s["$id"]] = s
-    registry = Registry().with_resources(
-        (uri, Resource.from_contents(s)) for uri, s in schemas.items()
-    )
+    common = schemas["https://paik.dev/schema/common.schema.json"]
     return {
         kind: Draft202012Validator(
-            schemas[f"https://paik.dev/schema/{kind}.schema.json"],
-            registry=registry,
+            _compose_schema(common, schemas[f"https://paik.dev/schema/{kind}.schema.json"]),
             format_checker=Draft202012Validator.FORMAT_CHECKER,
         )
         for kind in ("project", "component", "environment")
@@ -207,21 +224,33 @@ def validate_dir(paik_dir, validators, report):
             where = ", ".join(f"{k}:{r}" for k, r in entries)
             report.error(where, f"duplicate id {cid!r} used by {len(entries)} documents")
 
-    # Pass 2: reference resolution, including that the target's kind matches expectations.
+    # Pass 2: reference resolution, including that the target's kind matches expectations and
+    # that the target is actually inside this paik/ folder (a relative link can walk outside it
+    # with enough "../", which is never valid - PAIK documents only cross-reference each other).
+    paik_abs = os.path.normpath(paik_dir)
+
     def resolve(base, r):
         target = os.path.normpath(os.path.join(base, r))
+        try:
+            common = os.path.commonpath([paik_abs, target])
+        except ValueError:
+            common = None  # e.g. different drives on Windows
+        if common != paik_abs:
+            return "outside", None, None
         if not os.path.isfile(target):
-            return None, None
-        target_rel = os.path.relpath(target, paik_dir)
-        return target_rel, docs.get(target_rel)
+            return "missing", None, None
+        target_rel = os.path.relpath(target, paik_abs)
+        return "ok", target_rel, docs.get(target_rel)
 
     for rel, fm in docs.items():
         base = os.path.dirname(os.path.join(paik_dir, rel))
 
         for field, expected_kind in (("components", "component"), ("environments", "environment")):
             for r in fm.get(field) or []:
-                target_rel, target_fm = resolve(base, r)
-                if target_rel is None:
+                status, target_rel, target_fm = resolve(base, r)
+                if status == "outside":
+                    report.error(rel, f"{field} entry {r!r} resolves outside the paik/ folder - PAIK documents must only reference other PAIK documents")
+                elif status == "missing":
                     report.error(rel, f"{field} entry {r!r} does not resolve to a file")
                 elif target_fm is not None and target_fm.get("kind") != expected_kind:
                     report.error(
@@ -234,8 +263,10 @@ def validate_dir(paik_dir, validators, report):
                 continue
             u = link.get("url")
             if u and not ABSOLUTE_URL_RE.match(u):
-                target_rel, _ = resolve(base, u)
-                if target_rel is None:
+                status, _, _ = resolve(base, u)
+                if status == "outside":
+                    report.error(rel, f"links[{i}] url {u!r} resolves outside the paik/ folder - PAIK documents must only reference other PAIK documents")
+                elif status == "missing":
                     report.error(rel, f"links[{i}] url {u!r} does not resolve to a file")
             comp = link.get("component")
             if comp is not None and comp not in component_docs:

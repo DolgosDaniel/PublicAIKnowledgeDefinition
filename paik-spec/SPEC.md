@@ -141,6 +141,10 @@ Common `kind` values in practice (illustrative, not exhaustive — invent new on
   kind, these just live in `links[]`
 - `other` — anything not yet listed; add a `provider` field to say what it actually is
 
+`paik-spec/LINKS.md` is a non-normative cookbook of which fields are worth setting on each of
+these `kind` values in practice — nothing there is schema-enforced, it's a shared convention so
+two projects shape the same `kind` the same way.
+
 ## 4. Cross-referencing convention
 
 - Links between PAIK documents are relative Markdown links, e.g. `[Orders API](components/orders-api.md)`.

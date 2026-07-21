@@ -88,17 +88,40 @@ systems stay the source of truth; PAIK stays the map.
   `paik/` folder.
 - [`paik-spec/schema/`](paik-spec/schema/) — JSON Schema for every document kind's frontmatter.
 - [`tools/paik_validate.py`](tools/paik_validate.py) — the validator described in step 4 above.
+- [`paik-spec/LINKS.md`](paik-spec/LINKS.md) — non-normative recommendations for which fields to
+  set on common `links[]` `kind` values, so different projects shape the same `kind` the same way.
+- [`paik-spec/ROLES.md`](paik-spec/ROLES.md) — who typically edits which part of a `paik/`
+  folder (product owner, designer, engineer, operator), plus an optional
+  [`CODEOWNERS.example`](paik-spec/templates/CODEOWNERS.example).
+- [`paik-spec/CHECKLIST.md`](paik-spec/CHECKLIST.md) — three honest "is this done?" tiers
+  (minimal / development-ready / operations-ready), as documentation, not a new schema profile.
+- [`paik-spec/TROUBLESHOOTING.md`](paik-spec/TROUBLESHOOTING.md) — common `paik_validate.py`
+  errors with the broken snippet and the exact message each one produces.
 
 ## Examples
 
-- [`examples/simple-project/`](examples/simple-project/) — TaskFlow Lite: the minimal instance,
-  one team, one repo/API, two environments — `project.md` + `component.md` + `environments/*.md`.
+- [`examples/minimal-planning-project/`](examples/minimal-planning-project/) — Northwind Loyalty:
+  the smallest valid PAIK project, still in planning, `components: []` and `environments: []`.
+- [`examples/simple-project/`](examples/simple-project/) — TaskFlow Lite: the minimal *built*
+  instance, one team, one repo/API, two environments — `project.md` + `component.md` +
+  `environments/*.md`.
+- [`examples/cross-functional-product/`](examples/cross-functional-product/) — Solstice Rewards:
+  the same single-service shape read from a product owner/designer angle — `figma`, `analytics`,
+  `roadmap` links alongside the usual engineering ones.
 - [`examples/complex-project/`](examples/complex-project/) — Nimbus Commerce: the multi-service
   instance, 3 services, 5 owning teams, 4 environments across 2 regions.
+- [`examples/mixed-components-project/`](examples/mixed-components-project/) — DataForge
+  Analytics: all four `component.type` values in one project — `service`, `library`
+  (`environments: []`), `job` (scheduled), and `other` (a no-code tool with no repository).
+- [`examples/monorepo-project/`](examples/monorepo-project/) — Vertex Platform: three components
+  sharing one repository URL, disambiguated by `purpose` — a component is not a repository.
 - [`examples/external-dependencies-project/`](examples/external-dependencies-project/) — Aurora
   Logistics: 5 services, 6 owning teams, 3 environments, and 2 third-party dependencies
   (payments, mapping) expressed as `links[].kind: external-service` entries on the components
   that call them.
+- [`examples/operations-ready-project/`](examples/operations-ready-project/) — Helios Payments:
+  a complete per-component operational map (health, deploy pipeline, dashboard, runbooks,
+  on-call, logs, SLO) on one shared production environment.
 
 ## Tooling
 
@@ -106,5 +129,5 @@ systems stay the source of truth; PAIK stays the map.
   systems a `paik/` folder's `links[]` reference (Jira/Confluence, GitHub/GitLab, databases, API
   specs), wired to the example projects above.
 - [`skills/`](skills/README.md) — sample Agent Skills that operate on a `paik/` folder:
-  scaffolding, syncing status from the live systems, health-checking environments, and
-  generating an onboarding brief.
+  scaffolding, ad-hoc natural-language maintenance (`paik-maintain`), syncing status from the
+  live systems, health-checking environments, and generating an onboarding brief.

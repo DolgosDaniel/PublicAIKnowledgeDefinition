@@ -25,3 +25,8 @@ jobs:
           examples/simple-project/paik
           examples/complex-project/paik
           examples/external-dependencies-project/paik
+          examples/cross-functional-product/paik
+          examples/minimal-planning-project/paik
+          examples/mixed-components-project/paik
+          examples/monorepo-project/paik
+          examples/operations-ready-project/paik

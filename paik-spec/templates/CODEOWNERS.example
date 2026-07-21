@@ -1,0 +1,14 @@
+# Example CODEOWNERS entries for a paik/ folder - see ../ROLES.md for the reasoning behind
+# this split. Copy the lines you want into your repo's real CODEOWNERS file and adjust the
+# team handles; this file on its own does nothing (GitHub/GitLab only read a CODEOWNERS file
+# at the repo root or in .github/ or docs/).
+
+# Product-owned: project-level scope, roadmap, and delivery links
+/paik/project.md              @your-org/product
+
+# Engineering-owned: component definitions
+/paik/component.md            @your-org/platform-eng
+/paik/components/             @your-org/platform-eng
+
+# Operator/SRE-owned: environments and their operational links
+/paik/environments/           @your-org/sre

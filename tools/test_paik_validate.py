@@ -161,6 +161,23 @@ class ValidatorTests(unittest.TestCase):
             f"expected a uri format error, got: {report.errors}",
         )
 
+    def test_reference_outside_paik_dir_is_rejected(self):
+        files = copy.deepcopy(self.files)
+        # A malicious/careless "../../../etc/passwd"-shaped relative link.
+        outside = os.path.join(self.tmp, "outside.md")
+        with open(outside, "w", encoding="utf-8") as fh:
+            fh.write("not a paik document\n")
+        files["components/a.md"] = files["components/a.md"].replace(
+            "environments:\n  - ../environments/dev.md",
+            "environments:\n  - ../environments/dev.md\n  - ../../outside.md",
+        )
+        self.write(files)
+        report = self.run_validate()
+        self.assertTrue(
+            any("resolves outside the paik/ folder" in e for e in report.errors),
+            f"expected an outside-paik-dir error, got: {report.errors}",
+        )
+
     def test_empty_link_kind_is_rejected(self):
         files = copy.deepcopy(self.files)
         files["components/a.md"] = files["components/a.md"].replace(
