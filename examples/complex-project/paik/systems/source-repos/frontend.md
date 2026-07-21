@@ -4,7 +4,7 @@ doc_type: source-repo
 id: nimbus-frontend-repo
 name: nimbus-commerce/frontend
 status: active
-last_updated: 2026-07-21
+last_updated: "2026-07-21"
 owner_ref: ../../participants.md#gergo-toth
 type: github
 url: https://github.com/nimbus-commerce/frontend

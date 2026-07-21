@@ -4,7 +4,7 @@ doc_type: participants
 id: participants
 name: Nimbus Commerce Participants
 status: active
-last_updated: 2026-07-21
+last_updated: "2026-07-21"
 owner_ref: participants.md#eszter-varga
 ---
 

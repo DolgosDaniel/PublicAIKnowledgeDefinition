@@ -4,7 +4,7 @@ doc_type: source-repo
 id: nimbus-orders-api-repo
 name: nimbus-commerce/orders-api
 status: active
-last_updated: 2026-07-21
+last_updated: "2026-07-21"
 owner_ref: ../../participants.md#peter-molnar
 type: github
 url: https://github.com/nimbus-commerce/orders-api

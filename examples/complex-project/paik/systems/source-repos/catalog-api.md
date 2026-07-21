@@ -4,7 +4,7 @@ doc_type: source-repo
 id: nimbus-catalog-api-repo
 name: nimbus-commerce/catalog-api
 status: active
-last_updated: 2026-07-21
+last_updated: "2026-07-21"
 owner_ref: ../../participants.md#zsofia-kiss
 type: github
 url: https://github.com/nimbus-commerce/catalog-api

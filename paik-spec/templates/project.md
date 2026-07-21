@@ -4,7 +4,7 @@ doc_type: project
 id: <project-slug>
 name: <Project Name>
 status: planning # planning | active | maintenance | sunset
-last_updated: <YYYY-MM-DD>
+last_updated: "<YYYY-MM-DD>"
 owner_ref: participants.md#<owner-anchor>
 description: >
   One paragraph: what this project is, who it's for, and what problem it solves.

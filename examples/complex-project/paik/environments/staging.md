@@ -4,7 +4,7 @@ doc_type: environment
 id: staging
 name: Staging
 status: active
-last_updated: 2026-07-21
+last_updated: "2026-07-21"
 owner_ref: ../participants.md#adam-fekete
 purpose: pre-production verification, mirrors prod topology, manual promotion from dev
 app_url: https://staging.nimbus.example

@@ -4,7 +4,7 @@ doc_type: configuration
 id: configuration
 name: TaskFlow Lite Configuration Management
 status: active
-last_updated: 2026-07-21
+last_updated: "2026-07-21"
 owner_ref: participants.md#bence-nagy
 tool: dotenv
 location: https://dashboard.render.com/web/taskflow-lite/env

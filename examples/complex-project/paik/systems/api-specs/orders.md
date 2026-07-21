@@ -4,7 +4,7 @@ doc_type: api-spec
 id: orders-api-spec
 name: Orders API
 status: active
-last_updated: 2026-07-21
+last_updated: "2026-07-21"
 owner_ref: ../../participants.md#peter-molnar
 type: swaggerhub
 base_url: https://app.swaggerhub.com

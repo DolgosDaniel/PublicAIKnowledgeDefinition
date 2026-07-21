@@ -4,7 +4,7 @@ doc_type: project
 id: nimbus-commerce
 name: Nimbus Commerce
 status: active
-last_updated: 2026-07-21
+last_updated: "2026-07-21"
 owner_ref: participants.md#eszter-varga
 description: >
   A multi-service e-commerce platform: a frontend app plus an orders-api and a catalog-api

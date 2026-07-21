@@ -4,7 +4,7 @@ doc_type: environment
 id: prod
 name: Production
 status: active
-last_updated: 2026-07-21
+last_updated: "2026-07-21"
 owner_ref: ../participants.md#bence-nagy
 purpose: customer-facing production
 app_url: https://taskflow.example

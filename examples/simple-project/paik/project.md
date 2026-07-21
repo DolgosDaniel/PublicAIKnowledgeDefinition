@@ -4,7 +4,7 @@ doc_type: project
 id: taskflow-lite
 name: TaskFlow Lite
 status: active
-last_updated: 2026-07-21
+last_updated: "2026-07-21"
 owner_ref: participants.md#alice-kovacs
 description: >
   A small, single-service web app for tracking personal to-do lists. One team, one repo,

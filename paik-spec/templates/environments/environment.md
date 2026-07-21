@@ -4,7 +4,7 @@ doc_type: environment
 id: <env-slug>
 name: <Environment Name>
 status: active
-last_updated: <YYYY-MM-DD>
+last_updated: "<YYYY-MM-DD>"
 owner_ref: ../participants.md#<owner-anchor>
 purpose: <e.g. "developer integration testing" / "customer-facing production, EU region">
 app_url: https://<env>.example.com

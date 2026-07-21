@@ -4,7 +4,7 @@ doc_type: environment
 id: dev
 name: Development
 status: active
-last_updated: 2026-07-21
+last_updated: "2026-07-21"
 owner_ref: ../participants.md#bence-nagy
 purpose: developer integration testing, auto-deployed from main on every merge
 app_url: https://taskflow-lite-dev.onrender.com

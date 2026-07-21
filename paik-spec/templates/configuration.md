@@ -4,7 +4,7 @@ doc_type: configuration
 id: configuration
 name: Configuration Management
 status: active
-last_updated: <YYYY-MM-DD>
+last_updated: "<YYYY-MM-DD>"
 owner_ref: participants.md#<owner-anchor>
 tool: vault # vault | aws-secrets-manager | consul | dotenv | spring-cloud-config | helm-values | other
 location: https://vault.example.com/ui/vault/secrets/<project>

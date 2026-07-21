@@ -4,7 +4,7 @@ doc_type: participants
 id: participants
 name: Project Participants
 status: active
-last_updated: <YYYY-MM-DD>
+last_updated: "<YYYY-MM-DD>"
 owner_ref: participants.md#<project-lead-anchor>
 ---
 

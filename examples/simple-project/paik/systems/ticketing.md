@@ -4,7 +4,7 @@ doc_type: ticketing-system
 id: taskflow-lite-jira
 name: TaskFlow Lite — Jira
 status: active
-last_updated: 2026-07-21
+last_updated: "2026-07-21"
 owner_ref: ../participants.md#alice-kovacs
 type: jira
 base_url: https://taskflow-inc.atlassian.net

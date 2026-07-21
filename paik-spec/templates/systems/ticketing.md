@@ -4,7 +4,7 @@ doc_type: ticketing-system
 id: <ticketing-slug>
 name: <Ticketing System Name>
 status: active
-last_updated: <YYYY-MM-DD>
+last_updated: "<YYYY-MM-DD>"
 owner_ref: participants.md#<owner-anchor>
 type: jira # jira | azure-boards | linear | github-issues | other
 base_url: https://<org>.atlassian.net

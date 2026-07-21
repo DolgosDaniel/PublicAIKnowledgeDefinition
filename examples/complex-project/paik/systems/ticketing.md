@@ -4,7 +4,7 @@ doc_type: ticketing-system
 id: nimbus-jira
 name: Nimbus Commerce — Jira
 status: active
-last_updated: 2026-07-21
+last_updated: "2026-07-21"
 owner_ref: ../participants.md#eszter-varga
 type: jira
 base_url: https://nimbus-commerce.atlassian.net

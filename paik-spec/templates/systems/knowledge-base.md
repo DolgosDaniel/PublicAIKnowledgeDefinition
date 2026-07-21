@@ -4,7 +4,7 @@ doc_type: knowledge-base
 id: <knowledge-base-slug>
 name: <Knowledge Base Name>
 status: active
-last_updated: <YYYY-MM-DD>
+last_updated: "<YYYY-MM-DD>"
 owner_ref: participants.md#<owner-anchor>
 type: confluence # confluence | notion | sharepoint | wiki-js | other
 base_url: https://<org>.atlassian.net/wiki

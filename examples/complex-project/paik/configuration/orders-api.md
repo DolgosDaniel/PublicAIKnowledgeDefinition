@@ -4,7 +4,7 @@ doc_type: configuration
 id: orders-api-configuration
 name: Orders API — Configuration
 status: active
-last_updated: 2026-07-21
+last_updated: "2026-07-21"
 owner_ref: ../participants.md#peter-molnar
 tool: vault
 location: https://vault.nimbus.example/ui/vault/secrets/nimbus

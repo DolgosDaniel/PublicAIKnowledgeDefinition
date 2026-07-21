@@ -4,7 +4,7 @@ doc_type: source-repo
 id: <repo-slug>
 name: <Repo Name>
 status: active
-last_updated: <YYYY-MM-DD>
+last_updated: "<YYYY-MM-DD>"
 owner_ref: participants.md#<owner-anchor>
 type: github # github | gitlab | bitbucket | azure-repos | other
 url: https://github.com/<org>/<repo>

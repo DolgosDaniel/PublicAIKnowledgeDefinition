@@ -4,7 +4,7 @@ doc_type: api-spec
 id: catalog-api-spec
 name: Catalog API
 status: active
-last_updated: 2026-07-21
+last_updated: "2026-07-21"
 owner_ref: ../../participants.md#zsofia-kiss
 type: swaggerhub
 base_url: https://app.swaggerhub.com

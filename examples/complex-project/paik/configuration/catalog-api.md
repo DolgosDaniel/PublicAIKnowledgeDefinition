@@ -4,7 +4,7 @@ doc_type: configuration
 id: catalog-api-configuration
 name: Catalog API — Configuration
 status: active
-last_updated: 2026-07-21
+last_updated: "2026-07-21"
 owner_ref: ../participants.md#zsofia-kiss
 tool: vault
 location: https://vault.nimbus.example/ui/vault/secrets/nimbus

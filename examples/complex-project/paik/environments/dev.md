@@ -4,7 +4,7 @@ doc_type: environment
 id: dev
 name: Development
 status: active
-last_updated: 2026-07-21
+last_updated: "2026-07-21"
 owner_ref: ../participants.md#adam-fekete
 purpose: shared developer integration environment for all three services, auto-deployed from main
 app_url: https://dev.nimbus.example

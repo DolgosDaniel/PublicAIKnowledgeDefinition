@@ -4,7 +4,7 @@ doc_type: knowledge-base
 id: nimbus-confluence
 name: Nimbus Commerce — Confluence
 status: active
-last_updated: 2026-07-21
+last_updated: "2026-07-21"
 owner_ref: ../participants.md#eszter-varga
 type: confluence
 base_url: https://nimbus-commerce.atlassian.net/wiki

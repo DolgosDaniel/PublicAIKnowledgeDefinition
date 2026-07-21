@@ -4,7 +4,7 @@ doc_type: environment
 id: prod-us
 name: Production — US
 status: active
-last_updated: 2026-07-21
+last_updated: "2026-07-21"
 owner_ref: ../participants.md#adam-fekete
 purpose: customer-facing production, US region
 app_url: https://us.nimbus.example

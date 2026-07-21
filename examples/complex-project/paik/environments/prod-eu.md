@@ -4,7 +4,7 @@ doc_type: environment
 id: prod-eu
 name: Production — EU
 status: active
-last_updated: 2026-07-21
+last_updated: "2026-07-21"
 owner_ref: ../participants.md#adam-fekete
 purpose: customer-facing production, EU region, GDPR-scoped customer data
 app_url: https://eu.nimbus.example

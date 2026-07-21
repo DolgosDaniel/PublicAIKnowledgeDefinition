@@ -4,7 +4,7 @@ doc_type: source-repo
 id: taskflow-lite-repo
 name: taskflow-inc/taskflow-lite
 status: active
-last_updated: 2026-07-21
+last_updated: "2026-07-21"
 owner_ref: ../participants.md#bence-nagy
 type: github
 url: https://github.com/taskflow-inc/taskflow-lite

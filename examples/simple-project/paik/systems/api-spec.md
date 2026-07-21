@@ -4,7 +4,7 @@ doc_type: api-spec
 id: taskflow-lite-api
 name: TaskFlow Lite API
 status: active
-last_updated: 2026-07-21
+last_updated: "2026-07-21"
 owner_ref: ../participants.md#bence-nagy
 type: swaggerhub
 base_url: https://app.swaggerhub.com

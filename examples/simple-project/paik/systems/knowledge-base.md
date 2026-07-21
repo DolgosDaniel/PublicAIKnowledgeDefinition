@@ -4,7 +4,7 @@ doc_type: knowledge-base
 id: taskflow-lite-confluence
 name: TaskFlow Lite — Confluence
 status: active
-last_updated: 2026-07-21
+last_updated: "2026-07-21"
 owner_ref: ../participants.md#alice-kovacs
 type: confluence
 base_url: https://taskflow-inc.atlassian.net/wiki

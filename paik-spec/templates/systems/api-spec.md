@@ -4,7 +4,7 @@ doc_type: api-spec
 id: <api-slug>
 name: <API Name>
 status: active
-last_updated: <YYYY-MM-DD>
+last_updated: "<YYYY-MM-DD>"
 owner_ref: participants.md#<owner-anchor>
 type: swaggerhub # swaggerhub | stoplight | redocly | openapi-file | other
 base_url: https://app.swaggerhub.com
