@@ -1,24 +1,39 @@
 ---
-paik_version: "2.0"
-doc_type: environment
+paik: "0.3"
+kind: environment
 id: prod-eu
 name: Production — EU
-status: active
-last_updated: "2026-07-21"
-owner_ref: ../teams/sre-qa.md
-visibility: internal
+lifecycle: active
+owner:
+  name: SRE & QA
+  ref: https://nimbus-commerce.example/directory/teams/sre-qa
 purpose: customer-facing production, EU region, GDPR-scoped customer data
 app_url: https://eu.nimbus.example
 health_endpoint: https://eu.nimbus.example/health
-status_page: https://status.nimbus.example
 databases:
   - type: postgres
-    host_ref: ../configuration/orders-api.md#prod-eu-orders-database
+    host_ref: "Vault path secret/nimbus/prod-eu/orders-api/db-url (orders database)"
   - type: postgres
-    host_ref: ../configuration/catalog-api.md#prod-eu-catalog-database
-deploy_pipeline_ref: https://github.com/nimbus-commerce/orders-api/actions/workflows/deploy-prod-eu.yml
-config_ref: ../configuration/shared.md
+    host_ref: "Vault path secret/nimbus/prod-eu/catalog-api/db-url (catalog database)"
 access: SRE + release manager approval required
+links:
+  - kind: status-page
+    url: https://status.nimbus.example
+  - kind: deploy-pipeline
+    purpose: one per service, orders-api shown as representative; requires a signed-off release ticket (see the project's jira-project link)
+    url: https://github.com/nimbus-commerce/orders-api/actions/workflows/deploy-prod-eu.yml
+  - kind: secrets
+    provider: vault
+    purpose: shared cross-service config, nimbus/prod-eu/shared/<key>
+    url: https://vault.nimbus.example/ui/vault/secrets/nimbus
+  - kind: dashboard
+    provider: launchdarkly
+    purpose: feature-flags
+    url: https://app.launchdarkly.com/nimbus-commerce
+  - kind: chat
+    id: "#nimbus-sre-qa"
+  - kind: pagerduty
+    url: https://nimbus-commerce.pagerduty.com/schedules/sre
 ---
 
 # Production — EU
@@ -26,14 +41,8 @@ access: SRE + release manager approval required
 - Purpose: customer-facing production, EU region, GDPR-scoped customer data
 - App URL: https://eu.nimbus.example
 - Health endpoint: https://eu.nimbus.example/health
-- Status page: https://status.nimbus.example
-- Databases:
-  - Orders — [configuration](../configuration/orders-api.md#prod-eu-orders-database)
-  - Catalog — [configuration](../configuration/catalog-api.md#prod-eu-catalog-database)
-- Deploy pipelines: one per service, e.g.
-  https://github.com/nimbus-commerce/orders-api/actions/workflows/deploy-prod-eu.yml
-  (requires a signed-off release ticket, see [ticketing.md](../systems/ticketing.md))
-- Configuration: [shared](../configuration/shared.md),
-  [orders-api](../configuration/orders-api.md), [catalog-api](../configuration/catalog-api.md)
+- Databases: Orders and Catalog, each Postgres — see `databases` above (Vault paths, never
+  connection strings)
+- Deploy pipeline: requires a signed-off release ticket — see `links` above
 - Access: SRE + release manager approval required
-- Owner: [SRE & QA](../teams/sre-qa.md)
+- Owner: SRE & QA

@@ -1,22 +1,21 @@
 ---
-paik_version: "2.0"
-doc_type: environment
+paik: "0.3"
+kind: environment
 id: <env-slug>
 name: <Environment Name>
-status: active
-last_updated: "<YYYY-MM-DD>"
-owner_ref: ../team.md
-visibility: internal # public | internal | confidential
+lifecycle: active
 purpose: <e.g. "developer integration testing" / "customer-facing production, EU region">
 app_url: https://<env>.example.com
 health_endpoint: https://<env>.example.com/health
-status_page: https://status.example.com
 databases:
   - type: postgres
-    host_ref: ../configuration.md#<env>-database
-deploy_pipeline_ref: https://github.com/<org>/<repo>/actions/workflows/deploy-<env>.yml
-config_ref: ../configuration.md#<env>
+    host_ref: <e.g. "Vault: secret/data/<project>/<env>#database" or an env var name>
 access: <e.g. "VPN + SSO required" / "public">
+links:
+  - kind: status-page
+    url: https://status.example.com
+  - kind: deploy-pipeline
+    url: https://github.com/<org>/<repo>/actions/workflows/deploy-<env>.yml
 ---
 
 # <Environment Name>
@@ -24,9 +23,7 @@ access: <e.g. "VPN + SSO required" / "public">
 - Purpose: <purpose>
 - App URL: <app_url>
 - Health endpoint: <health_endpoint>
-- Status page: <status_page>
-- Database(s): see `databases` above — connection details live in
-  [configuration.md](../configuration.md#<env>-database), never here
-- Deploy pipeline: <deploy_pipeline_ref>
+- Database(s): see `databases` above — connection details live wherever `host_ref` points,
+  never here
+- Status page / deploy pipeline: see `links` above
 - Access: <access>
-- Owner: [<Team Name>](../team.md)

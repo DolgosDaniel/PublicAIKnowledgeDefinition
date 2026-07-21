@@ -6,50 +6,22 @@
   "allOf": [{ "$ref": "./common.schema.json" }],
   "type": "object",
   "properties": {
-    "doc_type": { "const": "project" },
+    "kind": { "const": "project" },
     "description": {
       "type": "string",
       "description": "One-paragraph summary of what the project does"
     },
-    "systems": {
-      "type": "object",
-      "description": "Relative links to this project's system documents",
-      "properties": {
-        "ticketing": { "type": "array", "items": { "type": "string" } },
-        "knowledge_base": { "type": "array", "items": { "type": "string" } },
-        "api_specs": { "type": "array", "items": { "type": "string" } },
-        "source_repos": { "type": "array", "items": { "type": "string" } }
-      },
-      "required": ["ticketing", "knowledge_base", "api_specs", "source_repos"]
+    "components": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Relative links to this project's component document(s) - component.md, or components/*.md for multiple"
     },
-    "team_ref": {
-      "type": "string",
-      "description": "Relative link to team.md, or to the teams/ directory/index for multi-team projects"
-    },
-    "components_ref": {
-      "type": "string",
-      "description": "Relative link to component.md, or to the components/ directory/index for multi-component projects"
-    },
-    "external_services_ref": {
-      "type": "string",
-      "description": "Optional: relative link to external-service.md, or to the external-services/ directory/index, for projects that depend on third-party services they don't operate"
-    },
-    "environments_ref": {
-      "type": "string",
-      "description": "Relative link to the environments/ directory or index"
-    },
-    "configuration_ref": {
-      "type": "string",
-      "description": "Relative link to configuration.md or the configuration/ directory"
+    "environments": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Relative links to this project's environment document(s)"
     }
   },
-  "required": [
-    "description",
-    "systems",
-    "team_ref",
-    "components_ref",
-    "environments_ref",
-    "configuration_ref"
-  ],
+  "required": ["description", "owner", "components", "environments"],
   "unevaluatedProperties": false
 }

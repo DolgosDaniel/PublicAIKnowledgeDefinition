@@ -1,28 +1,53 @@
 ---
-paik_version: "2.1"
-doc_type: component
-id: aurora-routing-service
+paik: "0.3"
+kind: component
+id: routing-service
 name: Routing Service
-status: active
-last_updated: "2026-07-21"
-owner_ref: ../teams/routing.md
-visibility: internal
+lifecycle: active
+owner:
+  name: Routing team
+  ref: https://aurora-logistics.example/directory/teams/routing
 type: service
-repository_ref: ../systems/source-repos/routing-service.md
-provides_api_refs:
-  - ../systems/api-specs/routing.md
-consumes_api_refs: []
-environment_refs:
+links:
+  - kind: repository
+    provider: github
+    url: https://github.com/aurora-logistics/routing-service
+    id: aurora-logistics/routing-service
+    purpose: trunk-based, short-lived feature branches, PR review required
+  - kind: api
+    purpose: provides
+    provider: grpc
+    id: aurora-logistics/routing-service
+    url: https://api.swaggerhub.com/apis/aurora-logistics/routing-service/2.0.0
+    served_by_env:
+      dev: 2.1.0-rc1
+      staging: 2.0.0
+      prod: 2.0.0
+  - kind: jira-component
+    id: routing-service
+    url: https://aurora-logistics.atlassian.net/jira/software/projects/AUR/boards/1?component=routing-service
+  - kind: secrets
+    provider: vault
+    url: https://vault.aurora-logistics.example/ui/vault/secrets/aurora
+    purpose: "aurora/<environment>/routing-service/<key>"
+  - kind: external-service
+    provider: mapbox
+    vendor: Mapbox, Inc.
+    url: https://www.mapbox.com
+    docs_url: https://docs.mapbox.com/api/
+    status_page: https://status.mapbox.com
+    contract_ref: https://aurora-logistics.atlassian.net/wiki/spaces/AUR/overview
+    data_shared: pickup/dropoff coordinates and driver GPS pings for route optimization and geocoding
+    secret_ref: "Vault path aurora/<environment>/routing-service/mapbox-token, never the token itself"
+  - kind: chat
+    id: "#aurora-routing"
+  - kind: pagerduty
+    url: https://aurora-logistics.pagerduty.com/schedules/routing
+environments:
   - ../environments/dev.md
   - ../environments/staging.md
   - ../environments/prod.md
-configuration_ref: ../configuration/routing-service.md
 depends_on: []
-external_dependency_refs:
-  - ../external-services/mapbox.md
-ticket_scopes:
-  - type: jira-component
-    key: routing-service
 ---
 
 # Routing Service
@@ -31,11 +56,9 @@ Route optimization and dispatch: given a set of pickups/dropoffs, returns an opt
 Stateless — calls Mapbox for the underlying geocoding/routing computation.
 
 - Type: `service`
-- Repository: [aurora-logistics/routing-service](../systems/source-repos/routing-service.md)
-- Provides API: [Routing API](../systems/api-specs/routing.md)
+- Repository / API / ticket scope / secrets / Mapbox: see `links` above
 - Deployed to: [dev](../environments/dev.md), [staging](../environments/staging.md),
   [prod](../environments/prod.md)
-- Configuration: [routing-service](../configuration/routing-service.md)
 - Depends on: none (internal)
-- External dependencies: [Mapbox](../external-services/mapbox.md) (route optimization/geocoding)
-- Owner: [Routing team](../teams/routing.md)
+- External dependencies: Mapbox (route optimization/geocoding) — see `links` above
+- Owner: Routing team

@@ -1,25 +1,32 @@
 ---
-paik_version: "2.0"
-doc_type: component
-id: taskflow-lite
+paik: "0.3"
+kind: component
+id: taskflow-lite-service
 name: TaskFlow Lite
-status: active
-last_updated: "2026-07-21"
-owner_ref: team.md
-visibility: internal
+lifecycle: active
+owner:
+  name: TaskFlow Lite team
+  ref: https://taskflow-inc.example/directory/teams/taskflow-lite
 type: service
-repository_ref: systems/source-repo.md
-provides_api_refs:
-  - systems/api-spec.md
-consumes_api_refs: []
-environment_refs:
+links:
+  - kind: repository
+    provider: github
+    url: https://github.com/taskflow-inc/taskflow-lite
+    id: taskflow-inc/taskflow-lite
+  - kind: api
+    provider: swaggerhub
+    id: taskflow-inc/taskflow-lite-api
+    url: https://api.swaggerhub.com/apis/taskflow-inc/taskflow-lite-api/1.2.0
+  - kind: jira-project
+    id: TFL
+    url: https://taskflow-inc.atlassian.net/jira/software/projects/TFL
+  - kind: secrets
+    provider: dotenv
+    url: https://dashboard.render.com/web/taskflow-lite/env
+environments:
   - environments/dev.md
   - environments/prod.md
-configuration_ref: configuration.md
 depends_on: []
-ticket_scopes:
-  - type: jira-project
-    key: TFL
 ---
 
 # TaskFlow Lite
@@ -27,9 +34,8 @@ ticket_scopes:
 The single service that makes up this project: a to-do list web app plus its API.
 
 - Type: `service`
-- Repository: [taskflow-inc/taskflow-lite](systems/source-repo.md)
-- Provides API: [TaskFlow Lite API](systems/api-spec.md)
+- Repository / API / ticket scope / secrets location: see `links` above (currently published API
+  version `1.2.0`; dev is running a release candidate `1.3.0-rc1` ahead of prod)
 - Deployed to: [dev](environments/dev.md), [prod](environments/prod.md)
-- Configuration: [configuration.md](configuration.md)
 - Depends on: none — single-service project
-- Owner: [TaskFlow Lite team](team.md)
+- Owner: TaskFlow Lite team

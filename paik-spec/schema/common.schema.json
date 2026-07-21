@@ -2,28 +2,60 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://paik.dev/schema/common.schema.json",
   "title": "PAIK Common Frontmatter",
-  "description": "Fields required on the frontmatter of every PAIK document type. See SPEC.md section 2.",
+  "description": "Fields shared by every PAIK document, plus the reusable owner/link building blocks every document draws on. See SPEC.md section 2.",
   "type": "object",
-  "properties": {
-    "paik_version": {
-      "type": "string",
-      "enum": ["2.0", "2.1"],
-      "description": "2.0 and 2.1 both validate under this schema - 2.1 only adds optional fields (external-service doc type, component.external_dependency_refs, project.external_services_ref), so 2.0 documents remain valid unchanged."
+  "$defs": {
+    "owner": {
+      "type": "object",
+      "description": "Who is responsible for this document's subject. Inline by design - PAIK has no separate team/roster document type; the org's own directory (HR system, chat admin, Backstage) stays the source of truth for who is actually on a team.",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Team or individual name, e.g. \"Orders team\""
+        },
+        "ref": {
+          "type": "string",
+          "format": "uri",
+          "description": "Optional link to where this owner is documented in the org's own systems (a wiki page, an org chart) - never a list of personal emails/handles here"
+        }
+      },
+      "required": ["name"],
+      "unevaluatedProperties": false
     },
-    "doc_type": {
+    "link": {
+      "type": "object",
+      "description": "A single typed pointer to an external system or resource. `kind` is the only enforced key, on purpose - one shape covers ticketing, wikis, API specs, repos, external services, secrets locations, dashboards, runbooks, on-call, and anything else. See SPEC.md section 3 for common `kind` values. Fields beyond `kind` are intentionally open (unlike the rest of a PAIK document), since the whole point of `links` is not needing a new schema per system.",
+      "properties": {
+        "kind": {
+          "type": "string",
+          "description": "What this link points at, e.g. repository, api, jira-project, jira-epic, jira-component, confluence, external-service, secrets, dashboard, runbook, pagerduty, status-page, deploy-pipeline, chat, other"
+        },
+        "url": { "type": "string", "format": "uri" },
+        "id": {
+          "type": "string",
+          "description": "The identifier this link's system uses internally, e.g. a Jira project key or component key"
+        },
+        "purpose": {
+          "type": "string",
+          "description": "Free-text disambiguator when a kind can appear more than once on the same document, e.g. purpose: architecture on a second confluence link"
+        },
+        "provider": {
+          "type": "string",
+          "description": "The vendor/product behind this link, e.g. jira, confluence, github, gitlab, swaggerhub, pagerduty, vault"
+        }
+      },
+      "required": ["kind"]
+    }
+  },
+  "properties": {
+    "paik": {
       "type": "string",
-      "enum": [
-        "project",
-        "ticketing-system",
-        "knowledge-base",
-        "api-spec",
-        "source-repo",
-        "team",
-        "component",
-        "external-service",
-        "environment",
-        "configuration"
-      ]
+      "const": "0.3",
+      "description": "PAIK spec version this document conforms to"
+    },
+    "kind": {
+      "type": "string",
+      "enum": ["project", "component", "environment"]
     },
     "id": {
       "type": "string",
@@ -33,42 +65,19 @@
     "name": {
       "type": "string"
     },
-    "status": {
+    "lifecycle": {
       "type": "string",
       "enum": ["planning", "active", "maintenance", "sunset"]
     },
-    "last_updated": {
-      "type": "string",
-      "format": "date",
-      "description": "Date this document's content was last edited"
+    "owner": { "$ref": "#/$defs/owner" },
+    "links": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/link" }
     },
-    "last_verified": {
-      "type": "string",
-      "format": "date",
-      "description": "Optional: date this document's external links/references were last confirmed to still resolve. Distinct from last_updated, which tracks content edits."
-    },
-    "owner_ref": {
-      "type": "string",
-      "description": "Relative link to the owning team's document, e.g. team.md or teams/orders.md. Points at the whole file - team docs have no per-person anchor."
-    },
-    "visibility": {
-      "type": "string",
-      "enum": ["public", "internal", "confidential"],
-      "description": "Who this document is safe to share with. The absence of secrets does not make a document public - on-call links, chat handles, hostnames, and DB topology are still internal-or-worse."
-    },
-    "data_classification": {
-      "type": "string",
-      "description": "Optional free-form classification tag for the kind of data this document references, e.g. operational, pii, financial"
+    "extensions": {
+      "type": "object",
+      "description": "Free-form, namespaced fields for org-specific needs that don't belong in the core schema, e.g. \"company.hu/data-owner\": \"finance\". Namespace keys as domain/key to avoid collisions; this is intentionally not validated further."
     }
   },
-  "required": [
-    "paik_version",
-    "doc_type",
-    "id",
-    "name",
-    "status",
-    "last_updated",
-    "owner_ref",
-    "visibility"
-  ]
+  "required": ["paik", "kind", "id", "name", "lifecycle"]
 }

@@ -6,14 +6,13 @@
   "allOf": [{ "$ref": "./common.schema.json" }],
   "type": "object",
   "properties": {
-    "doc_type": { "const": "environment" },
+    "kind": { "const": "environment" },
     "purpose": {
       "type": "string",
       "description": "e.g. \"developer integration testing\", \"customer-facing production, EU region\""
     },
     "app_url": { "type": "string", "format": "uri" },
     "health_endpoint": { "type": "string", "format": "uri" },
-    "status_page": { "type": "string", "format": "uri" },
     "databases": {
       "type": "array",
       "items": {
@@ -22,19 +21,18 @@
           "type": { "type": "string" },
           "host_ref": {
             "type": "string",
-            "description": "Reference to where the host/connection details live (Vault path, config doc) - never a credential"
+            "description": "Free-text pointer to where connection details live (a Vault path, an env var name) - never a credential"
           }
         },
-        "required": ["type", "host_ref"]
+        "required": ["type", "host_ref"],
+        "unevaluatedProperties": false
       }
     },
-    "deploy_pipeline_ref": { "type": "string", "format": "uri" },
-    "config_ref": { "type": "string" },
     "access": {
       "type": "string",
       "description": "Who can reach this environment and how, e.g. \"VPN + SSO required\""
     }
   },
-  "required": ["purpose", "app_url", "health_endpoint", "config_ref", "access"],
+  "required": ["purpose", "app_url", "health_endpoint", "access"],
   "unevaluatedProperties": false
 }

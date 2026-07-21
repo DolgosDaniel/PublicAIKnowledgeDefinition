@@ -1,53 +1,54 @@
 ---
-paik_version: "2.0"
-doc_type: project
+paik: "0.3"
+kind: project
 id: nimbus-commerce
 name: Nimbus Commerce
-status: active
-last_updated: "2026-07-21"
-owner_ref: teams/platform.md
-visibility: internal
+lifecycle: active
+owner:
+  name: Platform team
+  ref: https://nimbus-commerce.example/directory/teams/platform
 description: >
   A multi-service e-commerce platform: a frontend app plus an orders-api and a catalog-api
-  microservice, built by three teams, deployed to four environments across two regions.
-  Used here as the multi-service instance of the PAIK standard — the same doc types as
-  examples/simple-project, but split one-per-service/one-per-region where that matches reality.
-systems:
-  ticketing: [systems/ticketing.md]
-  knowledge_base: [systems/knowledge-base.md]
-  api_specs: [systems/api-specs/orders.md, systems/api-specs/catalog.md]
-  source_repos:
-    [
-      systems/source-repos/frontend.md,
-      systems/source-repos/orders-api.md,
-      systems/source-repos/catalog-api.md,
-    ]
-team_ref: teams/
-components_ref: components/
-environments_ref: environments/
-configuration_ref: configuration/
+  microservice, built by three service teams and operated by a shared SRE & QA team, deployed
+  to four environments across two regions. Used here as the multi-service instance of the PAIK
+  v0.3 standard — same shape as examples/simple-project, just split one-per-service/one-per-region
+  where that matches reality.
+links:
+  - kind: jira-project
+    id: NIM
+    purpose: shared across all three services; components distinguish teams within the same board
+    url: https://nimbus-commerce.atlassian.net/jira/software/projects/NIM/boards/4
+  - kind: confluence
+    purpose: project-home
+    url: https://nimbus-commerce.atlassian.net/wiki/spaces/NIM/overview
+components:
+  - components/frontend.md
+  - components/orders-api.md
+  - components/catalog-api.md
+environments:
+  - environments/dev.md
+  - environments/staging.md
+  - environments/prod-eu.md
+  - environments/prod-us.md
 ---
 
 # Nimbus Commerce
 
 A multi-service e-commerce platform: a frontend app plus an `orders-api` and a `catalog-api`
-microservice, built by three teams, deployed to four environments across two regions.
+microservice, built by three service teams and operated by a shared SRE & QA team, deployed to
+four environments across two regions.
 
-## Planning
-- Ticketing (shared across all three services): [Jira — NIM](systems/ticketing.md)
-- Knowledge base: [Confluence — NIM space](systems/knowledge-base.md)
+## Where things live
+- Ticketing (shared across all three services): Jira, project `NIM` — see `links` above
+- Knowledge base: Confluence, `NIM` space — see `links` above (per-service runbooks live as child
+  pages, `NIM / Orders`, `NIM / Catalog`, `NIM / Frontend`, rather than separate PAIK documents)
 
 ## Implementation
-- Components (repo + API + config + environments + owner, wired together):
-  - [Frontend](components/frontend.md) (consumes both APIs below, has no API spec of its own)
+- Components (repo/API/secrets/environments/owner wired together via `links`/`owner`):
+  - [Frontend](components/frontend.md) (consumes both APIs below, has no API of its own)
   - [Orders API](components/orders-api.md)
   - [Catalog API](components/catalog-api.md)
-
-## Teams
-- See [teams/](teams/) — Platform, Frontend, Orders, Catalog and SRE & QA
 
 ## Operations
 - Environments: [dev](environments/dev.md), [staging](environments/staging.md),
   [prod-eu](environments/prod-eu.md), [prod-us](environments/prod-us.md)
-- Configuration management: [shared](configuration/shared.md),
-  [orders-api](configuration/orders-api.md), [catalog-api](configuration/catalog-api.md)

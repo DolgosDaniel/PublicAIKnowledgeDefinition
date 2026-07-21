@@ -1,24 +1,39 @@
 ---
-paik_version: "2.1"
-doc_type: environment
+paik: "0.3"
+kind: environment
 id: prod
 name: Production
-status: active
-last_updated: "2026-07-21"
-owner_ref: ../teams/platform.md
-visibility: internal
+lifecycle: active
+owner:
+  name: Platform team
+  ref: https://aurora-logistics.example/directory/teams/platform
 purpose: customer-facing production
 app_url: https://app.aurora-logistics.example
 health_endpoint: https://app.aurora-logistics.example/health
-status_page: https://status.aurora-logistics.example
 databases:
   - type: postgres
-    host_ref: ../configuration/orders-service.md#prod-orders-database
+    host_ref: "Vault path secret/aurora/prod/orders-service/db-url (orders database)"
   - type: postgres
-    host_ref: ../configuration/fleet-service.md#prod-fleet-database
-deploy_pipeline_ref: https://github.com/aurora-logistics/orders-service/actions/workflows/deploy-prod.yml
-config_ref: ../configuration/shared.md
+    host_ref: "Vault path secret/aurora/prod/fleet-service/db-url (fleet database)"
 access: SRE + release manager approval required
+links:
+  - kind: status-page
+    url: https://status.aurora-logistics.example
+  - kind: deploy-pipeline
+    purpose: one per service, orders-service shown as representative; requires a signed-off release ticket (see the project's jira-project link)
+    url: https://github.com/aurora-logistics/orders-service/actions/workflows/deploy-prod.yml
+  - kind: secrets
+    provider: vault
+    purpose: shared cross-service config, aurora/prod/shared/<key>
+    url: https://vault.aurora-logistics.example/ui/vault/secrets/aurora
+  - kind: dashboard
+    provider: launchdarkly
+    purpose: feature-flags
+    url: https://app.launchdarkly.com/aurora-logistics
+  - kind: chat
+    id: "#aurora-platform"
+  - kind: pagerduty
+    url: https://aurora-logistics.pagerduty.com/schedules/platform
 ---
 
 # Production
@@ -26,13 +41,8 @@ access: SRE + release manager approval required
 - Purpose: customer-facing production
 - App URL: https://app.aurora-logistics.example
 - Health endpoint: https://app.aurora-logistics.example/health
-- Status page: https://status.aurora-logistics.example
-- Databases (only the stateful services have one):
-  - Orders — [configuration](../configuration/orders-service.md#prod-orders-database)
-  - Fleet — [configuration](../configuration/fleet-service.md#prod-fleet-database)
-- Deploy pipelines: one per service, e.g.
-  https://github.com/aurora-logistics/orders-service/actions/workflows/deploy-prod.yml
-  (requires a signed-off release ticket, see [ticketing.md](../systems/ticketing.md))
-- Configuration: [shared](../configuration/shared.md), plus each service's own configuration doc
+- Databases (only the stateful services have one): Orders and Fleet, each Postgres — see
+  `databases` above (Vault paths, never connection strings)
+- Deploy pipeline: requires a signed-off release ticket — see `links` above
 - Access: SRE + release manager approval required
-- Owner: [Platform](../teams/platform.md)
+- Owner: Platform team

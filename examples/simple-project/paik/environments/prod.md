@@ -1,22 +1,22 @@
 ---
-paik_version: "2.0"
-doc_type: environment
+paik: "0.3"
+kind: environment
 id: prod
 name: Production
-status: active
-last_updated: "2026-07-21"
-owner_ref: ../team.md
-visibility: internal
+lifecycle: active
 purpose: customer-facing production
 app_url: https://taskflow.example
 health_endpoint: https://taskflow.example/health
-status_page: https://status.taskflow.example
 databases:
   - type: postgres
-    host_ref: ../configuration.md#prod-database
-deploy_pipeline_ref: https://github.com/taskflow-inc/taskflow-lite/actions/workflows/deploy-prod.yml
-config_ref: ../configuration.md#prod-database
+    host_ref: env var TFL_DB_URL on the Render service "taskflow-lite-prod"
 access: public
+links:
+  - kind: status-page
+    url: https://status.taskflow.example
+  - kind: deploy-pipeline
+    url: https://github.com/taskflow-inc/taskflow-lite/actions/workflows/deploy-prod.yml
+    purpose: manual approval required, see the Jira release checklist
 ---
 
 # Production
@@ -24,11 +24,7 @@ access: public
 - Purpose: customer-facing production
 - App URL: https://taskflow.example
 - Health endpoint: https://taskflow.example/health
-- Status page: https://status.taskflow.example
-- Database: Postgres — connection details in
-  [configuration.md](../configuration.md#prod-database)
-- Deploy pipeline: https://github.com/taskflow-inc/taskflow-lite/actions/workflows/deploy-prod.yml
-  (manual approval required, see Jira release checklist in
-  [ticketing.md](../systems/ticketing.md))
+- Database: Postgres — connection string lives in env var `TFL_DB_URL` on the Render service
+  `taskflow-lite-prod`, never in this file
+- Deploy pipeline: manual approval required (see the Jira release checklist) — see `links` above
 - Access: public
-- Owner: [TaskFlow Lite team](../team.md)

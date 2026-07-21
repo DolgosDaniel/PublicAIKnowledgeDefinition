@@ -1,42 +1,38 @@
 ---
-paik_version: "2.1"
-doc_type: project
+paik: "0.3"
+kind: project
 id: aurora-logistics
 name: Aurora Logistics
-status: active
-last_updated: "2026-07-21"
-owner_ref: teams/platform.md
-visibility: internal
+lifecycle: active
+owner:
+  name: Platform team
+  ref: https://aurora-logistics.example/directory/teams/platform
 description: >
   A fleet/delivery management platform: a dispatcher dashboard plus four microservices
   (orders, routing, fleet, notifications), built by six teams, deployed to three environments,
   and depending on two third-party services (Stripe for payments, Mapbox for routing/geocoding)
-  it does not operate. Used here as the PAIK instance that demonstrates the external-service
-  doc type and a multi-hop internal dependency graph, alongside examples/simple-project (one
-  service) and examples/complex-project (three services, region-scaled environments).
-systems:
-  ticketing: [systems/ticketing.md]
-  knowledge_base: [systems/knowledge-base.md]
-  api_specs:
-    [
-      systems/api-specs/orders.md,
-      systems/api-specs/routing.md,
-      systems/api-specs/fleet.md,
-      systems/api-specs/notifications.md,
-    ]
-  source_repos:
-    [
-      systems/source-repos/ops-console.md,
-      systems/source-repos/orders-service.md,
-      systems/source-repos/routing-service.md,
-      systems/source-repos/fleet-service.md,
-      systems/source-repos/notifications-service.md,
-    ]
-team_ref: teams/
-components_ref: components/
-external_services_ref: external-services/
-environments_ref: environments/
-configuration_ref: configuration/
+  it does not operate. Used here as the PAIK v0.3 instance that demonstrates third-party
+  dependencies (as `links[].kind: external-service`, no dedicated document type) and a multi-hop
+  internal dependency graph, alongside examples/simple-project (one service) and
+  examples/complex-project (three services, region-scaled environments).
+links:
+  - kind: jira-project
+    id: AUR
+    purpose: shared across all five services; components distinguish teams within the same board
+    url: https://aurora-logistics.atlassian.net/jira/software/projects/AUR/boards/1
+  - kind: confluence
+    purpose: project-home
+    url: https://aurora-logistics.atlassian.net/wiki/spaces/AUR/overview
+components:
+  - components/ops-console.md
+  - components/orders-service.md
+  - components/routing-service.md
+  - components/fleet-service.md
+  - components/notifications-service.md
+environments:
+  - environments/dev.md
+  - environments/staging.md
+  - environments/prod.md
 ---
 
 # Aurora Logistics
@@ -46,29 +42,22 @@ microservices — `orders-service`, `routing-service`, `fleet-service`, `notific
 built by six teams, deployed to three environments, and depending on two third-party services it
 does not operate.
 
-## Planning
-- Ticketing (shared across all five services): [Jira — AUR](systems/ticketing.md)
-- Knowledge base: [Confluence — AUR space](systems/knowledge-base.md)
+## Where things live
+- Ticketing (shared across all five services): Jira, project `AUR` — see `links` above
+- Knowledge base: Confluence, `AUR` space — see `links` above (vendor contract/SLA pages for
+  Stripe/Mapbox live under this space as child pages)
 
 ## Implementation
-- Components (repo + API + config + environments + owner + dependencies, wired together):
+- Components (repo/API/secrets/environments/owner/dependencies wired together via `links`/`owner`/`depends_on`):
   - [Ops Console](components/ops-console.md) (consumes Orders/Routing/Fleet, has no API of its own)
   - [Orders Service](components/orders-service.md) (depends on Routing + Notifications; calls Stripe)
   - [Routing Service](components/routing-service.md) (calls Mapbox)
   - [Fleet Service](components/fleet-service.md) (depends on Routing)
   - [Notifications Service](components/notifications-service.md)
-- External services this project depends on but does not operate: see
-  [external-services/](external-services/) — [Stripe](external-services/stripe.md) (payments),
-  [Mapbox](external-services/mapbox.md) (routing/geocoding)
-
-## Teams
-- See [teams/](teams/) — Platform, Frontend, Orders, Routing, Fleet, and Notifications
+- Third-party dependencies the project calls but does not operate: Stripe (payments, on
+  `orders-service`) and Mapbox (routing/geocoding, on `routing-service`) — each is a
+  `kind: external-service` entry in that component's `links`, not a separate document.
 
 ## Operations
 - Environments: [dev](environments/dev.md), [staging](environments/staging.md),
   [prod](environments/prod.md)
-- Configuration management: [shared](configuration/shared.md),
-  [orders-service](configuration/orders-service.md),
-  [routing-service](configuration/routing-service.md),
-  [fleet-service](configuration/fleet-service.md),
-  [notifications-service](configuration/notifications-service.md)

@@ -8,8 +8,8 @@
         "GITLAB_API_URL": "${GITLAB_API_URL}"
       },
       "_paik": {
-        "serves": ["systems/source-repo.md (type: gitlab)"],
-        "notes": "GITLAB_API_URL should point at your instance's API root (e.g. https://gitlab.example.com/api/v4) - set it to match the source-repo.md url field.",
+        "serves": ["links[] entries with kind: repository, provider: gitlab"],
+        "notes": "GITLAB_API_URL should point at your instance's API root (e.g. https://gitlab.example.com/api/v4) - set it to match the repository link's url field.",
         "deprecated": true,
         "deprecation_notes": "@modelcontextprotocol/server-gitlab ships from modelcontextprotocol/servers-archived - it no longer receives security updates. Evaluate a maintained alternative before using this in a real project."
       }

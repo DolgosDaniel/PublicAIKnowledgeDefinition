@@ -1,24 +1,31 @@
 ---
-paik_version: "2.0"
-doc_type: project
+paik: "0.3"
+kind: project
 id: taskflow-lite
 name: TaskFlow Lite
-status: active
-last_updated: "2026-07-21"
-owner_ref: team.md
-visibility: internal
+lifecycle: active
+owner:
+  name: TaskFlow Lite team
+  ref: https://taskflow-inc.example/directory/teams/taskflow-lite
 description: >
   A small, single-service web app for tracking personal to-do lists. One team, one repo,
   one API, two environments. Used here as the minimal instance of the PAIK standard.
-systems:
-  ticketing: [systems/ticketing.md]
-  knowledge_base: [systems/knowledge-base.md]
-  api_specs: [systems/api-spec.md]
-  source_repos: [systems/source-repo.md]
-team_ref: team.md
-components_ref: component.md
-environments_ref: environments/
-configuration_ref: configuration.md
+links:
+  - kind: jira-project
+    id: TFL
+    url: https://taskflow-inc.atlassian.net/jira/software/projects/TFL/boards/1
+  - kind: confluence
+    purpose: project-home
+    url: https://taskflow-inc.atlassian.net/wiki/spaces/TFL/overview
+  - kind: chat
+    id: "#taskflow-lite"
+  - kind: pagerduty
+    url: https://taskflow-inc.pagerduty.com/schedules/taskflow-lite
+components:
+  - component.md
+environments:
+  - environments/dev.md
+  - environments/prod.md
 ---
 
 # TaskFlow Lite
@@ -26,18 +33,13 @@ configuration_ref: configuration.md
 A small, single-service web app for tracking personal to-do lists. One team, one repo, one API,
 two environments — the minimal instance of the PAIK standard.
 
-## Planning
-- Ticketing: [Jira — TFL](systems/ticketing.md)
-- Knowledge base: [Confluence — TFL space](systems/knowledge-base.md)
+## Where things live
+- Ticketing: Jira, project `TFL` — see `links` above
+- Knowledge base: Confluence, `TFL` space — see `links` above
+- Chat / on-call: `#taskflow-lite` / PagerDuty — see `links` above
 
 ## Implementation
 - Component: [TaskFlow Lite](component.md)
-- API spec: [TaskFlow Lite API](systems/api-spec.md)
-- Source repo: [taskflow-inc/taskflow-lite](systems/source-repo.md)
-
-## Team
-- See [team.md](team.md)
 
 ## Operations
 - Environments: [dev](environments/dev.md), [prod](environments/prod.md)
-- Configuration management: see [configuration.md](configuration.md)

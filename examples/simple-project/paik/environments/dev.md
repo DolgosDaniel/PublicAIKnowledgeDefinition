@@ -1,22 +1,21 @@
 ---
-paik_version: "2.0"
-doc_type: environment
+paik: "0.3"
+kind: environment
 id: dev
 name: Development
-status: active
-last_updated: "2026-07-21"
-owner_ref: ../team.md
-visibility: internal
+lifecycle: active
 purpose: developer integration testing, auto-deployed from main on every merge
 app_url: https://taskflow-lite-dev.onrender.com
 health_endpoint: https://taskflow-lite-dev.onrender.com/health
-status_page: https://status.render.com
 databases:
   - type: postgres
-    host_ref: ../configuration.md#dev-database
-deploy_pipeline_ref: https://github.com/taskflow-inc/taskflow-lite/actions/workflows/deploy-dev.yml
-config_ref: ../configuration.md#dev-database
+    host_ref: env var TFL_DB_URL on the Render service "taskflow-lite-dev"
 access: public (read-only demo data, reset nightly)
+links:
+  - kind: status-page
+    url: https://status.render.com
+  - kind: deploy-pipeline
+    url: https://github.com/taskflow-inc/taskflow-lite/actions/workflows/deploy-dev.yml
 ---
 
 # Development
@@ -24,9 +23,7 @@ access: public (read-only demo data, reset nightly)
 - Purpose: developer integration testing, auto-deployed from `main` on every merge
 - App URL: https://taskflow-lite-dev.onrender.com
 - Health endpoint: https://taskflow-lite-dev.onrender.com/health
-- Status page: https://status.render.com
-- Database: Postgres — connection details in
-  [configuration.md](../configuration.md#dev-database)
-- Deploy pipeline: https://github.com/taskflow-inc/taskflow-lite/actions/workflows/deploy-dev.yml
+- Database: Postgres — connection string lives in env var `TFL_DB_URL` on the Render service
+  `taskflow-lite-dev`, never in this file
+- Status page / deploy pipeline: see `links` above
 - Access: public, read-only demo data, reset nightly
-- Owner: [TaskFlow Lite team](../team.md)

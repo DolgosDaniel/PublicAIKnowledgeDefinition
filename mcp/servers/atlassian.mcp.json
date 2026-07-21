@@ -4,7 +4,7 @@
       "command": "npx",
       "args": ["-y", "mcp-remote", "https://mcp.atlassian.com/v1/mcp/authv2"],
       "_paik": {
-        "serves": ["systems/ticketing.md (Jira)", "systems/knowledge-base.md (Confluence)"],
+        "serves": ["links[] entries with kind starting jira- (Jira)", "links[] entries with kind: confluence (Confluence)"],
         "notes": "Official Atlassian remote MCP server, reached via the mcp-remote stdio bridge. First run opens a browser for OAuth; no static token needed. Endpoint is /v1/mcp/authv2 - the older /v1/sse endpoint stopped being supported after 2026-06-30; verify against Atlassian's own docs before relying on this."
       }
     }

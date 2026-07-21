@@ -1,40 +1,55 @@
 ---
-paik_version: "2.1"
-doc_type: component
-id: aurora-notifications-service
+paik: "0.3"
+kind: component
+id: notifications-service
 name: Notifications Service
-status: active
-last_updated: "2026-07-21"
-owner_ref: ../teams/notifications.md
-visibility: internal
+lifecycle: active
+owner:
+  name: Notifications team
+  ref: https://aurora-logistics.example/directory/teams/notifications
 type: service
-repository_ref: ../systems/source-repos/notifications-service.md
-provides_api_refs:
-  - ../systems/api-specs/notifications.md
-consumes_api_refs: []
-environment_refs:
+links:
+  - kind: repository
+    provider: github
+    url: https://github.com/aurora-logistics/notifications-service
+    id: aurora-logistics/notifications-service
+    purpose: trunk-based, short-lived feature branches, PR review required
+  - kind: api
+    purpose: provides
+    provider: asyncapi
+    id: aurora-logistics/notifications-service
+    url: https://api.swaggerhub.com/apis/aurora-logistics/notifications-service/1.0.0
+    served_by_env:
+      dev: 1.0.0
+      staging: 1.0.0
+      prod: 1.0.0
+  - kind: jira-component
+    id: notifications-service
+    url: https://aurora-logistics.atlassian.net/jira/software/projects/AUR/boards/1?component=notifications-service
+  - kind: secrets
+    provider: vault
+    url: https://vault.aurora-logistics.example/ui/vault/secrets/aurora
+    purpose: "aurora/<environment>/notifications-service/<key>"
+  - kind: chat
+    id: "#aurora-notifications"
+  - kind: pagerduty
+    url: https://aurora-logistics.pagerduty.com/schedules/notifications
+environments:
   - ../environments/dev.md
   - ../environments/staging.md
   - ../environments/prod.md
-configuration_ref: ../configuration/notifications-service.md
 depends_on: []
-external_dependency_refs: []
-ticket_scopes:
-  - type: jira-component
-    key: notifications-service
 ---
 
 # Notifications Service
 
 Relays order/delivery events to drivers and customers (SMS/push/email) on behalf of the other
-services. Stateless relay — no external dependency modeled at the PAIK level in this example.
+services. Stateless relay — no external dependency modeled in this example.
 
 - Type: `service`
-- Repository: [aurora-logistics/notifications-service](../systems/source-repos/notifications-service.md)
-- Provides API: [Notifications API](../systems/api-specs/notifications.md)
+- Repository / API / ticket scope / secrets: see `links` above
 - Deployed to: [dev](../environments/dev.md), [staging](../environments/staging.md),
   [prod](../environments/prod.md)
-- Configuration: [notifications-service](../configuration/notifications-service.md)
 - Depends on: none (internal)
 - External dependencies: none
-- Owner: [Notifications team](../teams/notifications.md)
+- Owner: Notifications team

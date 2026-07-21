@@ -1,29 +1,50 @@
 ---
-paik_version: "2.1"
-doc_type: component
-id: aurora-fleet-service
+paik: "0.3"
+kind: component
+id: fleet-service
 name: Fleet Service
-status: active
-last_updated: "2026-07-21"
-owner_ref: ../teams/fleet.md
-visibility: internal
+lifecycle: active
+owner:
+  name: Fleet team
+  ref: https://aurora-logistics.example/directory/teams/fleet
 type: service
-repository_ref: ../systems/source-repos/fleet-service.md
-provides_api_refs:
-  - ../systems/api-specs/fleet.md
-consumes_api_refs:
-  - ../systems/api-specs/routing.md
-environment_refs:
+links:
+  - kind: repository
+    provider: github
+    url: https://github.com/aurora-logistics/fleet-service
+    id: aurora-logistics/fleet-service
+    purpose: trunk-based, short-lived feature branches, PR review required
+  - kind: api
+    purpose: provides
+    provider: openapi-file
+    id: aurora-logistics/fleet-service
+    url: https://api.swaggerhub.com/apis/aurora-logistics/fleet-service/1.1.0
+    served_by_env:
+      dev: 1.1.0
+      staging: 1.1.0
+      prod: 1.1.0
+  - kind: api
+    purpose: consumes
+    provider: grpc
+    id: aurora-logistics/routing-service
+    url: https://api.swaggerhub.com/apis/aurora-logistics/routing-service/2.0.0
+  - kind: jira-component
+    id: fleet-service
+    url: https://aurora-logistics.atlassian.net/jira/software/projects/AUR/boards/1?component=fleet-service
+  - kind: secrets
+    provider: vault
+    url: https://vault.aurora-logistics.example/ui/vault/secrets/aurora
+    purpose: "aurora/<environment>/fleet-service/<key>"
+  - kind: chat
+    id: "#aurora-fleet"
+  - kind: pagerduty
+    url: https://aurora-logistics.pagerduty.com/schedules/fleet
+environments:
   - ../environments/dev.md
   - ../environments/staging.md
   - ../environments/prod.md
-configuration_ref: ../configuration/fleet-service.md
 depends_on:
-  - routing-service.md
-external_dependency_refs: []
-ticket_scopes:
-  - type: jira-component
-    key: fleet-service
+  - routing-service
 ---
 
 # Fleet Service
@@ -32,12 +53,9 @@ Tracks vehicles and drivers, and assigns routes computed by `routing-service` to
 drivers.
 
 - Type: `service`
-- Repository: [aurora-logistics/fleet-service](../systems/source-repos/fleet-service.md)
-- Provides API: [Fleet API](../systems/api-specs/fleet.md)
-- Consumes API: [Routing API](../systems/api-specs/routing.md)
+- Repository / provided + consumed APIs / ticket scope / secrets: see `links` above
 - Deployed to: [dev](../environments/dev.md), [staging](../environments/staging.md),
   [prod](../environments/prod.md)
-- Configuration: [fleet-service](../configuration/fleet-service.md)
-- Depends on: [Routing Service](routing-service.md)
+- Depends on: Routing Service
 - External dependencies: none
-- Owner: [Fleet team](../teams/fleet.md)
+- Owner: Fleet team

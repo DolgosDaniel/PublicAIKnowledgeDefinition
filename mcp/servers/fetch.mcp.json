@@ -4,7 +4,7 @@
       "command": "uvx",
       "args": ["mcp-server-fetch"],
       "_paik": {
-        "serves": ["systems/api-spec.md (spec_url, e.g. SwaggerHub)", "environments/*.md (health_endpoint, status_page)"],
+        "serves": ["links[] entries with kind: api (url field, e.g. SwaggerHub)", "environments/*.md (health_endpoint) and links[] entries with kind: status-page"],
         "notes": "Generic HTTP fetch server. Used as the SwaggerHub fallback since there is no single ubiquitous official SwaggerHub MCP server - swap in a dedicated one if your org standardizes on it. Also doubles as a simple way to poll health_endpoint URLs."
       }
     }

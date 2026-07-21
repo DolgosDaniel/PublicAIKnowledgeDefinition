@@ -1,25 +1,27 @@
 ---
-paik_version: "2.0"
-doc_type: component
+paik: "0.3"
+kind: component
 id: <component-slug>
 name: <Component Name>
-status: active
-last_updated: "<YYYY-MM-DD>"
-owner_ref: ../team.md
-visibility: internal # public | internal | confidential
+lifecycle: active
+owner:
+  name: <Owning team name>
+  ref: <optional link to the team in your org's own directory/wiki>
 type: service # service | library | job | other
-repository_ref: ../systems/source-repo.md
-provides_api_refs:
-  - ../systems/api-spec.md
-consumes_api_refs: []
-environment_refs:
+links:
+  - kind: repository
+    provider: github # or gitlab, bitbucket, ...
+    url: <https://.../repo>
+  - kind: api
+    provider: swaggerhub # or a raw openapi/asyncapi/grpc/graphql url
+    url: <https://.../api-spec>
+  - kind: jira-epic # or jira-component, linear-project, ...
+    id: <PROJ-123>
+    url: <https://.../PROJ-123>
+environments:
   - ../environments/dev.md
   - ../environments/prod.md
-configuration_ref: ../configuration.md
 depends_on: []
-ticket_scopes:
-  - type: jira-epic
-    key: <PROJ-123>
 ---
 
 # <Component Name>
@@ -27,9 +29,7 @@ ticket_scopes:
 <One paragraph: what this component does.>
 
 - Type: `service`
-- Repository: [<Repo Name>](../systems/source-repo.md)
-- Provides API: [<API Name>](../systems/api-spec.md)
+- Repository / API / ticket scope: see `links` above
 - Deployed to: [dev](../environments/dev.md), [prod](../environments/prod.md)
-- Configuration: [configuration.md](../configuration.md)
 - Depends on: <other components, or "none">
-- Owner: [<Team Name>](../team.md)
+- Owner: <Owning team name>

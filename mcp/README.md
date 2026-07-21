@@ -1,9 +1,9 @@
 # PAIK sample MCP configs
 
 These are working `mcpServers` configuration snippets (the format used by Claude Code /
-`.mcp.json`) for the systems a PAIK `paik/` folder points at. They let an AI agent actually reach
-the live system a given document only references — e.g. resolve the current ticket status behind
-`systems/ticketing.md`, or check the schema behind `systems/api-spec.md`.
+`.mcp.json`) for the systems a PAIK `paik/` folder's `links[]` entries point at. They let an AI
+agent actually reach the live system a given link only references — e.g. resolve the current
+ticket status behind a `jira-project` link, or check the schema behind an `api` link.
 
 > **The MCP ecosystem moves fast.** Package names, versions, and auth flows below were accurate
 > at time of writing but are not guaranteed to be current — verify the server's own repo/docs
@@ -17,19 +17,19 @@ the live system a given document only references — e.g. resolve the current ti
 
 ## What's here
 
-- `servers/` — one config per system, each mapped to the PAIK doc type it serves:
-  - `atlassian.mcp.json` → `systems/ticketing.md` (Jira) and `systems/knowledge-base.md`
-    (Confluence), via Atlassian's official remote MCP server.
-  - `github.mcp.json` / `gitlab.mcp.json` → `systems/source-repo.md`.
+- `servers/` — one config per system, each mapped to the `links[]` `kind` it serves:
+  - `atlassian.mcp.json` → `kind: jira-*` (Jira) and `kind: confluence`, via Atlassian's official
+    remote MCP server.
+  - `github.mcp.json` / `gitlab.mcp.json` → `kind: repository`.
   - `postgres.mcp.json` → the `databases` field in `environments/*.md`.
-  - `fetch.mcp.json` → `systems/api-spec.md` when the spec is SwaggerHub (or anything else
-    reachable over plain HTTP) — there is no single ubiquitous official SwaggerHub MCP server at
-    time of writing, so a generic HTTP fetch server is the honest fallback. Swap in a
-    SwaggerHub-specific server if/when one becomes standard.
+  - `fetch.mcp.json` → `kind: api` when the spec is SwaggerHub (or anything else reachable over
+    plain HTTP) — there is no single ubiquitous official SwaggerHub MCP server at time of
+    writing, so a generic HTTP fetch server is the honest fallback. Swap in a SwaggerHub-specific
+    server if/when one becomes standard.
   - `filesystem.mcp.json` → local access to the `paik/` folder itself, for skills that need to
     read/write the documents directly.
 - `examples/` — combined configs wiring exactly the servers each example project needs, with env
-  var names matching the identifiers used in that project's `paik/systems/*.md` files.
+  var names matching the identifiers used in that project's `paik/` `links[]` entries.
 
 ## Using one of these
 
@@ -38,7 +38,7 @@ the live system a given document only references — e.g. resolve the current ti
 2. Set the referenced environment variables to real credentials — never commit them. Nothing in
    this directory contains a real token; every `env` value is a placeholder name.
 3. Cross-check the identifiers you pass (project key, space key, repo URL, DB name) against the
-   corresponding `paik/systems/*.md` or `paik/environments/*.md` document so the two stay in sync.
+   corresponding `links[]` entry or `paik/environments/*.md` document so the two stay in sync.
 
 ## Access model
 

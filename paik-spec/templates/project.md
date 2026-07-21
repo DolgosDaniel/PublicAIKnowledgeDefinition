@@ -1,41 +1,38 @@
 ---
-paik_version: "2.0"
-doc_type: project
+paik: "0.3"
+kind: project
 id: <project-slug>
 name: <Project Name>
-status: planning # planning | active | maintenance | sunset
-last_updated: "<YYYY-MM-DD>"
-owner_ref: team.md
-visibility: internal # public | internal | confidential
+lifecycle: planning # planning | active | maintenance | sunset
+owner:
+  name: <Owning team name>
+  ref: <optional link to the team in your org's own directory/wiki>
 description: >
   One paragraph: what this project is, who it's for, and what problem it solves.
-systems:
-  ticketing: [systems/ticketing.md]
-  knowledge_base: [systems/knowledge-base.md]
-  api_specs: [systems/api-spec.md]
-  source_repos: [systems/source-repo.md]
-team_ref: team.md
-components_ref: component.md
-environments_ref: environments/
-configuration_ref: configuration.md
+links:
+  - kind: jira-project # or linear-project, azure-boards-project, github-issues, ...
+    id: <PROJ>
+    url: <https://.../projects/PROJ>
+  - kind: confluence # or notion, sharepoint, ...
+    purpose: project-home
+    url: <https://.../spaces/PROJ>
+components:
+  - component.md # or components/*.md for multiple
+environments:
+  - environments/dev.md
+  - environments/prod.md
 ---
 
 # <Project Name>
 
 <One paragraph: what this project is, who it's for, and what problem it solves.>
 
-## Planning
-- Ticketing: [<Ticketing system name>](systems/ticketing.md)
-- Knowledge base: [<Knowledge base name>](systems/knowledge-base.md)
+## Where things live
+- Ticketing: [<Ticketing project name>](<https://.../projects/PROJ>)
+- Knowledge base: [<Space name>](<https://.../spaces/PROJ>)
 
 ## Implementation
-- Component: [<Component Name>](component.md)
-- API spec: [<API Name>](systems/api-spec.md)
-- Source repo: [<Repo Name>](systems/source-repo.md)
-
-## Team
-- See [team.md](team.md)
+- Component(s): [<Component Name>](component.md)
 
 ## Operations
-- Environments: see [environments/](environments/)
-- Configuration management: see [configuration.md](configuration.md)
+- Environments: [dev](environments/dev.md), [prod](environments/prod.md)
