@@ -23,6 +23,10 @@ validate each document type, and blank templates you copy into a new project.
        configuration.md
    ```
 
+   Projects that depend on third-party services they don't operate (a payment processor, a
+   mapping API, ...) can optionally add `external-service.md` (or `external-services/*.md`) —
+   see `SPEC.md` section 5. Omit it entirely if there are none.
+
 2. Fill in the frontmatter of each file. Every field is documented in `SPEC.md` and enforced by
    the matching schema in `schema/`.
 3. Delete/duplicate files that don't apply to your project shape — see `../examples/` for a

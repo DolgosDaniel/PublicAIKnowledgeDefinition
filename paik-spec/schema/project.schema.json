@@ -30,6 +30,10 @@
       "type": "string",
       "description": "Relative link to component.md, or to the components/ directory/index for multi-component projects"
     },
+    "external_services_ref": {
+      "type": "string",
+      "description": "Optional: relative link to external-service.md, or to the external-services/ directory/index, for projects that depend on third-party services they don't operate"
+    },
     "environments_ref": {
       "type": "string",
       "description": "Relative link to the environments/ directory or index"

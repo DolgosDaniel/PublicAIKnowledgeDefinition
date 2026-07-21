@@ -7,7 +7,8 @@
   "properties": {
     "paik_version": {
       "type": "string",
-      "const": "2.0"
+      "enum": ["2.0", "2.1"],
+      "description": "2.0 and 2.1 both validate under this schema - 2.1 only adds optional fields (external-service doc type, component.external_dependency_refs, project.external_services_ref), so 2.0 documents remain valid unchanged."
     },
     "doc_type": {
       "type": "string",
@@ -19,6 +20,7 @@
         "source-repo",
         "team",
         "component",
+        "external-service",
         "environment",
         "configuration"
       ]

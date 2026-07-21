@@ -25,6 +25,9 @@ paik/
                               deployable/runnable unit - see section 5)
   team.md                     required, at least one (team.md for a single team, or
                               teams/*.md for multiple teams)
+  external-service.md         optional, or external-services/*.md - third-party dependencies
+                              this project calls but doesn't operate (a payment processor, a
+                              mapping API, ...); omit entirely if there are none
   environments/
     <env-name>.md              one file per environment (dev.md, staging.md, prod.md, ...)
   configuration.md           or configuration/*.md for multi-service configs
@@ -42,8 +45,8 @@ document type, regardless of category:
 
 | Key            | Type   | Meaning                                                                 |
 |----------------|--------|--------------------------------------------------------------------------|
-| `paik_version` | string | Spec version this document conforms to (`"2.0"`)                        |
-| `doc_type`     | string | One of: `project`, `ticketing-system`, `knowledge-base`, `api-spec`, `source-repo`, `component`, `team`, `environment`, `configuration` |
+| `paik_version` | string | Spec version this document conforms to (`"2.0"` or `"2.1"`)              |
+| `doc_type`     | string | One of: `project`, `ticketing-system`, `knowledge-base`, `api-spec`, `source-repo`, `component`, `team`, `external-service`, `environment`, `configuration` |
 | `id`           | string | Stable slug, unique within the project (`kebab-case`)                   |
 | `name`         | string | Human-readable name                                                     |
 | `status`       | string | `planning` \| `active` \| `maintenance` \| `sunset`                     |
@@ -130,6 +133,17 @@ fields: `type` (`service` \| `library` \| `job` \| `other`), `repository_ref`,
 (other components), `ticket_scopes` (ticketing-system epics/components this component's work is
 filed under).
 
+### `external-service` — `templates/external-services/external-service.md` (optional)
+A third-party dependency this project calls but does not operate (a payment processor, a
+mapping/geocoding API, ...) — no repository, environments, or configuration of its own, so it
+does not fit the `component` shape. Key fields: `type` (`payments` \| `communications` \|
+`geo-mapping` \| `infrastructure` \| `analytics` \| `other`), `vendor`, `base_url`, `docs_url`,
+`status_page`, `contract_ref` (link to an internal knowledge-base page about the contract/SLA,
+never the contract itself), `data_shared` (what data flows to this vendor). A `component`
+references one via the optional `external_dependency_refs` field, kept separate from
+`depends_on` (which stays internal-components-only). Most projects have none of these — omit
+`external-service.md`/`external-services/` entirely rather than authoring an empty one.
+
 ### `team` — `templates/team.md`
 The group that owns a component, system, or environment. Deliberately thin: `description`,
 `chat_channel`, `on_call_ref`, and an optional `directory_ref` pointing at the org's actual
@@ -150,12 +164,18 @@ convention, per-environment mapping, `rotation_policy_ref`, `feature_flag_system
 
 ## 6. Versioning
 
-This is `paik_version: "2.0"`. Backward-incompatible changes to required fields bump the major
-version; new optional fields bump the minor version. A document always states the version it was
-authored against so tooling can detect drift.
+Current documents are authored against `paik_version: "2.0"` or `"2.1"`. Backward-incompatible
+changes to required fields bump the major version; new optional fields bump the minor version —
+and, unlike a major bump, a minor bump does not require existing documents to be re-authored,
+since by definition it only adds fields nothing already-valid depends on. A document always
+states the version it was authored against so tooling can detect drift.
 
 ### Changelog
 
+- **2.1** — Added the optional `external-service` document type for third-party dependencies a
+  project calls but does not operate (payment processors, mapping/geocoding APIs, ...), plus the
+  optional `component.external_dependency_refs` and `project.external_services_ref` fields that
+  point at it. Purely additive: every `2.0` document remains valid unchanged.
 - **2.0** — Removed the `participants` document type and `participants.md`/`participants_ref`
   (it duplicated PII that a real org directory already owns). Added `team` (thin, no personal
   data) as the new target of `owner_ref`, and `component` as a first-class entity tying a

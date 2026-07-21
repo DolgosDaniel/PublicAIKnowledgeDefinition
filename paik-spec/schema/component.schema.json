@@ -39,6 +39,11 @@
       "items": { "type": "string" },
       "description": "Relative links to other component documents this one depends on"
     },
+    "external_dependency_refs": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Optional: relative links to external-service documents (third-party dependencies this component calls but the project doesn't operate)"
+    },
     "ticket_scopes": {
       "type": "array",
       "items": {

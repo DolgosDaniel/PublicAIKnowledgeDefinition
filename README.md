@@ -26,6 +26,9 @@ itself make a `paik/` folder safe to publish — see `paik-spec/SPEC.md` section
   one team/repo/API/two environments.
 - [`examples/complex-project/`](examples/complex-project/) — Nimbus Commerce: the multi-service
   instance, 3 services, 5 teams, 4 environments across 2 regions.
+- [`examples/external-dependencies-project/`](examples/external-dependencies-project/) — Aurora
+  Logistics: 5 services, 6 teams, 3 environments, and 2 `external-service` documents for
+  third-party dependencies (payments, mapping) the project calls but doesn't operate.
 
 ## Tooling
 
