@@ -11,7 +11,7 @@ reach it. The systems stay the source of truth; PAIK stays the map.
 v0.3 is a deliberate reset from the earlier `2.x` line: rather than a document type per external
 system (ticketing, wiki, API spec, repo, external service, config manager, team roster), PAIK now
 has three real entities — `project`, `component`, `environment` — and one generic, typed `links[]`
-list that covers everything else. See section 8 for what changed and why.
+list that covers everything else.
 
 ## 1. Directory convention
 
@@ -207,34 +207,6 @@ environment is deployed to by more than one component, per section 3.
 Current documents are authored against `paik: "0.3"`. Backward-incompatible changes to required
 fields bump the minor digit until the model stabilizes enough to commit to `1.0`; a document
 always states the version it was authored against so tooling can detect drift.
-
-### Changelog
-
-- **0.3** — Reset from the `2.x` line. Collapsed nine document kinds (`project`,
-  `ticketing-system`, `knowledge-base`, `api-spec`, `source-repo`, `component`, `team`,
-  `external-service`, `environment`, `configuration`) down to three (`project`, `component`,
-  `environment`). Replaced `systems`, `provides_api_refs`, `consumes_api_refs`,
-  `repository_ref`, `configuration_ref`, `external_dependency_refs`, and `ticket_scopes` with a
-  single generic `links[]` array (only `kind` is enforced per entry — everything else is open,
-  trading the closed-schema strictness those dedicated fields had for one shape that doesn't need
-  a new document type per external system). Replaced the separate `team` document type and
-  `owner_ref` file-pointer with an inline `owner: { name, ref? }` object on `project`/`component`.
-  Renamed `doc_type` → `kind` and `status` → `lifecycle`. Dropped the required `visibility` field
-  and the optional `last_updated`/`last_verified`/`data_classification` fields from the common
-  core — publish-safety is a repo-level decision now, not a per-document one (see the root
-  `README.md`). Added `extensions` for org-specific fields, replacing the old per-type
-  `custom_fields`/`type: other` escape hatch. This is a deliberate fresh minimal core, not a
-  continuation of the `1.0` → `2.1` line — hence the version reset rather than a `3.0` bump.
-- **2.1** — Added the optional `external-service` document type for third-party dependencies a
-  project calls but does not operate (payment processors, mapping/geocoding APIs, ...), plus the
-  optional `component.external_dependency_refs` and `project.external_services_ref` fields that
-  point at it.
-- **2.0** — Removed the `participants` document type and `participants.md`/`participants_ref`
-  (it duplicated PII that a real org directory already owns). Added `team` (thin, no personal
-  data) as the new target of `owner_ref`, and `component` as a first-class entity tying a
-  service's repo/API/environments/configuration/team/dependencies together. Added required
-  `visibility` and optional `data_classification` and `last_verified` common fields.
-- **1.0** — Initial standard.
 
 ## 9. Deferred / future work
 

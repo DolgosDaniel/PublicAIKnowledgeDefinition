@@ -17,7 +17,9 @@ links:
     purpose: project-home
     url: <https://.../spaces/PROJ>
 components:
-  - component.md # or components/*.md for multiple
+  - components/component.md # rename to just component.md (and drop the components/ prefix
+    # here) if this is truly a single-component project - see examples/simple-project vs.
+    # examples/complex-project, and the root README's step 3
 environments:
   - environments/dev.md
   - environments/prod.md
@@ -32,7 +34,7 @@ environments:
 - Knowledge base: [<Space name>](<https://.../spaces/PROJ>)
 
 ## Implementation
-- Component(s): [<Component Name>](component.md)
+- Component(s): [<Component Name>](components/component.md)
 
 ## Operations
 - Environments: [dev](environments/dev.md), [prod](environments/prod.md)

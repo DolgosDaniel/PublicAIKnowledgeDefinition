@@ -5,14 +5,23 @@ Usage:
     python tools/paik_validate.py <paik-dir> [<paik-dir> ...]
 
 Checks performed, per paik/ folder:
-  - Every document's YAML frontmatter parses and validates against its kind's JSON Schema.
+  - Every document's YAML frontmatter parses and validates against its kind's JSON Schema,
+    including `format: uri` fields (a real FormatChecker is wired in, not jsonschema's silent
+    default of skipping format assertions).
   - A document under components/ or environments/ has the matching kind (kind vs. placement).
-  - Every id (component, environment) is unique within the project.
-  - Every relative reference (project/component `components`/`environments` arrays, and any
-    non-absolute `links[].url`) resolves to a file that actually exists.
+  - Every id is unique across the *whole* project, not just within one kind - a component and
+    an environment cannot share an id either.
+  - Every relative reference resolves to a file that exists, AND that file's own `kind` matches
+    what the referencing field expects: a `components` entry must point at a `kind: component`
+    document, an `environments` entry at a `kind: environment` document.
+  - The project document lists every component and every environment document that actually
+    exists under the folder - nothing is silently unreachable from project.md.
+  - Every `links[].component` / `links[].environment` qualifier, and every
+    `databases[].component` qualifier, names a component/environment id that actually exists.
   - Every `depends_on` entry is a known component id, and the dependency graph has no cycles.
-  - Every links[] entry carries at least one of url/id/purpose/provider beyond `kind` (a
-    kind-only link isn't useful to a reader) - reported as a warning, not an error.
+  - Every links[] entry has a non-empty `kind` (error) and, as a soft convention, a kebab-case
+    `kind` (warning); and carries at least one of url/id/purpose/provider beyond `kind` (warning -
+    a kind-only link isn't useful to a reader).
   - A best-effort regex scan for accidentally-embedded secrets (AWS keys, private key blocks,
     common vendor token prefixes, inline password/api_key-looking assignments) across the whole
     file, not just frontmatter - PAIK documents must only ever point at where a secret lives.
@@ -35,6 +44,7 @@ SCHEMA_DIR = os.path.join(SCRIPT_DIR, "..", "paik-spec", "schema")
 
 FRONTMATTER_RE = re.compile(r"^---\n(.*?)\n---\n", re.DOTALL)
 ABSOLUTE_URL_RE = re.compile(r"^[a-zA-Z][a-zA-Z0-9+.-]*://")
+KEBAB_CASE_RE = re.compile(r"^[a-z0-9]+(-[a-z0-9]+)*$")
 
 SECRET_PATTERNS = [
     (re.compile(r"AKIA[0-9A-Z]{16}"), "an AWS access key ID"),
@@ -60,7 +70,9 @@ def load_validators():
     )
     return {
         kind: Draft202012Validator(
-            schemas[f"https://paik.dev/schema/{kind}.schema.json"], registry=registry
+            schemas[f"https://paik.dev/schema/{kind}.schema.json"],
+            registry=registry,
+            format_checker=Draft202012Validator.FORMAT_CHECKER,
         )
         for kind in ("project", "component", "environment")
     }
@@ -122,10 +134,13 @@ def validate_dir(paik_dir, validators, report):
         report.error(paik_dir, "no .md files found")
         return
 
-    docs = {}
+    docs = {}  # rel path -> frontmatter dict
     project_docs = []
-    ids_by_kind = {"component": {}, "environment": {}}
+    ids_all = {}  # id -> [(kind, rel), ...] across every kind
+    component_docs = {}  # component id -> rel path
+    environment_docs = {}  # environment id -> rel path
 
+    # Pass 1: parse, schema-validate, collect ids, scan for secrets/link hygiene.
     for path in md_files:
         rel = os.path.relpath(path, paik_dir)
         with open(path, encoding="utf-8") as fh:
@@ -157,41 +172,106 @@ def validate_dir(paik_dir, validators, report):
             report.error(rel, f"schema violation at {list(e.path)}: {e.message}")
 
         docs[rel] = fm
+
+        cid = fm.get("id")
         if kind == "project":
             project_docs.append(rel)
-        elif fm.get("id"):
-            ids_by_kind[kind].setdefault(fm["id"], []).append(rel)
+        if cid:
+            ids_all.setdefault(cid, []).append((kind, rel))
+            if kind == "component":
+                component_docs[cid] = rel
+            elif kind == "environment":
+                environment_docs[cid] = rel
 
         for pattern, label in SECRET_PATTERNS:
             if pattern.search(content):
                 report.error(rel, f"looks like it contains {label} - never embed secret values, only where they live")
 
         for i, link in enumerate(fm.get("links") or []):
-            if isinstance(link, dict) and not (link.keys() - {"kind"}):
-                report.warn(rel, f"links[{i}] (kind: {link.get('kind')!r}) has only 'kind' - add url/id/purpose/provider or drop it")
+            if not isinstance(link, dict):
+                continue
+            k = link.get("kind")
+            if not isinstance(k, str) or not k.strip():
+                report.error(rel, f"links[{i}] has an empty or missing 'kind'")
+            elif not KEBAB_CASE_RE.match(k):
+                report.warn(rel, f"links[{i}] kind {k!r} isn't kebab-case - consider normalizing it")
+            if not (link.keys() - {"kind"}):
+                report.warn(rel, f"links[{i}] (kind: {k!r}) has only 'kind' - add url/id/purpose/provider or drop it")
 
     if len(project_docs) != 1:
         report.error(paik_dir, f"expected exactly one project document, found {len(project_docs)}: {project_docs}")
 
-    for kind, ids in ids_by_kind.items():
-        for cid, paths in ids.items():
-            if len(paths) > 1:
-                report.error(", ".join(paths), f"duplicate {kind} id {cid!r}")
+    # Ids must be unique across the whole project, not just within one kind.
+    for cid, entries in ids_all.items():
+        if len(entries) > 1:
+            where = ", ".join(f"{k}:{r}" for k, r in entries)
+            report.error(where, f"duplicate id {cid!r} used by {len(entries)} documents")
+
+    # Pass 2: reference resolution, including that the target's kind matches expectations.
+    def resolve(base, r):
+        target = os.path.normpath(os.path.join(base, r))
+        if not os.path.isfile(target):
+            return None, None
+        target_rel = os.path.relpath(target, paik_dir)
+        return target_rel, docs.get(target_rel)
 
     for rel, fm in docs.items():
         base = os.path.dirname(os.path.join(paik_dir, rel))
-        refs = list(fm.get("components") or []) + list(fm.get("environments") or [])
-        for link in fm.get("links") or []:
-            if isinstance(link, dict):
-                u = link.get("url")
-                if u and not ABSOLUTE_URL_RE.match(u):
-                    refs.append(u)
-        for r in refs:
-            target = os.path.normpath(os.path.join(base, r))
-            if not os.path.isfile(target):
-                report.error(rel, f"reference {r!r} does not resolve to a file")
 
-    component_ids = set(ids_by_kind["component"].keys())
+        for field, expected_kind in (("components", "component"), ("environments", "environment")):
+            for r in fm.get(field) or []:
+                target_rel, target_fm = resolve(base, r)
+                if target_rel is None:
+                    report.error(rel, f"{field} entry {r!r} does not resolve to a file")
+                elif target_fm is not None and target_fm.get("kind") != expected_kind:
+                    report.error(
+                        rel,
+                        f"{field} entry {r!r} points at a {target_fm.get('kind')!r} document, expected {expected_kind!r}",
+                    )
+
+        for i, link in enumerate(fm.get("links") or []):
+            if not isinstance(link, dict):
+                continue
+            u = link.get("url")
+            if u and not ABSOLUTE_URL_RE.match(u):
+                target_rel, _ = resolve(base, u)
+                if target_rel is None:
+                    report.error(rel, f"links[{i}] url {u!r} does not resolve to a file")
+            comp = link.get("component")
+            if comp is not None and comp not in component_docs:
+                report.error(rel, f"links[{i}] component {comp!r} is not a known component id")
+            envq = link.get("environment")
+            if envq is not None and envq not in environment_docs:
+                report.error(rel, f"links[{i}] environment {envq!r} is not a known environment id")
+
+        if fm.get("kind") == "environment":
+            for i, dbentry in enumerate(fm.get("databases") or []):
+                if not isinstance(dbentry, dict):
+                    continue
+                comp = dbentry.get("component")
+                if comp is not None and comp not in component_docs:
+                    report.error(rel, f"databases[{i}] component {comp!r} is not a known component id")
+
+    # The project document must list every component/environment that actually exists.
+    if len(project_docs) == 1:
+        project_rel = project_docs[0]
+        proj_fm = docs[project_rel]
+        proj_base = os.path.dirname(os.path.join(paik_dir, project_rel))
+        listed_components = {
+            os.path.normpath(os.path.join(proj_base, r)) for r in proj_fm.get("components") or []
+        }
+        listed_environments = {
+            os.path.normpath(os.path.join(proj_base, r)) for r in proj_fm.get("environments") or []
+        }
+        for cid, rel in component_docs.items():
+            if os.path.normpath(os.path.join(paik_dir, rel)) not in listed_components:
+                report.error(project_rel, f"component {cid!r} ({rel}) exists but isn't listed in this project's 'components'")
+        for eid, rel in environment_docs.items():
+            if os.path.normpath(os.path.join(paik_dir, rel)) not in listed_environments:
+                report.error(project_rel, f"environment {eid!r} ({rel}) exists but isn't listed in this project's 'environments'")
+
+    # depends_on: unknown targets + cycles.
+    component_ids = set(component_docs.keys())
     graph = {}
     for rel, fm in docs.items():
         if fm.get("kind") != "component":

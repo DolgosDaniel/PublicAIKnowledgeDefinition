@@ -30,12 +30,18 @@ systems stay the source of truth; PAIK stays the map.
    cp -r PublicAIKnowledgeDefinition/paik-spec/templates <your-project>/paik
    ```
    (`xcopy /E /I PublicAIKnowledgeDefinition\paik-spec\templates <your-project>\paik` on
-   Windows). This becomes the `paik/` folder tooling looks for by default.
+   Windows). This becomes the `paik/` folder tooling looks for by default. The copy lands as
+   `paik/components/component.md` and `paik/environments/environment.md` (the multi-service
+   shape) — see step 3 for the one-service flatten.
 
-3. **Pick a shape and fill in the placeholders.** A one-service project keeps `component.md` as
-   is; a multi-service project converts it to `components/*.md` — compare
-   [`examples/simple-project/`](examples/simple-project/) against
-   [`examples/complex-project/`](examples/complex-project/) to see both shapes side by side.
+3. **Pick a shape and fill in the placeholders.** The templates default to the multi-service
+   shape (`components/*.md`); for a true one-service project, move `components/component.md` up
+   to `paik/component.md` and change `project.md`'s `components:` entry from
+   `components/component.md` to `component.md` to match — compare
+   [`examples/simple-project/`](examples/simple-project/) (flattened) against
+   [`examples/complex-project/`](examples/complex-project/) (`components/*.md`) to see both
+   shapes side by side. Duplicate `environments/environment.md` once per real environment
+   (`dev.md`, `staging.md`, `prod.md`, ...) either way — `environments/` is always a directory.
    Replace every `<placeholder>` with a real value: every field is documented in
    [`paik-spec/SPEC.md`](paik-spec/SPEC.md) and enforced by the matching schema in
    [`paik-spec/schema/`](paik-spec/schema/) — except a `links[]` item, which only requires a

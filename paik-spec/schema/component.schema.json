@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://paik.dev/schema/component.schema.json",
   "title": "PAIK Component",
-  "description": "A deployable/runnable unit of the project (a service, library, or job). Its repository, API, external services, secrets location, and ticket scopes are `links[]` entries rather than dedicated fields - see SPEC.md section 5.",
+  "description": "A deployable/runnable unit of the project (a service, library, or job). Its repository, API, external services, secrets location, and ticket scopes are `links[]` entries rather than dedicated fields - see SPEC.md section 7.",
   "allOf": [{ "$ref": "./common.schema.json" }],
   "type": "object",
   "properties": {
