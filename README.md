@@ -1,1 +1,1 @@
-# PublicAIKnowledgeDefinition
+# PAIK (Public AI Knowledge Definition)
