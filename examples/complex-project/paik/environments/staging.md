@@ -12,16 +12,24 @@ app_url: https://staging.nimbus.example
 health_endpoint: https://staging.nimbus.example/health
 databases:
   - type: postgres
-    host_ref: "Vault path secret/nimbus/staging/orders-api/db-url (orders database)"
+    component: orders-api
+    host_ref: "Vault path secret/nimbus/staging/orders-api/db-url"
   - type: postgres
-    host_ref: "Vault path secret/nimbus/staging/catalog-api/db-url (catalog database)"
+    component: catalog-api
+    host_ref: "Vault path secret/nimbus/staging/catalog-api/db-url"
 access: VPN required
 links:
   - kind: status-page
     url: https://status.nimbus.example
   - kind: deploy-pipeline
-    purpose: one per service, orders-api shown as representative
+    component: frontend
+    url: https://github.com/nimbus-commerce/frontend/actions/workflows/deploy-staging.yml
+  - kind: deploy-pipeline
+    component: orders-api
     url: https://github.com/nimbus-commerce/orders-api/actions/workflows/deploy-staging.yml
+  - kind: deploy-pipeline
+    component: catalog-api
+    url: https://github.com/nimbus-commerce/catalog-api/actions/workflows/deploy-staging.yml
   - kind: secrets
     provider: vault
     purpose: shared cross-service config, nimbus/staging/shared/<key>
@@ -43,6 +51,7 @@ links:
 - Health endpoint: https://staging.nimbus.example/health
 - Databases: Orders and Catalog, each Postgres — see `databases` above (Vault paths, never
   connection strings)
-- Status page / deploy pipeline / shared secrets / feature flags: see `links` above
+- Status page / per-component deploy pipelines / shared secrets / feature flags: see `links`
+  above (each `deploy-pipeline` link is tagged with the `component` it deploys)
 - Access: VPN required
 - Owner: SRE & QA

@@ -12,16 +12,30 @@ app_url: https://staging.aurora-logistics.example
 health_endpoint: https://staging.aurora-logistics.example/health
 databases:
   - type: postgres
-    host_ref: "Vault path secret/aurora/staging/orders-service/db-url (orders database)"
+    component: orders-service
+    host_ref: "Vault path secret/aurora/staging/orders-service/db-url"
   - type: postgres
-    host_ref: "Vault path secret/aurora/staging/fleet-service/db-url (fleet database)"
+    component: fleet-service
+    host_ref: "Vault path secret/aurora/staging/fleet-service/db-url"
 access: VPN required
 links:
   - kind: status-page
     url: https://status.aurora-logistics.example
   - kind: deploy-pipeline
-    purpose: one per service, orders-service shown as representative
+    component: ops-console
+    url: https://github.com/aurora-logistics/ops-console/actions/workflows/deploy-staging.yml
+  - kind: deploy-pipeline
+    component: orders-service
     url: https://github.com/aurora-logistics/orders-service/actions/workflows/deploy-staging.yml
+  - kind: deploy-pipeline
+    component: routing-service
+    url: https://github.com/aurora-logistics/routing-service/actions/workflows/deploy-staging.yml
+  - kind: deploy-pipeline
+    component: fleet-service
+    url: https://github.com/aurora-logistics/fleet-service/actions/workflows/deploy-staging.yml
+  - kind: deploy-pipeline
+    component: notifications-service
+    url: https://github.com/aurora-logistics/notifications-service/actions/workflows/deploy-staging.yml
   - kind: secrets
     provider: vault
     purpose: shared cross-service config, aurora/staging/shared/<key>
@@ -43,6 +57,7 @@ links:
 - Health endpoint: https://staging.aurora-logistics.example/health
 - Databases (only the stateful services have one): Orders and Fleet, each Postgres — see
   `databases` above (Vault paths, never connection strings)
-- Status page / deploy pipeline / shared secrets / feature flags: see `links` above
+- Status page / per-component deploy pipelines / shared secrets / feature flags: see `links`
+  above (each `deploy-pipeline` link is tagged with the `component` it deploys)
 - Access: VPN required
 - Owner: Platform team

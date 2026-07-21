@@ -11,11 +11,15 @@
         "ghcr.io/github/github-mcp-server"
       ],
       "env": {
-        "GITHUB_PERSONAL_ACCESS_TOKEN": "${GITHUB_PAT}"
+        "GITHUB_PERSONAL_ACCESS_TOKEN": "${GITHUB_PAT}",
+        "GITHUB_READ_ONLY": "1",
+        "GITHUB_TOOLSETS": "repos,issues,pull_requests"
       },
       "_paik": {
         "serves": ["links[] entries with kind: repository, provider: github"],
-        "notes": "Official GitHub MCP server, distributed as a container image. GITHUB_PAT should be a fine-grained PAT scoped to the repo(s) listed in your components' repository links."
+        "notes": "Official GitHub MCP server, distributed as a container image. GITHUB_PAT should be a fine-grained PAT scoped to the repo(s) listed in your components' repository links. Defaults to read-only (GITHUB_READ_ONLY=1) with a minimal toolset (GITHUB_TOOLSETS) - widen only the specific toolsets/write access an actual workflow needs, per the server's own docs: https://github.com/github/github-mcp-server",
+        "access_mode": "read-only",
+        "human_approval_required": ["repos.write", "issues.write", "pull_requests.write"]
       }
     }
   }

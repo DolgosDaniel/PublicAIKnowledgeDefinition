@@ -11,7 +11,7 @@
       "properties": {
         "name": {
           "type": "string",
-          "description": "Team or individual name, e.g. \"Orders team\""
+          "description": "Team name, e.g. \"Orders team\" - never an individual's name; PAIK does not identify individual people anywhere in a document"
         },
         "ref": {
           "type": "string",
@@ -41,7 +41,23 @@
         },
         "provider": {
           "type": "string",
-          "description": "The vendor/product behind this link, e.g. jira, confluence, github, gitlab, swaggerhub, pagerduty, vault"
+          "description": "The vendor/product behind this link, e.g. jira, confluence, github, gitlab, swaggerhub, pagerduty, vault - never a protocol or file format (those are protocol/format)"
+        },
+        "protocol": {
+          "type": "string",
+          "description": "The wire protocol for an api link, e.g. grpc, graphql, rest, soap"
+        },
+        "format": {
+          "type": "string",
+          "description": "The spec/document format for an api link, e.g. openapi, asyncapi"
+        },
+        "component": {
+          "type": "string",
+          "description": "When this document is shared across more than one component (typically an environment.md deployed by several services), the id of the single component this link actually applies to. Omit when the link applies to the whole document."
+        },
+        "environment": {
+          "type": "string",
+          "description": "When this document is shared across more than one environment (typically a component.md deployed to several environments), the id of the single environment this link actually applies to. Omit when the link applies to every environment the document lists."
         }
       },
       "required": ["kind"]

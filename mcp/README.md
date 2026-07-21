@@ -20,7 +20,9 @@ ticket status behind a `jira-project` link, or check the schema behind an `api` 
 - `servers/` — one config per system, each mapped to the `links[]` `kind` it serves:
   - `atlassian.mcp.json` → `kind: jira-*` (Jira) and `kind: confluence`, via Atlassian's official
     remote MCP server.
-  - `github.mcp.json` / `gitlab.mcp.json` → `kind: repository`.
+  - `github.mcp.json` / `gitlab.mcp.json` → `kind: repository`. `github.mcp.json` defaults to
+    read-only (`GITHUB_READ_ONLY=1`) with a minimal `GITHUB_TOOLSETS` — widen either only for a
+    workflow that actually needs write access (e.g. a skill that opens a PR).
   - `postgres.mcp.json` → the `databases` field in `environments/*.md`.
   - `fetch.mcp.json` → `kind: api` when the spec is SwaggerHub (or anything else reachable over
     plain HTTP) — there is no single ubiquitous official SwaggerHub MCP server at time of

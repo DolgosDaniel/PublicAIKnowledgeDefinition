@@ -15,7 +15,9 @@
         "ghcr.io/github/github-mcp-server"
       ],
       "env": {
-        "GITHUB_PERSONAL_ACCESS_TOKEN": "${NIMBUS_GITHUB_PAT}"
+        "GITHUB_PERSONAL_ACCESS_TOKEN": "${NIMBUS_GITHUB_PAT}",
+        "GITHUB_READ_ONLY": "1",
+        "GITHUB_TOOLSETS": "repos,issues,pull_requests"
       }
     },
     "postgres-orders-dev": {
@@ -24,11 +26,21 @@
     },
     "postgres-orders-prod-eu": {
       "command": "npx",
-      "args": ["-y", "@modelcontextprotocol/server-postgres", "${NIMBUS_ORDERS_PROD_EU_DATABASE_URL}"]
+      "args": ["-y", "@modelcontextprotocol/server-postgres", "${NIMBUS_ORDERS_PROD_EU_DATABASE_URL}"],
+      "_paik": {
+        "access_mode": "read-only",
+        "human_approval_required": ["database.write"],
+        "notes": "This is an example of the shape, not a production-ready pattern - see mcp/README.md's Access model section before pointing this at a real prod database (read-only DB role, masked/audited views, credential separate from non-prod, query logging)."
+      }
     },
     "postgres-orders-prod-us": {
       "command": "npx",
-      "args": ["-y", "@modelcontextprotocol/server-postgres", "${NIMBUS_ORDERS_PROD_US_DATABASE_URL}"]
+      "args": ["-y", "@modelcontextprotocol/server-postgres", "${NIMBUS_ORDERS_PROD_US_DATABASE_URL}"],
+      "_paik": {
+        "access_mode": "read-only",
+        "human_approval_required": ["database.write"],
+        "notes": "This is an example of the shape, not a production-ready pattern - see mcp/README.md's Access model section before pointing this at a real prod database (read-only DB role, masked/audited views, credential separate from non-prod, query logging)."
+      }
     },
     "postgres-catalog-dev": {
       "command": "npx",
@@ -36,11 +48,21 @@
     },
     "postgres-catalog-prod-eu": {
       "command": "npx",
-      "args": ["-y", "@modelcontextprotocol/server-postgres", "${NIMBUS_CATALOG_PROD_EU_DATABASE_URL}"]
+      "args": ["-y", "@modelcontextprotocol/server-postgres", "${NIMBUS_CATALOG_PROD_EU_DATABASE_URL}"],
+      "_paik": {
+        "access_mode": "read-only",
+        "human_approval_required": ["database.write"],
+        "notes": "This is an example of the shape, not a production-ready pattern - see mcp/README.md's Access model section before pointing this at a real prod database (read-only DB role, masked/audited views, credential separate from non-prod, query logging)."
+      }
     },
     "postgres-catalog-prod-us": {
       "command": "npx",
-      "args": ["-y", "@modelcontextprotocol/server-postgres", "${NIMBUS_CATALOG_PROD_US_DATABASE_URL}"]
+      "args": ["-y", "@modelcontextprotocol/server-postgres", "${NIMBUS_CATALOG_PROD_US_DATABASE_URL}"],
+      "_paik": {
+        "access_mode": "read-only",
+        "human_approval_required": ["database.write"],
+        "notes": "This is an example of the shape, not a production-ready pattern - see mcp/README.md's Access model section before pointing this at a real prod database (read-only DB role, masked/audited views, credential separate from non-prod, query logging)."
+      }
     },
     "fetch": {
       "command": "uvx",

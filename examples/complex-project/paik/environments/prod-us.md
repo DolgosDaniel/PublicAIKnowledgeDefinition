@@ -12,16 +12,27 @@ app_url: https://us.nimbus.example
 health_endpoint: https://us.nimbus.example/health
 databases:
   - type: postgres
-    host_ref: "Vault path secret/nimbus/prod-us/orders-api/db-url (orders database)"
+    component: orders-api
+    host_ref: "Vault path secret/nimbus/prod-us/orders-api/db-url"
   - type: postgres
-    host_ref: "Vault path secret/nimbus/prod-us/catalog-api/db-url (catalog database)"
+    component: catalog-api
+    host_ref: "Vault path secret/nimbus/prod-us/catalog-api/db-url"
 access: SRE + release manager approval required
 links:
   - kind: status-page
     url: https://status.nimbus.example
   - kind: deploy-pipeline
-    purpose: one per service, orders-api shown as representative; requires a signed-off release ticket (see the project's jira-project link)
+    component: frontend
+    purpose: requires a signed-off release ticket (see the project's jira-project link)
+    url: https://github.com/nimbus-commerce/frontend/actions/workflows/deploy-prod-us.yml
+  - kind: deploy-pipeline
+    component: orders-api
+    purpose: requires a signed-off release ticket (see the project's jira-project link)
     url: https://github.com/nimbus-commerce/orders-api/actions/workflows/deploy-prod-us.yml
+  - kind: deploy-pipeline
+    component: catalog-api
+    purpose: requires a signed-off release ticket (see the project's jira-project link)
+    url: https://github.com/nimbus-commerce/catalog-api/actions/workflows/deploy-prod-us.yml
   - kind: secrets
     provider: vault
     purpose: shared cross-service config, nimbus/prod-us/shared/<key>
@@ -43,6 +54,7 @@ links:
 - Health endpoint: https://us.nimbus.example/health
 - Databases: Orders and Catalog, each Postgres — see `databases` above (Vault paths, never
   connection strings)
-- Deploy pipeline: requires a signed-off release ticket — see `links` above
+- Deploy pipelines: one per component, each requiring a signed-off release ticket — see `links`
+  above (tagged with the `component` each deploys)
 - Access: SRE + release manager approval required
 - Owner: SRE & QA

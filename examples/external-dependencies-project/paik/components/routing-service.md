@@ -16,7 +16,8 @@ links:
     purpose: trunk-based, short-lived feature branches, PR review required
   - kind: api
     purpose: provides
-    provider: grpc
+    provider: swaggerhub
+    protocol: grpc
     id: aurora-logistics/routing-service
     url: https://api.swaggerhub.com/apis/aurora-logistics/routing-service/2.0.0
     served_by_env:

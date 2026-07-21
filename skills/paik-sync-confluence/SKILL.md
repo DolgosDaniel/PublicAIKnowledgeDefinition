@@ -15,12 +15,14 @@ Verify (not mirror) the knowledge-base pointers in a PAIK project.
 
 ## Steps
 
-1. Find every `kind: confluence` link across `paik/project.md` and `paik/component*.md`. Read its
-   `url` and `purpose` (disambiguates when more than one exists, e.g. `project-home` vs
-   `architecture`).
-2. Via the MCP server, confirm each URL resolves and the page isn't archived/deleted. If a link's
-   `provider` isn't Confluence, skip the MCP call and just note that a manual check is needed
-   (this skill is Confluence-specific; other wikis need their own MCP integration).
+1. Find every `kind: confluence` link across `paik/project.md` and `paik/component*.md` — the
+   `kind` itself is the filter, since each wiki product gets its own `kind` value (`confluence`,
+   `notion`, `sharepoint`, ...) rather than a shared `kind: knowledge-base` plus a `provider`
+   field. Read each link's `url` and `purpose` (disambiguates when more than one exists, e.g.
+   `project-home` vs `architecture`).
+2. Via the MCP server, confirm each URL resolves and the page isn't archived/deleted. This skill
+   only handles `kind: confluence` links; a project's `notion`/`sharepoint`/other wiki links need
+   their own MCP integration and are out of scope here.
 3. Do not fetch or store the page's actual content — PAIK links point to knowledge, they don't
    duplicate it (see `paik-spec/SPEC.md` section 3).
 4. If a space or page has moved, propose the corrected `url` to the user rather than editing

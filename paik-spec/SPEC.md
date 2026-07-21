@@ -11,7 +11,7 @@ reach it. The systems stay the source of truth; PAIK stays the map.
 v0.3 is a deliberate reset from the earlier `2.x` line: rather than a document type per external
 system (ticketing, wiki, API spec, repo, external service, config manager, team roster), PAIK now
 has three real entities — `project`, `component`, `environment` — and one generic, typed `links[]`
-list that covers everything else. See section 6 for what changed and why.
+list that covers everything else. See section 8 for what changed and why.
 
 ## 1. Directory convention
 
@@ -94,8 +94,34 @@ against extra properties, because the entire point of this convention is not nee
 every time a new kind of external system shows up. `paik-spec/schema/common.schema.json` enforces
 only `kind: string, required`.
 
+`provider` is the *vendor/product* behind a link (`swaggerhub`, `github`, `pagerduty`, ...) — it
+is never a protocol or file format. An `api` link's protocol and spec format are their own fields,
+`protocol` (`grpc`, `graphql`, `rest`, `soap`, ...) and `format` (`openapi`, `asyncapi`, ...), so
+that "who hosts this" and "what shape is this" stay independently answerable — e.g. a gRPC
+contract hosted on SwaggerHub is `provider: swaggerhub, protocol: grpc`, not `provider: grpc`.
+
 `purpose` disambiguates when the same `kind` appears more than once on a document (e.g. two
-`confluence` links, one for the project home and one for an architecture doc).
+`confluence` links, one for the project home and one for an architecture doc; or `purpose:
+provides` vs `purpose: consumes` on a component's `api` links).
+
+`component` and `environment` disambiguate when a document is shared across more than one of
+either — most commonly an `environment.md` deployed by several services, or (less commonly) a
+`component.md` deployed to several environments with per-environment operational links. Put the
+other one's `id` on the link so tooling can filter to exactly the component/environment it
+concerns, instead of a link applying ambiguously to the whole shared document:
+
+```yaml
+links:
+  - kind: deploy-pipeline
+    component: orders-api
+    url: https://github.com/nimbus-commerce/orders-api/actions/workflows/deploy-prod-eu.yml
+  - kind: deploy-pipeline
+    component: catalog-api
+    url: https://github.com/nimbus-commerce/catalog-api/actions/workflows/deploy-prod-eu.yml
+```
+
+Omit `component`/`environment` on links that genuinely apply to the whole document (a project's
+shared Jira project, an environment's overall status page).
 
 Common `kind` values in practice (illustrative, not exhaustive — invent new ones freely):
 
@@ -169,10 +195,12 @@ components this one depends on).
 
 ### `environment` — `templates/environments/environment.md`
 One running instance of the system. Key fields: `purpose`, `app_url`, `health_endpoint`,
-`databases` (array of `{ type, host_ref }` — `host_ref` is a free-text pointer to where
-connection details actually live, never a credential), `access` (who/how, e.g. "VPN required").
-Status pages and deploy pipelines are `links[]` entries (`kind: status-page`,
-`kind: deploy-pipeline`) rather than dedicated fields.
+`databases` (array of `{ type, host_ref, component? }` — `host_ref` is a free-text pointer to
+where connection details actually live, never a credential; `component` names which service
+owns that database when the environment is shared by several), `access` (who/how, e.g. "VPN
+required"). Status pages and deploy pipelines are `links[]` entries (`kind: status-page`,
+`kind: deploy-pipeline`) rather than dedicated fields — tag each with `component: <id>` when an
+environment is deployed to by more than one component, per section 3.
 
 ## 8. Versioning
 
@@ -212,8 +240,6 @@ always states the version it was authored against so tooling can detect drift.
 
 Not part of this spec yet — tracked here so the gap is explicit rather than implied:
 
-- A `paik validate` CLI (JSON Schema validation, file-reference resolution, ID uniqueness,
-  owner/component graph checks) and CI wiring for it.
 - A convention (or lightweight lint) for the `kind` vocabulary in `links[]` so tooling built
   against one PAIK project's link kinds transfers cleanly to another's, without re-introducing a
   closed enum.

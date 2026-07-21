@@ -1,8 +1,10 @@
 # PAIK sample skills
 
-Real `SKILL.md` files (the format Claude Code/Claude Agent SDK skills use: YAML frontmatter with
-`name` + `description`, Markdown body with instructions) that operate on a `paik/` folder. Drop
-any of these directories into `.claude/skills/` in a project that has adopted PAIK.
+Real `SKILL.md` files (the portable Agent Skills format — YAML frontmatter with `name` +
+`description`, Markdown body with instructions — used by Claude Code and other compatible
+agents) that operate on a `paik/` folder. Drop any of these directories wherever your agent
+looks for skills (`.claude/skills/` for Claude Code; check your agent's own docs for its
+convention) in a project that has adopted PAIK.
 
 | Skill | What it does |
 |---|---|

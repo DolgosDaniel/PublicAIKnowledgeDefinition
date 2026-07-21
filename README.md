@@ -42,17 +42,32 @@ systems stay the source of truth; PAIK stays the map.
    `kind`. Never invent a URL or identifier — leave a clearly marked `TODO` if a value is
    genuinely unknown.
 
-4. **Validate.** There's no packaged `paik validate` CLI yet (tracked as future work in
-   `SPEC.md` section 9) — until then, check each file's YAML frontmatter against its schema in
-   `paik-spec/schema/` with any JSON Schema (2020-12) validator for your language of choice
-   (e.g. Python's `jsonschema` + `pyyaml`, or Node's `ajv`). That's exactly how every document
-   in `examples/` is checked during development.
+4. **Validate.**
+   ```
+   pip install -r PublicAIKnowledgeDefinition/tools/requirements.txt
+   python PublicAIKnowledgeDefinition/tools/paik_validate.py <your-project>/paik
+   ```
+   [`tools/paik_validate.py`](tools/paik_validate.py) checks YAML frontmatter against the
+   matching schema, that every relative reference (`components`, `environments`, non-absolute
+   `links[].url`) resolves to a real file, that ids are unique and `depends_on` has no unknown
+   targets or cycles, that a file's `kind` matches whether it lives under `components/`/
+   `environments/`, and does a best-effort scan for accidentally-embedded secrets. It's the same
+   check [`.github/workflows/paik-validate.yml`](.github/workflows/paik-validate.yml) runs in CI
+   against every example in this repo — copy that workflow into your own project to get the same
+   check on every push/PR.
+
+   To validate directly against the schemas with a different tool (Node's `ajv`, etc.) instead,
+   remember every schema in `paik-spec/schema/` needs to be registered with the validator up
+   front — a `$ref` like `./common.schema.json` won't resolve on its own unless your tool has
+   all four schema files loaded (this is what trips up a naive one-schema-at-a-time validation
+   attempt).
 
 5. **(Optional) Wire up live access for an AI agent.** Copy the relevant server block(s) from
    [`mcp/`](mcp/README.md) into your project's `.mcp.json` so an agent can reach the live
    systems your `paik/` folder's `links[]` point at (Jira/Confluence, GitHub/GitLab, databases,
-   API specs), and drop any of the [`skills/`](skills/README.md) into `.claude/skills/` for
-   ready-made workflows (bootstrap, onboarding brief, health-check, sync).
+   API specs), and drop any of the [`skills/`](skills/README.md) — a portable Agent Skills
+   format, not Claude-specific — wherever your agent looks for skills (`.claude/skills/` for
+   Claude Code) for ready-made workflows (bootstrap, onboarding brief, health-check, sync).
 
 6. **Commit `paik/` to your repo.** Every document only points at *where* things live — never a
    secret — see `SPEC.md` section 6. Whether a given `paik/` folder is safe to make public is a
@@ -66,6 +81,7 @@ systems stay the source of truth; PAIK stays the map.
 - [`paik-spec/templates/`](paik-spec/templates/) — blank files to copy into a new project as its
   `paik/` folder.
 - [`paik-spec/schema/`](paik-spec/schema/) — JSON Schema for every document kind's frontmatter.
+- [`tools/paik_validate.py`](tools/paik_validate.py) — the validator described in step 4 above.
 
 ## Examples
 
@@ -83,6 +99,6 @@ systems stay the source of truth; PAIK stays the map.
 - [`mcp/`](mcp/README.md) — sample MCP server configs that give an AI agent live access to the
   systems a `paik/` folder's `links[]` reference (Jira/Confluence, GitHub/GitLab, databases, API
   specs), wired to the example projects above.
-- [`skills/`](skills/README.md) — sample Claude Skills that operate on a `paik/` folder:
+- [`skills/`](skills/README.md) — sample Agent Skills that operate on a `paik/` folder:
   scaffolding, syncing status from the live systems, health-checking environments, and
   generating an onboarding brief.

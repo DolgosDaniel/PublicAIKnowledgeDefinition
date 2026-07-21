@@ -13,7 +13,9 @@ links:
     provider: github # or gitlab, bitbucket, ...
     url: <https://.../repo>
   - kind: api
-    provider: swaggerhub # or a raw openapi/asyncapi/grpc/graphql url
+    purpose: provides # or "consumes" for an API this component calls but doesn't own
+    provider: swaggerhub # the vendor/host, e.g. swaggerhub - never a protocol/format
+    format: openapi # or asyncapi; use protocol: grpc / graphql / soap instead for non-REST APIs
     url: <https://.../api-spec>
   - kind: jira-epic # or jira-component, linear-project, ...
     id: <PROJ-123>

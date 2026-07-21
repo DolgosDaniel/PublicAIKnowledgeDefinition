@@ -16,7 +16,8 @@ links:
     purpose: trunk-based, short-lived feature branches, PR review required
   - kind: api
     purpose: provides
-    provider: asyncapi
+    provider: swaggerhub
+    format: asyncapi
     id: aurora-logistics/notifications-service
     url: https://api.swaggerhub.com/apis/aurora-logistics/notifications-service/1.0.0
     served_by_env:

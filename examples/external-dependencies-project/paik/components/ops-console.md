@@ -20,7 +20,8 @@ links:
     url: https://api.swaggerhub.com/apis/aurora-logistics/orders-service/1.4.0
   - kind: api
     purpose: consumes
-    provider: grpc
+    provider: swaggerhub
+    protocol: grpc
     id: aurora-logistics/routing-service
     url: https://api.swaggerhub.com/apis/aurora-logistics/routing-service/2.0.0
   - kind: api

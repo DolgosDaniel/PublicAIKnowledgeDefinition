@@ -16,7 +16,8 @@ links:
     purpose: trunk-based, short-lived feature branches, PR review required
   - kind: api
     purpose: provides
-    provider: openapi-file
+    provider: swaggerhub
+    format: openapi
     id: aurora-logistics/fleet-service
     url: https://api.swaggerhub.com/apis/aurora-logistics/fleet-service/1.1.0
     served_by_env:
@@ -25,7 +26,8 @@ links:
       prod: 1.1.0
   - kind: api
     purpose: consumes
-    provider: grpc
+    provider: swaggerhub
+    protocol: grpc
     id: aurora-logistics/routing-service
     url: https://api.swaggerhub.com/apis/aurora-logistics/routing-service/2.0.0
   - kind: jira-component

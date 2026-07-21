@@ -14,6 +14,7 @@ links:
     url: https://github.com/taskflow-inc/taskflow-lite
     id: taskflow-inc/taskflow-lite
   - kind: api
+    purpose: provides
     provider: swaggerhub
     id: taskflow-inc/taskflow-lite-api
     url: https://api.swaggerhub.com/apis/taskflow-inc/taskflow-lite-api/1.2.0

@@ -12,16 +12,35 @@ app_url: https://app.aurora-logistics.example
 health_endpoint: https://app.aurora-logistics.example/health
 databases:
   - type: postgres
-    host_ref: "Vault path secret/aurora/prod/orders-service/db-url (orders database)"
+    component: orders-service
+    host_ref: "Vault path secret/aurora/prod/orders-service/db-url"
   - type: postgres
-    host_ref: "Vault path secret/aurora/prod/fleet-service/db-url (fleet database)"
+    component: fleet-service
+    host_ref: "Vault path secret/aurora/prod/fleet-service/db-url"
 access: SRE + release manager approval required
 links:
   - kind: status-page
     url: https://status.aurora-logistics.example
   - kind: deploy-pipeline
-    purpose: one per service, orders-service shown as representative; requires a signed-off release ticket (see the project's jira-project link)
+    component: ops-console
+    purpose: requires a signed-off release ticket (see the project's jira-project link)
+    url: https://github.com/aurora-logistics/ops-console/actions/workflows/deploy-prod.yml
+  - kind: deploy-pipeline
+    component: orders-service
+    purpose: requires a signed-off release ticket (see the project's jira-project link)
     url: https://github.com/aurora-logistics/orders-service/actions/workflows/deploy-prod.yml
+  - kind: deploy-pipeline
+    component: routing-service
+    purpose: requires a signed-off release ticket (see the project's jira-project link)
+    url: https://github.com/aurora-logistics/routing-service/actions/workflows/deploy-prod.yml
+  - kind: deploy-pipeline
+    component: fleet-service
+    purpose: requires a signed-off release ticket (see the project's jira-project link)
+    url: https://github.com/aurora-logistics/fleet-service/actions/workflows/deploy-prod.yml
+  - kind: deploy-pipeline
+    component: notifications-service
+    purpose: requires a signed-off release ticket (see the project's jira-project link)
+    url: https://github.com/aurora-logistics/notifications-service/actions/workflows/deploy-prod.yml
   - kind: secrets
     provider: vault
     purpose: shared cross-service config, aurora/prod/shared/<key>
@@ -43,6 +62,7 @@ links:
 - Health endpoint: https://app.aurora-logistics.example/health
 - Databases (only the stateful services have one): Orders and Fleet, each Postgres — see
   `databases` above (Vault paths, never connection strings)
-- Deploy pipeline: requires a signed-off release ticket — see `links` above
+- Deploy pipelines: one per component, each requiring a signed-off release ticket — see `links`
+  above (tagged with the `component` each deploys)
 - Access: SRE + release manager approval required
 - Owner: Platform team

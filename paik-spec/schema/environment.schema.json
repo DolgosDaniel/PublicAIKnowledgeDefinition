@@ -22,6 +22,10 @@
           "host_ref": {
             "type": "string",
             "description": "Free-text pointer to where connection details live (a Vault path, an env var name) - never a credential"
+          },
+          "component": {
+            "type": "string",
+            "description": "Optional: id of the component this database belongs to, when the environment is shared across multiple components"
           }
         },
         "required": ["type", "host_ref"],

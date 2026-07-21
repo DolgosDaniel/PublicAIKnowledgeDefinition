@@ -9,7 +9,7 @@ app_url: https://<env>.example.com
 health_endpoint: https://<env>.example.com/health
 databases:
   - type: postgres
-    host_ref: <e.g. "Vault: secret/data/<project>/<env>#database" or an env var name>
+    host_ref: "<e.g. Vault path secret/data/<project>/<env>#database, or an env var name>"
 access: <e.g. "VPN + SSO required" / "public">
 links:
   - kind: status-page

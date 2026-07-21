@@ -15,7 +15,9 @@
         "ghcr.io/github/github-mcp-server"
       ],
       "env": {
-        "GITHUB_PERSONAL_ACCESS_TOKEN": "${TASKFLOW_LITE_GITHUB_PAT}"
+        "GITHUB_PERSONAL_ACCESS_TOKEN": "${TASKFLOW_LITE_GITHUB_PAT}",
+        "GITHUB_READ_ONLY": "1",
+        "GITHUB_TOOLSETS": "repos,issues,pull_requests"
       }
     },
     "postgres-dev": {
@@ -24,7 +26,12 @@
     },
     "postgres-prod": {
       "command": "npx",
-      "args": ["-y", "@modelcontextprotocol/server-postgres", "${TASKFLOW_LITE_PROD_DATABASE_URL}"]
+      "args": ["-y", "@modelcontextprotocol/server-postgres", "${TASKFLOW_LITE_PROD_DATABASE_URL}"],
+      "_paik": {
+        "access_mode": "read-only",
+        "human_approval_required": ["database.write"],
+        "notes": "This is an example of the shape, not a production-ready pattern - see mcp/README.md's Access model section before pointing this at a real prod database (read-only DB role, masked/audited views, credential separate from non-prod, query logging)."
+      }
     },
     "fetch": {
       "command": "uvx",

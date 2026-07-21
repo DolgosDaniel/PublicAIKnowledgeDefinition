@@ -12,16 +12,30 @@ app_url: https://dev.aurora-logistics.example
 health_endpoint: https://dev.aurora-logistics.example/health
 databases:
   - type: postgres
-    host_ref: "Vault path secret/aurora/dev/orders-service/db-url (orders database)"
+    component: orders-service
+    host_ref: "Vault path secret/aurora/dev/orders-service/db-url"
   - type: postgres
-    host_ref: "Vault path secret/aurora/dev/fleet-service/db-url (fleet database)"
+    component: fleet-service
+    host_ref: "Vault path secret/aurora/dev/fleet-service/db-url"
 access: VPN required
 links:
   - kind: status-page
     url: https://status.aurora-logistics.example
   - kind: deploy-pipeline
-    purpose: one per service, orders-service shown as representative
+    component: ops-console
+    url: https://github.com/aurora-logistics/ops-console/actions/workflows/deploy-dev.yml
+  - kind: deploy-pipeline
+    component: orders-service
     url: https://github.com/aurora-logistics/orders-service/actions/workflows/deploy-dev.yml
+  - kind: deploy-pipeline
+    component: routing-service
+    url: https://github.com/aurora-logistics/routing-service/actions/workflows/deploy-dev.yml
+  - kind: deploy-pipeline
+    component: fleet-service
+    url: https://github.com/aurora-logistics/fleet-service/actions/workflows/deploy-dev.yml
+  - kind: deploy-pipeline
+    component: notifications-service
+    url: https://github.com/aurora-logistics/notifications-service/actions/workflows/deploy-dev.yml
   - kind: secrets
     provider: vault
     purpose: shared cross-service config, aurora/dev/shared/<key>
@@ -45,6 +59,7 @@ links:
 - Databases (only the stateful services have one): Orders and Fleet, each Postgres — see
   `databases` above (Vault paths, never connection strings); `routing-service` and
   `notifications-service` are stateless
-- Status page / deploy pipeline / shared secrets / feature flags: see `links` above
+- Status page / per-component deploy pipelines / shared secrets / feature flags: see `links`
+  above (each `deploy-pipeline` link is tagged with the `component` it deploys)
 - Access: VPN required
 - Owner: Platform team
