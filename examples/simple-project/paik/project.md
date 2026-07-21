@@ -1,11 +1,12 @@
 ---
-paik_version: "1.0"
+paik_version: "2.0"
 doc_type: project
 id: taskflow-lite
 name: TaskFlow Lite
 status: active
 last_updated: "2026-07-21"
-owner_ref: participants.md#alice-kovacs
+owner_ref: team.md
+visibility: internal
 description: >
   A small, single-service web app for tracking personal to-do lists. One team, one repo,
   one API, two environments. Used here as the minimal instance of the PAIK standard.
@@ -14,7 +15,8 @@ systems:
   knowledge_base: [systems/knowledge-base.md]
   api_specs: [systems/api-spec.md]
   source_repos: [systems/source-repo.md]
-participants_ref: participants.md
+team_ref: team.md
+components_ref: component.md
 environments_ref: environments/
 configuration_ref: configuration.md
 ---
@@ -29,11 +31,12 @@ two environments — the minimal instance of the PAIK standard.
 - Knowledge base: [Confluence — TFL space](systems/knowledge-base.md)
 
 ## Implementation
+- Component: [TaskFlow Lite](component.md)
 - API spec: [TaskFlow Lite API](systems/api-spec.md)
 - Source repo: [taskflow-inc/taskflow-lite](systems/source-repo.md)
 
-## People
-- See [participants.md](participants.md)
+## Team
+- See [team.md](team.md)
 
 ## Operations
 - Environments: [dev](environments/dev.md), [prod](environments/prod.md)

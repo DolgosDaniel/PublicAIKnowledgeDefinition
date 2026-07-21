@@ -8,6 +8,12 @@ the live system a given document only references — e.g. resolve the current ti
 > **The MCP ecosystem moves fast.** Package names, versions, and auth flows below were accurate
 > at time of writing but are not guaranteed to be current — verify the server's own repo/docs
 > before wiring it into a real project. Treat these as a starting point, not a pinned dependency.
+> In particular, `servers/gitlab.mcp.json` and `servers/postgres.mcp.json` currently point at
+> servers published under
+> [`modelcontextprotocol/servers-archived`](https://github.com/modelcontextprotocol/servers-archived) —
+> archived means no further security updates, not "broken," but it does mean you should evaluate
+> a maintained alternative before relying on either in a real project (see each file's `_paik`
+> block).
 
 ## What's here
 
@@ -33,3 +39,27 @@ the live system a given document only references — e.g. resolve the current ti
    this directory contains a real token; every `env` value is a placeholder name.
 3. Cross-check the identifiers you pass (project key, space key, repo URL, DB name) against the
    corresponding `paik/systems/*.md` or `paik/environments/*.md` document so the two stay in sync.
+
+## Access model
+
+PAIK doesn't enforce anything at the MCP layer — that's the tooling's job — but each `_paik`
+metadata block is a place to record the access decisions a real deployment actually needs to
+make, so they're documented rather than implicit:
+
+```jsonc
+"_paik": {
+  "access_mode": "read-only",
+  "allowed_capabilities": ["jira.search", "confluence.read"],
+  "human_approval_required": ["jira.update", "database.query"],
+  "environment_scope": ["dev"]
+}
+```
+
+This is advisory documentation, not something the servers below currently read or enforce.
+
+**The direct production Postgres wiring in `examples/complex-project.mcp.json`
+(`postgres-orders-prod-eu`, `postgres-orders-prod-us`, `postgres-catalog-prod-eu`,
+`postgres-catalog-prod-us`) is an example of the shape, not a production-ready pattern.** A real
+deployment pointing an MCP server at a production database needs, at minimum: a read-only
+database role, masked/audited views instead of raw tables, a credential scoped and rotated
+separately from non-prod, and query logging — not just a `DATABASE_URL` env var pointed at prod.

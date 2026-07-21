@@ -1,11 +1,12 @@
 ---
-paik_version: "1.0"
+paik_version: "2.0"
 doc_type: configuration
 id: catalog-api-configuration
 name: Catalog API — Configuration
 status: active
 last_updated: "2026-07-21"
-owner_ref: ../participants.md#zsofia-kiss
+owner_ref: ../teams/catalog.md
+visibility: internal
 tool: vault
 location: https://vault.nimbus.example/ui/vault/secrets/nimbus
 key_naming_convention: "nimbus/<environment>/catalog-api/<key>"
@@ -24,7 +25,7 @@ feature_flag_system: see shared.md
 - Key naming convention: `nimbus/<environment>/catalog-api/<key>`
 - Per-environment mapping: see `environment_mapping` above
 - Shared config (auth, feature flags): see [shared.md](shared.md)
-- Owner: [Zsofia Kiss](../participants.md#zsofia-kiss)
+- Owner: [Catalog team](../teams/catalog.md)
 
 ## Database connections
 

@@ -1,11 +1,12 @@
 ---
-paik_version: "1.0"
+paik_version: "2.0"
 doc_type: environment
 id: staging
 name: Staging
 status: active
 last_updated: "2026-07-21"
-owner_ref: ../participants.md#adam-fekete
+owner_ref: ../teams/sre-qa.md
+visibility: internal
 purpose: pre-production verification, mirrors prod topology, manual promotion from dev
 app_url: https://staging.nimbus.example
 health_endpoint: https://staging.nimbus.example/health
@@ -34,4 +35,4 @@ access: VPN required
 - Configuration: [shared](../configuration/shared.md),
   [orders-api](../configuration/orders-api.md), [catalog-api](../configuration/catalog-api.md)
 - Access: VPN required
-- Owner: [Adam Fekete](../participants.md#adam-fekete)
+- Owner: [SRE & QA](../teams/sre-qa.md)

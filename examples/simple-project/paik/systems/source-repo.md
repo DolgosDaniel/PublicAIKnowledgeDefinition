@@ -1,11 +1,12 @@
 ---
-paik_version: "1.0"
+paik_version: "2.0"
 doc_type: source-repo
 id: taskflow-lite-repo
 name: taskflow-inc/taskflow-lite
 status: active
 last_updated: "2026-07-21"
-owner_ref: ../participants.md#bence-nagy
+owner_ref: ../team.md
+visibility: internal
 type: github
 url: https://github.com/taskflow-inc/taskflow-lite
 default_branch: main
@@ -19,4 +20,4 @@ ci_pipeline_url: https://github.com/taskflow-inc/taskflow-lite/actions
 - URL: https://github.com/taskflow-inc/taskflow-lite
 - Default branch: `main`
 - CI: https://github.com/taskflow-inc/taskflow-lite/actions
-- Owner: [Bence Nagy](../participants.md#bence-nagy)
+- Owner: [TaskFlow Lite team](../team.md)

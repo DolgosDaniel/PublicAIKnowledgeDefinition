@@ -24,5 +24,13 @@
       "description": "Only used when type is \"other\""
     }
   },
-  "required": ["type", "base_url", "project_key"]
+  "if": {
+    "properties": { "type": { "const": "other" } },
+    "required": ["type"]
+  },
+  "then": {
+    "required": ["custom_fields"]
+  },
+  "required": ["type", "base_url", "project_key"],
+  "unevaluatedProperties": false
 }

@@ -16,7 +16,8 @@ validate each document type, and blank templates you copy into a new project.
          knowledge-base.md
          api-spec.md
          source-repo.md
-       participants.md
+       component.md
+       team.md
        environments/
          environment.md   (duplicate per environment: dev.md, staging.md, prod.md, ...)
        configuration.md

@@ -22,9 +22,13 @@
       },
       "required": ["ticketing", "knowledge_base", "api_specs", "source_repos"]
     },
-    "participants_ref": {
+    "team_ref": {
       "type": "string",
-      "description": "Relative link to participants.md"
+      "description": "Relative link to team.md, or to the teams/ directory/index for multi-team projects"
+    },
+    "components_ref": {
+      "type": "string",
+      "description": "Relative link to component.md, or to the components/ directory/index for multi-component projects"
     },
     "environments_ref": {
       "type": "string",
@@ -38,8 +42,10 @@
   "required": [
     "description",
     "systems",
-    "participants_ref",
+    "team_ref",
+    "components_ref",
     "environments_ref",
     "configuration_ref"
-  ]
+  ],
+  "unevaluatedProperties": false
 }

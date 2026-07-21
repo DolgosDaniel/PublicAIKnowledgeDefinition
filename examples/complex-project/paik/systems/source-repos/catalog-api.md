@@ -1,11 +1,12 @@
 ---
-paik_version: "1.0"
+paik_version: "2.0"
 doc_type: source-repo
 id: nimbus-catalog-api-repo
 name: nimbus-commerce/catalog-api
 status: active
 last_updated: "2026-07-21"
-owner_ref: ../../participants.md#zsofia-kiss
+owner_ref: ../../teams/catalog.md
+visibility: internal
 type: github
 url: https://github.com/nimbus-commerce/catalog-api
 default_branch: main
@@ -20,4 +21,4 @@ ci_pipeline_url: https://github.com/nimbus-commerce/catalog-api/actions
 - Default branch: `main`
 - CI: https://github.com/nimbus-commerce/catalog-api/actions
 - API spec: [Catalog API](../api-specs/catalog.md)
-- Owner: [Zsofia Kiss](../../participants.md#zsofia-kiss)
+- Owner: [Catalog team](../../teams/catalog.md)

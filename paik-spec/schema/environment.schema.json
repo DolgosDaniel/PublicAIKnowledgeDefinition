@@ -35,5 +35,6 @@
       "description": "Who can reach this environment and how, e.g. \"VPN + SSO required\""
     }
   },
-  "required": ["purpose", "app_url", "health_endpoint", "config_ref", "access"]
+  "required": ["purpose", "app_url", "health_endpoint", "config_ref", "access"],
+  "unevaluatedProperties": false
 }

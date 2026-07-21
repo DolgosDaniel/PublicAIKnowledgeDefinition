@@ -1,11 +1,12 @@
 ---
-paik_version: "1.0"
+paik_version: "2.0"
 doc_type: environment
 id: prod-eu
 name: Production — EU
 status: active
 last_updated: "2026-07-21"
-owner_ref: ../participants.md#adam-fekete
+owner_ref: ../teams/sre-qa.md
+visibility: internal
 purpose: customer-facing production, EU region, GDPR-scoped customer data
 app_url: https://eu.nimbus.example
 health_endpoint: https://eu.nimbus.example/health
@@ -35,4 +36,4 @@ access: SRE + release manager approval required
 - Configuration: [shared](../configuration/shared.md),
   [orders-api](../configuration/orders-api.md), [catalog-api](../configuration/catalog-api.md)
 - Access: SRE + release manager approval required
-- Owner: [Adam Fekete](../participants.md#adam-fekete)
+- Owner: [SRE & QA](../teams/sre-qa.md)

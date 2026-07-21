@@ -1,11 +1,12 @@
 ---
-paik_version: "1.0"
+paik_version: "2.0"
 doc_type: source-repo
 id: <repo-slug>
 name: <Repo Name>
 status: active
 last_updated: "<YYYY-MM-DD>"
-owner_ref: participants.md#<owner-anchor>
+owner_ref: ../team.md
+visibility: internal # public | internal | confidential
 type: github # github | gitlab | bitbucket | azure-repos | other
 url: https://github.com/<org>/<repo>
 default_branch: main
@@ -21,4 +22,4 @@ Where the code lives.
 - URL: <url>
 - Default branch: `main`
 - CI: <ci_pipeline_url>
-- Owner: [<Owner Name>](../participants.md#<owner-anchor>)
+- Owner: [<Team Name>](../team.md)

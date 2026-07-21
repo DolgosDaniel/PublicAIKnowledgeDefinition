@@ -23,6 +23,7 @@ Check the operational status of every environment a PAIK project describes.
 4. If `status_page` is set and the environment isn't healthy, check it too — an already-declared
    incident changes how you report the finding (known issue vs. new problem).
 5. Do not attempt to fix anything or restart anything — this skill only reports. Escalate to the
-   environment's `owner_ref` (resolve it against `participants.md`) if something is unreachable.
+   environment's `owner_ref` (resolve it against the owning team's `team*.md` — its `chat_channel`
+   and `on_call_ref`) if something is unreachable.
 6. Report a table: environment, status, response time if available, owner to notify if not
    healthy.

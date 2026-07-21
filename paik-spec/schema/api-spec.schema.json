@@ -9,7 +9,17 @@
     "doc_type": { "const": "api-spec" },
     "type": {
       "type": "string",
-      "enum": ["swaggerhub", "stoplight", "redocly", "openapi-file", "other"]
+      "enum": [
+        "swaggerhub",
+        "stoplight",
+        "redocly",
+        "openapi-file",
+        "grpc",
+        "graphql",
+        "asyncapi",
+        "soap-wsdl",
+        "other"
+      ]
     },
     "base_url": { "type": "string", "format": "uri" },
     "api_id": { "type": "string" },
@@ -29,5 +39,13 @@
       "description": "Only used when type is \"other\""
     }
   },
-  "required": ["type", "base_url", "api_id", "version", "spec_url"]
+  "if": {
+    "properties": { "type": { "const": "other" } },
+    "required": ["type"]
+  },
+  "then": {
+    "required": ["custom_fields"]
+  },
+  "required": ["type", "base_url", "api_id", "version", "spec_url"],
+  "unevaluatedProperties": false
 }

@@ -1,11 +1,12 @@
 ---
-paik_version: "1.0"
+paik_version: "2.0"
 doc_type: api-spec
 id: orders-api-spec
 name: Orders API
 status: active
 last_updated: "2026-07-21"
-owner_ref: ../../participants.md#peter-molnar
+owner_ref: ../../teams/orders.md
+visibility: internal
 type: swaggerhub
 base_url: https://app.swaggerhub.com
 api_id: nimbus-commerce/orders-api
@@ -25,4 +26,4 @@ served_by_env:
 - Current published version: `3.4.0`
 - Spec: https://api.swaggerhub.com/apis/nimbus-commerce/orders-api/3.4.0
 - `dev`/`staging` are ahead on `3.5.0-rc2`; both `prod-*` regions are pinned to `3.4.0`
-- Owner: [Peter Molnar](../../participants.md#peter-molnar)
+- Owner: [Orders team](../../teams/orders.md)

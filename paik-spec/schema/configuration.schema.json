@@ -42,5 +42,13 @@
       "description": "Only used when tool is \"other\""
     }
   },
-  "required": ["tool", "location", "key_naming_convention", "environment_mapping"]
+  "if": {
+    "properties": { "tool": { "const": "other" } },
+    "required": ["tool"]
+  },
+  "then": {
+    "required": ["custom_fields"]
+  },
+  "required": ["tool", "location", "key_naming_convention", "environment_mapping"],
+  "unevaluatedProperties": false
 }

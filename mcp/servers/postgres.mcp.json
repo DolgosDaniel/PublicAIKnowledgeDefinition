@@ -5,7 +5,11 @@
       "args": ["-y", "@modelcontextprotocol/server-postgres", "${DATABASE_URL}"],
       "_paik": {
         "serves": ["environments/*.md (databases[].host_ref)"],
-        "notes": "DATABASE_URL should be the connection string for exactly one environment's database - run one instance of this server per environment you need live access to, never one shared instance across prod and non-prod."
+        "notes": "DATABASE_URL should be the connection string for exactly one environment's database - run one instance of this server per environment you need live access to, never one shared instance across prod and non-prod.",
+        "deprecated": true,
+        "deprecation_notes": "@modelcontextprotocol/server-postgres ships from modelcontextprotocol/servers-archived - it no longer receives security updates. Evaluate a maintained alternative before using this in a real project. For any prod database, wire in a read-only role, masked/audited views, and a credential separate from non-prod - see mcp/README.md's Access model section.",
+        "access_mode": "read-only",
+        "human_approval_required": ["database.write"]
       }
     }
   }

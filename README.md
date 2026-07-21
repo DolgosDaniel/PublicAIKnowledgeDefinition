@@ -3,13 +3,14 @@
 A tool-agnostic, Markdown-based standard for describing a software project end-to-end —
 planning, implementation, and operations — by **linking** the systems a team already uses
 instead of duplicating their content: ticketing (Jira, ...), knowledge base (Confluence, ...),
-API specs (SwaggerHub, ...), source repos (GitHub/GitLab, ...), participants, environments
-(running app / health endpoints / databases), and configuration management.
+API specs (SwaggerHub, ...), source repos (GitHub/GitLab, ...), components/services, owning
+teams, environments (running app / health endpoints / databases), and configuration management.
 
 A PAIK document is never a copy of a ticket, a wiki page, or a database password — it's a small,
 structured pointer: what system, which identifier, whose responsibility, how to reach it. The
-systems stay the source of truth; PAIK stays the map. That's also what makes a `paik/` folder
-safe to keep in a public repo.
+systems stay the source of truth; PAIK stays the map. Every document also declares its own
+`visibility` (`public`/`internal`/`confidential`), because the absence of a password doesn't by
+itself make a `paik/` folder safe to publish — see `paik-spec/SPEC.md` section 4.
 
 ## Start here
 

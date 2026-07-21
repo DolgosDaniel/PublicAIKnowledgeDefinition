@@ -1,11 +1,12 @@
 ---
-paik_version: "1.0"
+paik_version: "2.0"
 doc_type: project
 id: nimbus-commerce
 name: Nimbus Commerce
 status: active
 last_updated: "2026-07-21"
-owner_ref: participants.md#eszter-varga
+owner_ref: teams/platform.md
+visibility: internal
 description: >
   A multi-service e-commerce platform: a frontend app plus an orders-api and a catalog-api
   microservice, built by three teams, deployed to four environments across two regions.
@@ -21,7 +22,8 @@ systems:
       systems/source-repos/orders-api.md,
       systems/source-repos/catalog-api.md,
     ]
-participants_ref: participants.md
+team_ref: teams/
+components_ref: components/
 environments_ref: environments/
 configuration_ref: configuration/
 ---
@@ -36,14 +38,13 @@ microservice, built by three teams, deployed to four environments across two reg
 - Knowledge base: [Confluence — NIM space](systems/knowledge-base.md)
 
 ## Implementation
-- Services and their repos:
-  - Frontend — [repo](systems/source-repos/frontend.md) (consumes both APIs below, has no API
-    spec of its own)
-  - Orders — [repo](systems/source-repos/orders-api.md) / [API spec](systems/api-specs/orders.md)
-  - Catalog — [repo](systems/source-repos/catalog-api.md) / [API spec](systems/api-specs/catalog.md)
+- Components (repo + API + config + environments + owner, wired together):
+  - [Frontend](components/frontend.md) (consumes both APIs below, has no API spec of its own)
+  - [Orders API](components/orders-api.md)
+  - [Catalog API](components/catalog-api.md)
 
-## People
-- See [participants.md](participants.md) — Platform, Frontend, Orders, Catalog and SRE teams
+## Teams
+- See [teams/](teams/) — Platform, Frontend, Orders, Catalog and SRE & QA
 
 ## Operations
 - Environments: [dev](environments/dev.md), [staging](environments/staging.md),

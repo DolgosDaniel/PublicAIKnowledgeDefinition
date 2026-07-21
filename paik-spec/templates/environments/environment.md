@@ -1,11 +1,12 @@
 ---
-paik_version: "1.0"
+paik_version: "2.0"
 doc_type: environment
 id: <env-slug>
 name: <Environment Name>
 status: active
 last_updated: "<YYYY-MM-DD>"
-owner_ref: ../participants.md#<owner-anchor>
+owner_ref: ../team.md
+visibility: internal # public | internal | confidential
 purpose: <e.g. "developer integration testing" / "customer-facing production, EU region">
 app_url: https://<env>.example.com
 health_endpoint: https://<env>.example.com/health
@@ -28,4 +29,4 @@ access: <e.g. "VPN + SSO required" / "public">
   [configuration.md](../configuration.md#<env>-database), never here
 - Deploy pipeline: <deploy_pipeline_ref>
 - Access: <access>
-- Owner: [<Owner Name>](../participants.md#<owner-anchor>)
+- Owner: [<Team Name>](../team.md)

@@ -1,11 +1,12 @@
 ---
-paik_version: "1.0"
+paik_version: "2.0"
 doc_type: ticketing-system
 id: nimbus-jira
 name: Nimbus Commerce — Jira
 status: active
 last_updated: "2026-07-21"
-owner_ref: ../participants.md#eszter-varga
+owner_ref: ../teams/platform.md
+visibility: internal
 type: jira
 base_url: https://nimbus-commerce.atlassian.net
 project_key: NIM
@@ -21,4 +22,4 @@ One shared Jira project across all three services; components (`frontend`, `orde
 - Type: `jira`
 - Project key: `NIM`
 - Board: https://nimbus-commerce.atlassian.net/jira/software/projects/NIM/boards/4
-- Owner: [Eszter Varga](../participants.md#eszter-varga)
+- Owner: [Platform](../teams/platform.md)

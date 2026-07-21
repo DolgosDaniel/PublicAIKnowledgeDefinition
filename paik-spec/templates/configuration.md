@@ -1,11 +1,12 @@
 ---
-paik_version: "1.0"
+paik_version: "2.0"
 doc_type: configuration
 id: configuration
 name: Configuration Management
 status: active
 last_updated: "<YYYY-MM-DD>"
-owner_ref: participants.md#<owner-anchor>
+owner_ref: team.md
+visibility: internal # public | internal | confidential
 tool: vault # vault | aws-secrets-manager | consul | dotenv | spring-cloud-config | helm-values | other
 location: https://vault.example.com/ui/vault/secrets/<project>
 key_naming_convention: "<project>/<environment>/<component>/<key>"
@@ -27,4 +28,4 @@ config lives — it never contains an actual secret value.
 - Per-environment mapping: see `environment_mapping` above
 - Rotation policy: [<link>](systems/knowledge-base.md)
 - Feature flags: <feature_flag_system>
-- Owner: [<Owner Name>](participants.md#<owner-anchor>)
+- Owner: [<Team Name>](team.md)

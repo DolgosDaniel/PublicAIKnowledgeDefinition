@@ -1,11 +1,12 @@
 ---
-paik_version: "1.0"
+paik_version: "2.0"
 doc_type: configuration
 id: configuration
 name: TaskFlow Lite Configuration Management
 status: active
 last_updated: "2026-07-21"
-owner_ref: participants.md#bence-nagy
+owner_ref: team.md
+visibility: internal
 tool: dotenv
 location: https://dashboard.render.com/web/taskflow-lite/env
 key_naming_convention: "TFL_<COMPONENT>_<KEY>, upper snake case"
@@ -24,7 +25,7 @@ feature_flag_system: none
 - Per-environment mapping: see `environment_mapping` above
 - Rotation policy: see [knowledge-base.md](systems/knowledge-base.md)
 - Feature flags: none — this project is small enough to ship behind short-lived branches instead
-- Owner: [Bence Nagy](participants.md#bence-nagy)
+- Owner: [TaskFlow Lite team](team.md)
 
 ## Database connections
 

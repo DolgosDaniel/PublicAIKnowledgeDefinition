@@ -1,11 +1,12 @@
 ---
-paik_version: "1.0"
+paik_version: "2.0"
 doc_type: source-repo
 id: nimbus-frontend-repo
 name: nimbus-commerce/frontend
 status: active
 last_updated: "2026-07-21"
-owner_ref: ../../participants.md#gergo-toth
+owner_ref: ../../teams/frontend.md
+visibility: internal
 type: github
 url: https://github.com/nimbus-commerce/frontend
 default_branch: main
@@ -20,4 +21,4 @@ ci_pipeline_url: https://github.com/nimbus-commerce/frontend/actions
 - Default branch: `main`
 - CI: https://github.com/nimbus-commerce/frontend/actions
 - Consumes: [Orders API](../api-specs/orders.md), [Catalog API](../api-specs/catalog.md)
-- Owner: [Gergo Toth](../../participants.md#gergo-toth)
+- Owner: [Frontend team](../../teams/frontend.md)

@@ -1,11 +1,12 @@
 ---
-paik_version: "1.0"
+paik_version: "2.0"
 doc_type: api-spec
 id: catalog-api-spec
 name: Catalog API
 status: active
 last_updated: "2026-07-21"
-owner_ref: ../../participants.md#zsofia-kiss
+owner_ref: ../../teams/catalog.md
+visibility: internal
 type: swaggerhub
 base_url: https://app.swaggerhub.com
 api_id: nimbus-commerce/catalog-api
@@ -24,4 +25,4 @@ served_by_env:
 - API ID: `nimbus-commerce/catalog-api`
 - Current published version: `2.1.0`
 - Spec: https://api.swaggerhub.com/apis/nimbus-commerce/catalog-api/2.1.0
-- Owner: [Zsofia Kiss](../../participants.md#zsofia-kiss)
+- Owner: [Catalog team](../../teams/catalog.md)

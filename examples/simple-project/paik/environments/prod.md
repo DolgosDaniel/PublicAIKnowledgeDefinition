@@ -1,11 +1,12 @@
 ---
-paik_version: "1.0"
+paik_version: "2.0"
 doc_type: environment
 id: prod
 name: Production
 status: active
 last_updated: "2026-07-21"
-owner_ref: ../participants.md#bence-nagy
+owner_ref: ../team.md
+visibility: internal
 purpose: customer-facing production
 app_url: https://taskflow.example
 health_endpoint: https://taskflow.example/health
@@ -30,4 +31,4 @@ access: public
   (manual approval required, see Jira release checklist in
   [ticketing.md](../systems/ticketing.md))
 - Access: public
-- Owner: [Bence Nagy](../participants.md#bence-nagy)
+- Owner: [TaskFlow Lite team](../team.md)

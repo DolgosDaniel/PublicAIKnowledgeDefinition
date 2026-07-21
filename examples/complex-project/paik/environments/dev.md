@@ -1,11 +1,12 @@
 ---
-paik_version: "1.0"
+paik_version: "2.0"
 doc_type: environment
 id: dev
 name: Development
 status: active
 last_updated: "2026-07-21"
-owner_ref: ../participants.md#adam-fekete
+owner_ref: ../teams/sre-qa.md
+visibility: internal
 purpose: shared developer integration environment for all three services, auto-deployed from main
 app_url: https://dev.nimbus.example
 health_endpoint: https://dev.nimbus.example/health
@@ -35,4 +36,4 @@ access: VPN required
 - Configuration: [shared](../configuration/shared.md),
   [orders-api](../configuration/orders-api.md), [catalog-api](../configuration/catalog-api.md)
 - Access: VPN required
-- Owner: [Adam Fekete](../participants.md#adam-fekete)
+- Owner: [SRE & QA](../teams/sre-qa.md)

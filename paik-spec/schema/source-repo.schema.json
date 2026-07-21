@@ -20,5 +20,13 @@
       "description": "Only used when type is \"other\""
     }
   },
-  "required": ["type", "url", "default_branch", "ci_pipeline_url"]
+  "if": {
+    "properties": { "type": { "const": "other" } },
+    "required": ["type"]
+  },
+  "then": {
+    "required": ["custom_fields"]
+  },
+  "required": ["type", "url", "default_branch", "ci_pipeline_url"],
+  "unevaluatedProperties": false
 }

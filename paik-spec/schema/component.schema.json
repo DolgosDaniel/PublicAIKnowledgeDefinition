@@ -1,0 +1,69 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://paik.dev/schema/component.schema.json",
+  "title": "PAIK Component",
+  "description": "A deployable/runnable unit of the project (a service, library, or job) and the single structured node tying its repository, API, environments, configuration, team, and dependencies together. See SPEC.md section 5.",
+  "allOf": [{ "$ref": "./common.schema.json" }],
+  "type": "object",
+  "properties": {
+    "doc_type": { "const": "component" },
+    "type": {
+      "type": "string",
+      "enum": ["service", "library", "job", "other"]
+    },
+    "repository_ref": {
+      "type": "string",
+      "description": "Relative link to this component's source-repo document"
+    },
+    "provides_api_refs": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Relative links to the api-spec document(s) this component serves"
+    },
+    "consumes_api_refs": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Optional: relative links to api-spec documents this component calls but does not own"
+    },
+    "environment_refs": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Relative links to the environment documents this component is deployed to"
+    },
+    "configuration_ref": {
+      "type": "string",
+      "description": "Relative link to this component's configuration document"
+    },
+    "depends_on": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Relative links to other component documents this one depends on"
+    },
+    "ticket_scopes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "type": { "type": "string", "description": "e.g. jira-epic, jira-component" },
+          "key": { "type": "string" }
+        },
+        "required": ["type", "key"],
+        "unevaluatedProperties": false
+      },
+      "description": "Optional: ticket-system scopes (epics, components) this component's work is filed under"
+    },
+    "custom_fields": {
+      "type": "object",
+      "description": "Only used when type is \"other\""
+    }
+  },
+  "if": {
+    "properties": { "type": { "const": "other" } },
+    "required": ["type"]
+  },
+  "then": {
+    "required": ["custom_fields"]
+  },
+  "required": ["type", "repository_ref", "environment_refs", "configuration_ref"],
+  "unevaluatedProperties": false
+}

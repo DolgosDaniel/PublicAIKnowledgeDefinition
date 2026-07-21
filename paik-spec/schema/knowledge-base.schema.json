@@ -19,5 +19,13 @@
       "description": "Only used when type is \"other\""
     }
   },
-  "required": ["type", "base_url", "space_key", "root_page_url"]
+  "if": {
+    "properties": { "type": { "const": "other" } },
+    "required": ["type"]
+  },
+  "then": {
+    "required": ["custom_fields"]
+  },
+  "required": ["type", "base_url", "space_key", "root_page_url"],
+  "unevaluatedProperties": false
 }

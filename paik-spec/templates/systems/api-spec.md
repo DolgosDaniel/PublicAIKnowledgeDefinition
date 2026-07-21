@@ -1,12 +1,13 @@
 ---
-paik_version: "1.0"
+paik_version: "2.0"
 doc_type: api-spec
 id: <api-slug>
 name: <API Name>
 status: active
 last_updated: "<YYYY-MM-DD>"
-owner_ref: participants.md#<owner-anchor>
-type: swaggerhub # swaggerhub | stoplight | redocly | openapi-file | other
+owner_ref: ../team.md
+visibility: internal # public | internal | confidential
+type: swaggerhub # swaggerhub | stoplight | redocly | openapi-file | grpc | graphql | asyncapi | soap-wsdl | other
 base_url: https://app.swaggerhub.com
 api_id: <org>/<api-name>
 version: 1.0.0
@@ -24,4 +25,4 @@ The contract this service exposes.
 - API ID: `<org>/<api-name>`
 - Current version: `1.0.0`
 - Spec: <spec_url>
-- Owner: [<Owner Name>](../participants.md#<owner-anchor>)
+- Owner: [<Team Name>](../team.md)

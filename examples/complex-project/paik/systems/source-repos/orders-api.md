@@ -1,11 +1,12 @@
 ---
-paik_version: "1.0"
+paik_version: "2.0"
 doc_type: source-repo
 id: nimbus-orders-api-repo
 name: nimbus-commerce/orders-api
 status: active
 last_updated: "2026-07-21"
-owner_ref: ../../participants.md#peter-molnar
+owner_ref: ../../teams/orders.md
+visibility: internal
 type: github
 url: https://github.com/nimbus-commerce/orders-api
 default_branch: main
@@ -20,4 +21,4 @@ ci_pipeline_url: https://github.com/nimbus-commerce/orders-api/actions
 - Default branch: `main`
 - CI: https://github.com/nimbus-commerce/orders-api/actions
 - API spec: [Orders API](../api-specs/orders.md)
-- Owner: [Peter Molnar](../../participants.md#peter-molnar)
+- Owner: [Orders team](../../teams/orders.md)

@@ -1,11 +1,12 @@
 ---
-paik_version: "1.0"
+paik_version: "2.0"
 doc_type: ticketing-system
 id: <ticketing-slug>
 name: <Ticketing System Name>
 status: active
 last_updated: "<YYYY-MM-DD>"
-owner_ref: participants.md#<owner-anchor>
+owner_ref: ../team.md
+visibility: internal # public | internal | confidential
 type: jira # jira | azure-boards | linear | github-issues | other
 base_url: https://<org>.atlassian.net
 project_key: <PROJ>
@@ -20,4 +21,4 @@ Where planning and work-tracking happens for this project.
 - Type: `jira`
 - Project key: `<PROJ>`
 - Board: <board_url>
-- Owner: [<Owner Name>](../participants.md#<owner-anchor>)
+- Owner: [<Team Name>](../team.md)

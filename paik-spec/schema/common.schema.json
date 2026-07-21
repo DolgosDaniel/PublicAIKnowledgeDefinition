@@ -7,7 +7,7 @@
   "properties": {
     "paik_version": {
       "type": "string",
-      "const": "1.0"
+      "const": "2.0"
     },
     "doc_type": {
       "type": "string",
@@ -17,7 +17,8 @@
         "knowledge-base",
         "api-spec",
         "source-repo",
-        "participants",
+        "team",
+        "component",
         "environment",
         "configuration"
       ]
@@ -36,12 +37,36 @@
     },
     "last_updated": {
       "type": "string",
-      "format": "date"
+      "format": "date",
+      "description": "Date this document's content was last edited"
+    },
+    "last_verified": {
+      "type": "string",
+      "format": "date",
+      "description": "Optional: date this document's external links/references were last confirmed to still resolve. Distinct from last_updated, which tracks content edits."
     },
     "owner_ref": {
       "type": "string",
-      "description": "Relative link into participants.md, e.g. participants.md#alice-kovacs"
+      "description": "Relative link to the owning team's document, e.g. team.md or teams/orders.md. Points at the whole file - team docs have no per-person anchor."
+    },
+    "visibility": {
+      "type": "string",
+      "enum": ["public", "internal", "confidential"],
+      "description": "Who this document is safe to share with. The absence of secrets does not make a document public - on-call links, chat handles, hostnames, and DB topology are still internal-or-worse."
+    },
+    "data_classification": {
+      "type": "string",
+      "description": "Optional free-form classification tag for the kind of data this document references, e.g. operational, pii, financial"
     }
   },
-  "required": ["paik_version", "doc_type", "id", "name", "status", "last_updated", "owner_ref"]
+  "required": [
+    "paik_version",
+    "doc_type",
+    "id",
+    "name",
+    "status",
+    "last_updated",
+    "owner_ref",
+    "visibility"
+  ]
 }
