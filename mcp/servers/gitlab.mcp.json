@@ -1,0 +1,16 @@
+{
+  "mcpServers": {
+    "gitlab": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-gitlab"],
+      "env": {
+        "GITLAB_PERSONAL_ACCESS_TOKEN": "${GITLAB_PAT}",
+        "GITLAB_API_URL": "${GITLAB_API_URL}"
+      },
+      "_paik": {
+        "serves": ["systems/source-repo.md (type: gitlab)"],
+        "notes": "GITLAB_API_URL should point at your instance's API root (e.g. https://gitlab.example.com/api/v4) - set it to match the source-repo.md url field."
+      }
+    }
+  }
+}

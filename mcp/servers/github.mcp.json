@@ -1,0 +1,22 @@
+{
+  "mcpServers": {
+    "github": {
+      "command": "docker",
+      "args": [
+        "run",
+        "-i",
+        "--rm",
+        "-e",
+        "GITHUB_PERSONAL_ACCESS_TOKEN",
+        "ghcr.io/github/github-mcp-server"
+      ],
+      "env": {
+        "GITHUB_PERSONAL_ACCESS_TOKEN": "${GITHUB_PAT}"
+      },
+      "_paik": {
+        "serves": ["systems/source-repo.md (type: github)"],
+        "notes": "Official GitHub MCP server, distributed as a container image. GITHUB_PAT should be a fine-grained PAT scoped to the repo(s) listed in your source-repo.md files."
+      }
+    }
+  }
+}

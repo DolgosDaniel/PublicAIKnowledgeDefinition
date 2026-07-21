@@ -1,0 +1,39 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://paik.dev/schema/environment.schema.json",
+  "title": "PAIK Environment",
+  "description": "One running instance of the system. See SPEC.md section 5.",
+  "allOf": [{ "$ref": "./common.schema.json" }],
+  "type": "object",
+  "properties": {
+    "doc_type": { "const": "environment" },
+    "purpose": {
+      "type": "string",
+      "description": "e.g. \"developer integration testing\", \"customer-facing production, EU region\""
+    },
+    "app_url": { "type": "string", "format": "uri" },
+    "health_endpoint": { "type": "string", "format": "uri" },
+    "status_page": { "type": "string", "format": "uri" },
+    "databases": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "type": { "type": "string" },
+          "host_ref": {
+            "type": "string",
+            "description": "Reference to where the host/connection details live (Vault path, config doc) - never a credential"
+          }
+        },
+        "required": ["type", "host_ref"]
+      }
+    },
+    "deploy_pipeline_ref": { "type": "string", "format": "uri" },
+    "config_ref": { "type": "string" },
+    "access": {
+      "type": "string",
+      "description": "Who can reach this environment and how, e.g. \"VPN + SSO required\""
+    }
+  },
+  "required": ["purpose", "app_url", "health_endpoint", "config_ref", "access"]
+}

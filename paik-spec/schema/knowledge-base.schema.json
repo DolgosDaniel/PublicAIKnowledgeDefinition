@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://paik.dev/schema/knowledge-base.schema.json",
+  "title": "PAIK Knowledge Base",
+  "description": "Where design docs, decisions and runbooks live. See SPEC.md section 5.",
+  "allOf": [{ "$ref": "./common.schema.json" }],
+  "type": "object",
+  "properties": {
+    "doc_type": { "const": "knowledge-base" },
+    "type": {
+      "type": "string",
+      "enum": ["confluence", "notion", "sharepoint", "wiki-js", "other"]
+    },
+    "base_url": { "type": "string", "format": "uri" },
+    "space_key": { "type": "string" },
+    "root_page_url": { "type": "string", "format": "uri" },
+    "custom_fields": {
+      "type": "object",
+      "description": "Only used when type is \"other\""
+    }
+  },
+  "required": ["type", "base_url", "space_key", "root_page_url"]
+}

@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://paik.dev/schema/ticketing-system.schema.json",
+  "title": "PAIK Ticketing System",
+  "description": "Where planning and work-tracking happens for the project. See SPEC.md section 5.",
+  "allOf": [{ "$ref": "./common.schema.json" }],
+  "type": "object",
+  "properties": {
+    "doc_type": { "const": "ticketing-system" },
+    "type": {
+      "type": "string",
+      "enum": ["jira", "azure-boards", "linear", "github-issues", "other"]
+    },
+    "base_url": { "type": "string", "format": "uri" },
+    "project_key": { "type": "string" },
+    "board_url": { "type": "string", "format": "uri" },
+    "default_workflow": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Ordered ticket-state names, e.g. [\"To Do\", \"In Progress\", \"In Review\", \"Done\"]"
+    },
+    "custom_fields": {
+      "type": "object",
+      "description": "Only used when type is \"other\""
+    }
+  },
+  "required": ["type", "base_url", "project_key"]
+}

@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "atlassian": {
+      "command": "npx",
+      "args": ["-y", "mcp-remote", "https://mcp.atlassian.com/v1/sse"],
+      "_paik": {
+        "serves": ["systems/ticketing.md (Jira)", "systems/knowledge-base.md (Confluence)"],
+        "notes": "Official Atlassian remote MCP server, reached via the mcp-remote stdio bridge. First run opens a browser for OAuth; no static token needed."
+      }
+    }
+  }
+}

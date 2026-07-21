@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "paik-filesystem": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-filesystem", "${PAIK_ROOT}"],
+      "_paik": {
+        "serves": ["direct read/write access to the paik/ folder itself"],
+        "notes": "Set PAIK_ROOT to the absolute path of the paik/ folder (e.g. .../examples/simple-project/paik). Used by skills that scaffold or refresh PAIK documents in place."
+      }
+    }
+  }
+}

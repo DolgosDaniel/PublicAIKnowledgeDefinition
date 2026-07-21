@@ -1,0 +1,47 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://paik.dev/schema/common.schema.json",
+  "title": "PAIK Common Frontmatter",
+  "description": "Fields required on the frontmatter of every PAIK document type. See SPEC.md section 2.",
+  "type": "object",
+  "properties": {
+    "paik_version": {
+      "type": "string",
+      "const": "1.0"
+    },
+    "doc_type": {
+      "type": "string",
+      "enum": [
+        "project",
+        "ticketing-system",
+        "knowledge-base",
+        "api-spec",
+        "source-repo",
+        "participants",
+        "environment",
+        "configuration"
+      ]
+    },
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$",
+      "description": "Stable kebab-case slug, unique within the project"
+    },
+    "name": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string",
+      "enum": ["planning", "active", "maintenance", "sunset"]
+    },
+    "last_updated": {
+      "type": "string",
+      "format": "date"
+    },
+    "owner_ref": {
+      "type": "string",
+      "description": "Relative link into participants.md, e.g. participants.md#alice-kovacs"
+    }
+  },
+  "required": ["paik_version", "doc_type", "id", "name", "status", "last_updated", "owner_ref"]
+}

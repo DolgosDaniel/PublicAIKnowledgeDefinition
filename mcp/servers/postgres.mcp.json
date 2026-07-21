@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "postgres": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-postgres", "${DATABASE_URL}"],
+      "_paik": {
+        "serves": ["environments/*.md (databases[].host_ref)"],
+        "notes": "DATABASE_URL should be the connection string for exactly one environment's database - run one instance of this server per environment you need live access to, never one shared instance across prod and non-prod."
+      }
+    }
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://paik.dev/schema/participant.schema.json",
+  "title": "PAIK Participants",
+  "description": "Roster of everyone with a stake in the project. Body is one heading per person for stable anchors; frontmatter only carries the common fields. See SPEC.md section 5.",
+  "allOf": [{ "$ref": "./common.schema.json" }],
+  "type": "object",
+  "properties": {
+    "doc_type": { "const": "participants" }
+  }
+}

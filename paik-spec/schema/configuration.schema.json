@@ -1,0 +1,46 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://paik.dev/schema/configuration.schema.json",
+  "title": "PAIK Configuration Management",
+  "description": "How config and secrets are managed for the project. See SPEC.md section 5.",
+  "allOf": [{ "$ref": "./common.schema.json" }],
+  "type": "object",
+  "properties": {
+    "doc_type": { "const": "configuration" },
+    "tool": {
+      "type": "string",
+      "enum": [
+        "vault",
+        "aws-secrets-manager",
+        "consul",
+        "dotenv",
+        "spring-cloud-config",
+        "helm-values",
+        "other"
+      ]
+    },
+    "location": {
+      "type": "string",
+      "description": "URL or path where configuration is managed"
+    },
+    "key_naming_convention": { "type": "string" },
+    "environment_mapping": {
+      "type": "object",
+      "description": "Map of environment id -> config namespace/path for that environment",
+      "additionalProperties": { "type": "string" }
+    },
+    "rotation_policy_ref": {
+      "type": "string",
+      "description": "Link to the secret rotation policy document"
+    },
+    "feature_flag_system": {
+      "type": "string",
+      "description": "Optional: name/URL of the feature flag system, if any"
+    },
+    "custom_fields": {
+      "type": "object",
+      "description": "Only used when tool is \"other\""
+    }
+  },
+  "required": ["tool", "location", "key_naming_convention", "environment_mapping"]
+}

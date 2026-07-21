@@ -1,0 +1,45 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://paik.dev/schema/project.schema.json",
+  "title": "PAIK Project",
+  "description": "The entry point document for a PAIK-described project. See SPEC.md section 5.",
+  "allOf": [{ "$ref": "./common.schema.json" }],
+  "type": "object",
+  "properties": {
+    "doc_type": { "const": "project" },
+    "description": {
+      "type": "string",
+      "description": "One-paragraph summary of what the project does"
+    },
+    "systems": {
+      "type": "object",
+      "description": "Relative links to this project's system documents",
+      "properties": {
+        "ticketing": { "type": "array", "items": { "type": "string" } },
+        "knowledge_base": { "type": "array", "items": { "type": "string" } },
+        "api_specs": { "type": "array", "items": { "type": "string" } },
+        "source_repos": { "type": "array", "items": { "type": "string" } }
+      },
+      "required": ["ticketing", "knowledge_base", "api_specs", "source_repos"]
+    },
+    "participants_ref": {
+      "type": "string",
+      "description": "Relative link to participants.md"
+    },
+    "environments_ref": {
+      "type": "string",
+      "description": "Relative link to the environments/ directory or index"
+    },
+    "configuration_ref": {
+      "type": "string",
+      "description": "Relative link to configuration.md or the configuration/ directory"
+    }
+  },
+  "required": [
+    "description",
+    "systems",
+    "participants_ref",
+    "environments_ref",
+    "configuration_ref"
+  ]
+}

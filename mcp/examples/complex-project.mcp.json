@@ -1,0 +1,50 @@
+{
+  "mcpServers": {
+    "atlassian": {
+      "command": "npx",
+      "args": ["-y", "mcp-remote", "https://mcp.atlassian.com/v1/sse"]
+    },
+    "github": {
+      "command": "docker",
+      "args": [
+        "run",
+        "-i",
+        "--rm",
+        "-e",
+        "GITHUB_PERSONAL_ACCESS_TOKEN",
+        "ghcr.io/github/github-mcp-server"
+      ],
+      "env": {
+        "GITHUB_PERSONAL_ACCESS_TOKEN": "${NIMBUS_GITHUB_PAT}"
+      }
+    },
+    "postgres-orders-dev": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-postgres", "${NIMBUS_ORDERS_DEV_DATABASE_URL}"]
+    },
+    "postgres-orders-prod-eu": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-postgres", "${NIMBUS_ORDERS_PROD_EU_DATABASE_URL}"]
+    },
+    "postgres-orders-prod-us": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-postgres", "${NIMBUS_ORDERS_PROD_US_DATABASE_URL}"]
+    },
+    "postgres-catalog-dev": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-postgres", "${NIMBUS_CATALOG_DEV_DATABASE_URL}"]
+    },
+    "postgres-catalog-prod-eu": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-postgres", "${NIMBUS_CATALOG_PROD_EU_DATABASE_URL}"]
+    },
+    "postgres-catalog-prod-us": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-postgres", "${NIMBUS_CATALOG_PROD_US_DATABASE_URL}"]
+    },
+    "fetch": {
+      "command": "uvx",
+      "args": ["mcp-server-fetch"]
+    }
+  }
+}

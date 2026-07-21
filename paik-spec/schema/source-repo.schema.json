@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://paik.dev/schema/source-repo.schema.json",
+  "title": "PAIK Source Repository",
+  "description": "Where the code lives. See SPEC.md section 5.",
+  "allOf": [{ "$ref": "./common.schema.json" }],
+  "type": "object",
+  "properties": {
+    "doc_type": { "const": "source-repo" },
+    "type": {
+      "type": "string",
+      "enum": ["github", "gitlab", "bitbucket", "azure-repos", "other"]
+    },
+    "url": { "type": "string", "format": "uri" },
+    "default_branch": { "type": "string" },
+    "branch_strategy": { "type": "string" },
+    "ci_pipeline_url": { "type": "string", "format": "uri" },
+    "custom_fields": {
+      "type": "object",
+      "description": "Only used when type is \"other\""
+    }
+  },
+  "required": ["type", "url", "default_branch", "ci_pipeline_url"]
+}
