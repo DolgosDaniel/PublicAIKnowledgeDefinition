@@ -2,14 +2,15 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://paik.dev/schema/component.schema.json",
   "title": "PAIK Component",
-  "description": "A deployable/runnable unit of the project (a service, library, or job). Its repository, API, external services, secrets location, and ticket scopes are `links[]` entries rather than dedicated fields - see SPEC.md section 7.",
+  "description": "A deployable/runnable unit of the project (a service, library, or job). Its repository, API, external services, secrets location, and ticket scopes are `links[]` entries rather than dedicated fields - see SPEC.md section 8.",
   "allOf": [{ "$ref": "./common.schema.json" }],
   "type": "object",
   "properties": {
-    "kind": { "const": "component" },
-    "type": {
+    "type": { "const": "paik-component" },
+    "component_type": {
       "type": "string",
-      "enum": ["service", "library", "job", "other"]
+      "enum": ["service", "library", "job", "other"],
+      "description": "What kind of component this is - named component_type, not type, so it doesn't collide with the OKF concept type this document already carries."
     },
     "depends_on": {
       "type": "array",
@@ -22,6 +23,6 @@
       "description": "Relative links to the environment document(s) this component is deployed to"
     }
   },
-  "required": ["owner", "type", "environments"],
+  "required": ["owner", "component_type", "environments"],
   "unevaluatedProperties": false
 }

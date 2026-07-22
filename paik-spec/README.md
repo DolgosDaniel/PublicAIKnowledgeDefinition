@@ -22,13 +22,14 @@ typically edits what), [`CHECKLIST.md`](CHECKLIST.md) (three "is this done?" tie
 
    That's the whole shape — ticketing, wiki, API spec, repo, external services, secrets
    location, and ownership all live inline as `owner` and `links[]` fields on `project.md` and
-   `component.md` rather than as separate files. See `SPEC.md` sections 2-3.
+   `component.md` rather than as separate files. See `SPEC.md` sections 3-4.
 
 2. Fill in the frontmatter of each file. Every field is documented in `SPEC.md` and enforced by
    the matching schema in `schema/` — except `links[]` items, which only require a `kind`.
-3. Delete/duplicate files that don't apply to your project shape — see `../examples/` for eight
+3. Delete/duplicate files that don't apply to your project shape — see `../examples/` for nine
    instances of this standard: single- and multi-service, still in planning, product/design-led,
-   every `component.type`, a monorepo, third-party dependencies, and a full operations map.
+   every `component_type`, a monorepo, third-party dependencies, a full operations map, and an
+   explicit Open Knowledge Format conformance walkthrough.
 4. Optionally wire up `../mcp/` (live access to the systems referenced) and `../skills/` (agent
    workflows that scaffold, maintain, sync, and health-check a `paik/` folder).
 

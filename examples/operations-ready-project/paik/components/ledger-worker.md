@@ -1,13 +1,13 @@
 ---
-paik: "0.3"
-kind: component
+paik: "0.4"
+type: paik-component
 id: ledger-worker
-name: Ledger Worker
+title: Ledger Worker
 lifecycle: active
 owner:
   name: Payments team
   ref: https://helios-payments.example/wiki/spaces/PAY/pages/1/Payments+Team
-type: job
+component_type: job
 links:
   - kind: repository
     provider: github

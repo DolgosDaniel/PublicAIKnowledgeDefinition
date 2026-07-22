@@ -2,11 +2,11 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://paik.dev/schema/environment.schema.json",
   "title": "PAIK Environment",
-  "description": "One running instance of the system. See SPEC.md section 7.",
+  "description": "One running instance of the system. See SPEC.md section 8.",
   "allOf": [{ "$ref": "./common.schema.json" }],
   "type": "object",
   "properties": {
-    "kind": { "const": "environment" },
+    "type": { "const": "paik-environment" },
     "purpose": {
       "type": "string",
       "description": "e.g. \"developer integration testing\", \"customer-facing production, EU region\""

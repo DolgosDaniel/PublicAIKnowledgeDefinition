@@ -2,12 +2,14 @@
 
 A tool-agnostic, Markdown-based standard for describing a software project end-to-end —
 planning, implementation, and operations — by **linking** the systems a team already uses
-instead of duplicating their content. PAIK v0.3 has exactly three document kinds — `project`,
+instead of duplicating their content. PAIK v0.4 has exactly three document kinds — `project`,
 `component`, `environment` — plus one generic, typed `links[]` list that covers ticketing (Jira,
 ...), knowledge base (Confluence, ...), API specs (SwaggerHub, ...), source repos (GitHub/GitLab,
 ...), third-party/external services, and where secrets are managed. There is no separate document
 type per external system, and no separate `team` document — ownership is an inline `owner: {
-name, ref }` on `project.md`/`component.md`.
+name, ref }` on `project.md`/`component.md`. PAIK is also a strict domain profile of the
+[Open Knowledge Format](https://github.com/GoogleCloudPlatform/knowledge-catalog/blob/main/okf/SPEC.md)
+— every PAIK document is a valid OKF v0.1 concept, see `paik-spec/SPEC.md` section 2.
 
 A PAIK document is never a copy of a ticket, a wiki page, or a database password — it's a small,
 structured pointer: what system, which identifier, whose responsibility, how to reach it. The
@@ -53,12 +55,14 @@ systems stay the source of truth; PAIK stays the map.
    pip install -r PublicAIKnowledgeDefinition/tools/requirements.txt
    python PublicAIKnowledgeDefinition/tools/paik_validate.py <your-project>/paik
    ```
-   [`tools/paik_validate.py`](tools/paik_validate.py) checks YAML frontmatter against the
-   matching schema, that every relative reference (`components`, `environments`, non-absolute
-   `links[].url`) resolves to a real file, that ids are unique and `depends_on` has no unknown
-   targets or cycles, that a file's `kind` matches whether it lives under `components/`/
-   `environments/`, and does a best-effort scan for accidentally-embedded secrets. It's the same
-   check [`.github/workflows/paik-validate.yml`](.github/workflows/paik-validate.yml) runs in CI
+   [`tools/paik_validate.py`](tools/paik_validate.py) checks two layers: OKF's own base
+   conformance (every document has a non-empty `type`), then everything PAIK adds on top — YAML
+   frontmatter against the matching schema, that every relative reference (`components`,
+   `environments`, non-absolute `links[].url`) resolves to a real file of the expected `type`,
+   that ids are unique and `depends_on` has no unknown targets or cycles, and a best-effort scan
+   for accidentally-embedded secrets. [`tools/check_okf_conformance.py`](tools/check_okf_conformance.py)
+   checks the OKF layer alone, if that's all you need. It's the same check
+   [`.github/workflows/paik-validate.yml`](.github/workflows/paik-validate.yml) runs in CI
    against every example in this repo — copy that workflow into your own project to get the same
    check on every push/PR.
 
@@ -76,18 +80,21 @@ systems stay the source of truth; PAIK stays the map.
    Claude Code) for ready-made workflows (bootstrap, onboarding brief, health-check, sync).
 
 6. **Commit `paik/` to your repo.** Every document only points at *where* things live — never a
-   secret — see `SPEC.md` section 6. Whether a given `paik/` folder is safe to make public is a
+   secret — see `SPEC.md` section 7. Whether a given `paik/` folder is safe to make public is a
    repo-level call you make the same way you would for any other doc in the repo; PAIK doesn't
    impose a per-document classification for this.
 
 ## Start here
 
-- [`paik-spec/SPEC.md`](paik-spec/SPEC.md) — the normative standard: directory layout, common
-  frontmatter, the `links` convention, cross-referencing, and the three document kinds.
+- [`paik-spec/SPEC.md`](paik-spec/SPEC.md) — the normative standard: directory layout, its
+  relationship to the Open Knowledge Format, common frontmatter, the `links` convention,
+  cross-referencing, and the three document kinds.
 - [`paik-spec/templates/`](paik-spec/templates/) — blank files to copy into a new project as its
   `paik/` folder.
 - [`paik-spec/schema/`](paik-spec/schema/) — JSON Schema for every document kind's frontmatter.
 - [`tools/paik_validate.py`](tools/paik_validate.py) — the validator described in step 4 above.
+- [`tools/check_okf_conformance.py`](tools/check_okf_conformance.py) — checks only the OKF base
+  rule, if you want proof a `paik/` folder is a conformant OKF v0.1 bundle on its own.
 - [`paik-spec/LINKS.md`](paik-spec/LINKS.md) — non-normative recommendations for which fields to
   set on common `links[]` `kind` values, so different projects shape the same `kind` the same way.
 - [`paik-spec/ROLES.md`](paik-spec/ROLES.md) — who typically edits which part of a `paik/`
@@ -111,7 +118,7 @@ systems stay the source of truth; PAIK stays the map.
 - [`examples/complex-project/`](examples/complex-project/) — Nimbus Commerce: the multi-service
   instance, 3 services, 5 owning teams, 4 environments across 2 regions.
 - [`examples/mixed-components-project/`](examples/mixed-components-project/) — DataForge
-  Analytics: all four `component.type` values in one project — `service`, `library`
+  Analytics: all four `component_type` values in one project — `service`, `library`
   (`environments: []`), `job` (scheduled), and `other` (a no-code tool with no repository).
 - [`examples/monorepo-project/`](examples/monorepo-project/) — Vertex Platform: three components
   sharing one repository URL, disambiguated by `purpose` — a component is not a repository.
@@ -122,6 +129,9 @@ systems stay the source of truth; PAIK stays the map.
 - [`examples/operations-ready-project/`](examples/operations-ready-project/) — Helios Payments:
   a complete per-component operational map (health, deploy pipeline, dashboard, runbooks,
   on-call, logs, SLO) on one shared production environment.
+- [`examples/okf-compatible-project/`](examples/okf-compatible-project/) — Beacon Tasks: a
+  file-by-file walkthrough of why every PAIK document is also a conformant OKF v0.1 concept,
+  and where PAIK's own `id` diverges from OKF's file-path-based concept identity.
 
 ## Tooling
 

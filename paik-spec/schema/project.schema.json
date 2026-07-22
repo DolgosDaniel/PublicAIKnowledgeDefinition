@@ -2,11 +2,11 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://paik.dev/schema/project.schema.json",
   "title": "PAIK Project",
-  "description": "The entry point document for a PAIK-described project. See SPEC.md section 7.",
+  "description": "The entry point document for a PAIK-described project. See SPEC.md section 8.",
   "allOf": [{ "$ref": "./common.schema.json" }],
   "type": "object",
   "properties": {
-    "kind": { "const": "project" },
+    "type": { "const": "paik-project" },
     "description": {
       "type": "string",
       "description": "One-paragraph summary of what the project does"

@@ -1,6 +1,6 @@
 # Example: external-dependencies-project — Aurora Logistics
 
-The instance of the PAIK v0.3 standard that demonstrates third-party dependencies: 5 services,
+The instance of the PAIK v0.4 standard that demonstrates third-party dependencies: 5 services,
 6 owning teams, 3 environments, and 2 third-party dependencies (Stripe for payments, Mapbox for
 routing/geocoding) the project calls but does not operate. Start at
 [`paik/project.md`](paik/project.md).

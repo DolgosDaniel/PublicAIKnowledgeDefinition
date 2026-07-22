@@ -1,8 +1,8 @@
 ---
-paik: "0.3"
-kind: environment
+paik: "0.4"
+type: paik-environment
 id: staging
-name: Staging
+title: Staging
 lifecycle: active
 owner:
   name: Platform team

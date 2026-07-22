@@ -1,8 +1,8 @@
 ---
-paik: "0.3"
-kind: project
+paik: "0.4"
+type: paik-project
 id: northwind-loyalty
-name: Northwind Loyalty
+title: Northwind Loyalty
 lifecycle: planning
 owner:
   name: Northwind Labs product team

@@ -18,8 +18,9 @@ your Git host's review rules instead of just documented here.
 - Same boundary as the product owner: the engineering-facing documents belong to engineering.
 
 ## Engineer
-- Owns `component.md`/`components/*.md`: `type`, `repository`/`api` links, `depends_on`,
-  `environments`, and the component's `secrets` link (the *location*, never a value).
+- Owns `component.md`/`components/*.md`: `component_type`, `repository`/`api` links,
+  `depends_on`, `environments`, and the component's `secrets` link (the *location*, never a
+  value).
 - Adds new components to `project.md`'s `components` array when a new one is created — this is
   the step `paik_validate.py` catches if it's forgotten (see the "component exists but isn't
   listed" error in `paik-spec/TROUBLESHOOTING.md`).
@@ -33,7 +34,7 @@ your Git host's review rules instead of just documented here.
 
 ## Everyone
 - `owner` is always a team, never an individual — PAIK does not name people anywhere in a
-  document (see `SPEC.md` section 2). If you need to know who's actually on a team right now,
+  document (see `SPEC.md` section 3). If you need to know who's actually on a team right now,
   follow `owner.ref` into the org's own directory/wiki; don't add a name to a PAIK document to
   answer that instead.
 - Anyone can run `python tools/paik_validate.py <paik-dir>` before committing a change — it

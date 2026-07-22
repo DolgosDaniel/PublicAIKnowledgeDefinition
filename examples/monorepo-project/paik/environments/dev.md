@@ -1,8 +1,8 @@
 ---
-paik: "0.3"
-kind: environment
+paik: "0.4"
+type: paik-environment
 id: dev
-name: Development
+title: Development
 lifecycle: active
 purpose: shared developer integration environment for all three components, auto-deployed from main
 app_url: https://dev.vertex-robotics.example

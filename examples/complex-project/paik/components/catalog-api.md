@@ -1,13 +1,13 @@
 ---
-paik: "0.3"
-kind: component
+paik: "0.4"
+type: paik-component
 id: catalog-api
-name: Catalog API
+title: Catalog API
 lifecycle: active
 owner:
   name: Catalog team
   ref: https://nimbus-commerce.example/directory/teams/catalog
-type: service
+component_type: service
 links:
   - kind: repository
     provider: github

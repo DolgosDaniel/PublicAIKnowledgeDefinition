@@ -1,8 +1,8 @@
 ---
-paik: "0.3"
-kind: project
+paik: "0.4"
+type: paik-project
 id: taskflow-lite
-name: TaskFlow Lite
+title: TaskFlow Lite
 lifecycle: active
 owner:
   name: TaskFlow Lite team

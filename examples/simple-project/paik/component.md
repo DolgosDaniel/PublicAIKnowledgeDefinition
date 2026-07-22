@@ -1,13 +1,13 @@
 ---
-paik: "0.3"
-kind: component
+paik: "0.4"
+type: paik-component
 id: taskflow-lite-service
-name: TaskFlow Lite
+title: TaskFlow Lite
 lifecycle: active
 owner:
   name: TaskFlow Lite team
   ref: https://taskflow-inc.example/directory/teams/taskflow-lite
-type: service
+component_type: service
 links:
   - kind: repository
     provider: github

@@ -1,8 +1,8 @@
 ---
-paik: "0.3"
-kind: project
+paik: "0.4"
+type: paik-project
 id: aurora-logistics
-name: Aurora Logistics
+title: Aurora Logistics
 lifecycle: active
 owner:
   name: Platform team
@@ -11,7 +11,7 @@ description: >
   A fleet/delivery management platform: a dispatcher dashboard plus four microservices
   (orders, routing, fleet, notifications), built by six teams, deployed to three environments,
   and depending on two third-party services (Stripe for payments, Mapbox for routing/geocoding)
-  it does not operate. Used here as the PAIK v0.3 instance that demonstrates third-party
+  it does not operate. Used here as the PAIK v0.4 instance that demonstrates third-party
   dependencies (as `links[].kind: external-service`, no dedicated document type) and a multi-hop
   internal dependency graph, alongside examples/simple-project (one service) and
   examples/complex-project (three services, region-scaled environments).

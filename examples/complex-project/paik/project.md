@@ -1,8 +1,8 @@
 ---
-paik: "0.3"
-kind: project
+paik: "0.4"
+type: paik-project
 id: nimbus-commerce
-name: Nimbus Commerce
+title: Nimbus Commerce
 lifecycle: active
 owner:
   name: Platform team

@@ -1,8 +1,8 @@
 ---
-paik: "0.3"
-kind: project
+paik: "0.4"
+type: paik-project
 id: solstice-rewards
-name: Solstice Rewards
+title: Solstice Rewards
 lifecycle: active
 owner:
   name: Product team

@@ -1,13 +1,13 @@
 ---
-paik: "0.3"
-kind: component
+paik: "0.4"
+type: paik-component
 id: notifications-service
-name: Notifications Service
+title: Notifications Service
 lifecycle: active
 owner:
   name: Notifications team
   ref: https://aurora-logistics.example/directory/teams/notifications
-type: service
+component_type: service
 links:
   - kind: repository
     provider: github

@@ -1,6 +1,6 @@
 # Example: mixed-components-project — DataForge Analytics
 
-The instance of the PAIK v0.3 standard that exercises every `component.type` value, since the
+The instance of the PAIK v0.4 standard that exercises every `component_type` value, since the
 other examples might otherwise leave the impression that every component is an HTTP service:
 
 - `ingest-api` — `service`, the familiar shape.

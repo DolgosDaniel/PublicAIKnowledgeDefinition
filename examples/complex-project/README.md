@@ -1,6 +1,6 @@
 # Example: complex-project — Nimbus Commerce
 
-The multi-service instance of the PAIK v0.3 standard: 3 services (frontend, orders-api,
+The multi-service instance of the PAIK v0.4 standard: 3 services (frontend, orders-api,
 catalog-api), 5 owning teams, 4 environments across 2 regions — all expressed with just
 `project.md` + `components/*.md` + `environments/*.md`. Teams have no file of their own; each
 component/environment carries its owner inline, and everything that used to be a separate

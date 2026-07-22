@@ -1,13 +1,13 @@
 ---
-paik: "0.3"
-kind: component
+paik: "0.4"
+type: paik-component
 id: routing-service
-name: Routing Service
+title: Routing Service
 lifecycle: active
 owner:
   name: Routing team
   ref: https://aurora-logistics.example/directory/teams/routing
-type: service
+component_type: service
 links:
   - kind: repository
     provider: github

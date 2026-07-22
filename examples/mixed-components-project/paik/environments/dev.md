@@ -1,8 +1,8 @@
 ---
-paik: "0.3"
-kind: environment
+paik: "0.4"
+type: paik-environment
 id: dev
-name: Development
+title: Development
 lifecycle: active
 purpose: developer integration testing for ingest-api; the batch job and dashboard have no dev environment
 app_url: https://ingest-dev.dataforge.example

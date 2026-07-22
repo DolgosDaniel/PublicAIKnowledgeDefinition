@@ -1,8 +1,8 @@
 ---
-paik: "0.3"
-kind: project
+paik: "0.4"
+type: paik-project
 id: helios-payments
-name: Helios Payments
+title: Helios Payments
 lifecycle: active
 owner:
   name: Payments team

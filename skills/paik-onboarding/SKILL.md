@@ -12,7 +12,7 @@ Turn a `paik/` folder into a short onboarding brief for a new human or AI contri
 1. Start at `paik/project.md` — read the description, `owner`, and `links`, then follow
    `components`/`environments` (that's the point of PAIK: two hops from `project.md` reaches
    everything).
-2. Read `component*.md`: for each component, note its `type`, `owner`, `environments`,
+2. Read `component*.md`: for each component, note its `component_type`, `owner`, `environments`,
    `depends_on`, and group its `links[]` by `kind` (repository, api, ticketing, secrets,
    external-service, ...). Do not fetch any link's live content unless the user specifically
    asks — this brief is about orientation, not a data dump.
@@ -29,7 +29,7 @@ Turn a `paik/` folder into a short onboarding brief for a new human or AI contri
    - "Components": one line per component — what it is, its repository/API links, what it
      depends on.
    - "Who owns what": component/environment → owner name → `ref` if present.
-   - "Environments": name → purpose → URL.
+   - "Environments": title → purpose → URL.
    - "Secrets": note where each `kind: secrets` link points, explicitly noting none are embedded
      here.
 6. Keep the whole brief short enough to read in under two minutes — it's a map to the real

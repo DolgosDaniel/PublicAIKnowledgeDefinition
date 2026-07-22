@@ -1,13 +1,13 @@
 ---
-paik: "0.3"
-kind: component
+paik: "0.4"
+type: paik-component
 id: rewards-app
-name: Rewards App
+title: Rewards App
 lifecycle: active
 owner:
   name: Rewards engineering team
   ref: https://solstice-app.example/wiki/spaces/REWARDS/pages/2/Engineering+Team
-type: service
+component_type: service
 links:
   - kind: repository
     provider: github

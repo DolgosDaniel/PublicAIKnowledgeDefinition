@@ -1,32 +1,41 @@
 #!/usr/bin/env python3
-"""Validate one or more paik/ folders against the PAIK v0.3 schemas and conventions.
+"""Validate one or more paik/ folders against the PAIK v0.4 schemas and conventions.
 
 Usage:
     python tools/paik_validate.py <paik-dir> [<paik-dir> ...]
 
-Checks performed, per paik/ folder:
-  - Every document's YAML frontmatter parses and validates against its kind's JSON Schema,
-    including `format: uri` fields (a real FormatChecker is wired in, not jsonschema's silent
-    default of skipping format assertions).
-  - A document under components/ or environments/ has the matching kind (kind vs. placement).
-  - Every id is unique across the *whole* project, not just within one kind - a component and
-    an environment cannot share an id either.
-  - Every relative reference resolves to a file that exists, AND that file's own `kind` matches
-    what the referencing field expects: a `components` entry must point at a `kind: component`
-    document, an `environments` entry at a `kind: environment` document.
-  - The project document lists every component and every environment document that actually
-    exists under the folder - nothing is silently unreachable from project.md.
-  - Every `links[].component` / `links[].environment` qualifier, and every
-    `databases[].component` qualifier, names a component/environment id that actually exists.
-  - Every `depends_on` entry is a known component id, and the dependency graph has no cycles.
-  - Every links[] entry has a non-empty `kind` (error) and, as a soft convention, a kebab-case
-    `kind` (warning); and carries at least one of url/id/purpose/provider beyond `kind` (warning -
-    a kind-only link isn't useful to a reader).
-  - A best-effort regex scan for accidentally-embedded secrets (AWS keys, private key blocks,
-    common vendor token prefixes, inline password/api_key-looking assignments) across the whole
-    file, not just frontmatter - PAIK documents must only ever point at where a secret lives.
+PAIK v0.4 is a domain profile of the Open Knowledge Format (OKF) v0.1 - see SPEC.md's
+"Relationship to Open Knowledge Format" section. Checks run in two layers:
+
+  Layer 1 - OKF base conformance (applies to every non-reserved .md file):
+    - Frontmatter parses as YAML and is a mapping.
+    - The `type` field is present and non-empty (OKF's one and only hard requirement).
+
+  Layer 2 - PAIK profile conformance (on top of layer 1):
+    - `type` is one of the three PAIK consts (paik-project/paik-component/paik-environment) and
+      validates against that kind's JSON Schema, including `format: uri` fields (a real
+      FormatChecker is wired in, not jsonschema's silent default of skipping format assertions).
+    - A document under components/ or environments/ has the matching `type` (vs. placement).
+    - Every `id` is unique across the *whole* project, not just within one kind - a component
+      and an environment cannot share an id either. (PAIK's `id` is a separate mechanism from
+      OKF's own concept identity, which is always the file's path - see SPEC.md.)
+    - Every relative reference resolves to a file that exists, inside the paik/ folder, AND
+      that file's own `type` matches what the referencing field expects.
+    - The project document lists every component and every environment document that actually
+      exists under the folder - nothing is silently unreachable from project.md.
+    - Every `links[].component` / `links[].environment` qualifier, and every
+      `databases[].component` qualifier, names a component/environment id that actually exists.
+    - Every `depends_on` entry is a known component id, and the dependency graph has no cycles.
+    - Every links[] entry has a non-empty `kind` (error) and, as a soft convention, a kebab-case
+      `kind` (warning); and carries at least one of url/id/purpose/provider beyond `kind`
+      (warning - a kind-only link isn't useful to a reader).
+    - A best-effort regex scan for accidentally-embedded secrets (AWS keys, private key blocks,
+      common vendor token prefixes, inline password/api_key-looking assignments) across the
+      whole file, not just frontmatter - PAIK documents must only ever point at where a secret
+      lives.
 
 Exit code is non-zero if any error (not warning) was found in any of the given folders.
+See tools/check_okf_conformance.py for a standalone check of layer 1 alone.
 """
 import argparse
 import glob
@@ -44,6 +53,13 @@ SCHEMA_DIR = os.path.join(SCRIPT_DIR, "..", "paik-spec", "schema")
 FRONTMATTER_RE = re.compile(r"^---\n(.*?)\n---\n", re.DOTALL)
 ABSOLUTE_URL_RE = re.compile(r"^[a-zA-Z][a-zA-Z0-9+.-]*://")
 KEBAB_CASE_RE = re.compile(r"^[a-z0-9]+(-[a-z0-9]+)*$")
+
+# OKF concept `type` -> the short logical kind name used internally throughout this script.
+TYPE_TO_KIND = {
+    "paik-project": "project",
+    "paik-component": "component",
+    "paik-environment": "environment",
+}
 
 SECRET_PATTERNS = [
     (re.compile(r"AKIA[0-9A-Z]{16}"), "an AWS access key ID"),
@@ -66,7 +82,7 @@ def _compose_schema(common, kind_schema):
     (i.e. exactly the allOf: [{"$ref": "./common.schema.json"}] pattern the schema files use for
     readability) makes `unevaluatedProperties` forget that $ref'd schema contributed any
     properties at all - so a single invalid URI anywhere under `links[]` spuriously "unlocks" a
-    false "'id'/'name'/'owner'/... were unexpected" error on top of the real one. Composing the
+    false "'id'/'title'/'owner'/... were unexpected" error on top of the real one. Composing the
     schemas into one flat object before handing them to the validator sidesteps the bug entirely
     (same-document `$ref`s to `$defs`, which this still uses for `owner`/`link`, don't trigger
     it) without changing what's actually enforced or touching the on-disk schema files.
@@ -151,13 +167,14 @@ def validate_dir(paik_dir, validators, report):
         report.error(paik_dir, "no .md files found")
         return
 
-    docs = {}  # rel path -> frontmatter dict
+    docs = {}  # rel path -> frontmatter dict (PAIK-recognized documents only)
     project_docs = []
     ids_all = {}  # id -> [(kind, rel), ...] across every kind
     component_docs = {}  # component id -> rel path
     environment_docs = {}  # environment id -> rel path
 
-    # Pass 1: parse, schema-validate, collect ids, scan for secrets/link hygiene.
+    # Pass 1: OKF base conformance, then (for recognized PAIK types) schema-validate, collect
+    # ids, and scan for secrets/link hygiene.
     for path in md_files:
         rel = os.path.relpath(path, paik_dir)
         with open(path, encoding="utf-8") as fh:
@@ -176,14 +193,23 @@ def validate_dir(paik_dir, validators, report):
             report.error(rel, "frontmatter did not parse to a mapping")
             continue
 
-        kind = fm.get("kind")
-        if kind not in validators:
-            report.error(rel, f"unknown or missing 'kind': {kind!r}")
+        # Layer 1 - OKF base conformance: a non-empty `type` is OKF's only hard requirement.
+        type_value = fm.get("type")
+        if not isinstance(type_value, str) or not type_value.strip():
+            report.error(rel, "OKF base conformance: missing or empty 'type' field")
+            continue
+
+        # Layer 2 - PAIK profile conformance starts here. A `type` OKF would accept but PAIK
+        # doesn't recognize is a PAIK-profile error, not an OKF one - the document is still a
+        # valid OKF concept, just not one this validator's PAIK checks know how to interpret.
+        kind = TYPE_TO_KIND.get(type_value)
+        if kind is None:
+            report.error(rel, f"unrecognized PAIK type {type_value!r} (expected paik-project, paik-component, or paik-environment)")
             continue
 
         expected = expected_kind_for_path(rel)
         if expected and kind != expected:
-            report.error(rel, f"file lives under {expected}s/ but kind is {kind!r}")
+            report.error(rel, f"file lives under {expected}s/ but type is {type_value!r} (expected 'paik-{expected}')")
 
         for e in sorted(validators[kind].iter_errors(fm), key=lambda e: list(e.path)):
             report.error(rel, f"schema violation at {list(e.path)}: {e.message}")
@@ -224,7 +250,7 @@ def validate_dir(paik_dir, validators, report):
             where = ", ".join(f"{k}:{r}" for k, r in entries)
             report.error(where, f"duplicate id {cid!r} used by {len(entries)} documents")
 
-    # Pass 2: reference resolution, including that the target's kind matches expectations and
+    # Pass 2: reference resolution, including that the target's type matches expectations and
     # that the target is actually inside this paik/ folder (a relative link can walk outside it
     # with enough "../", which is never valid - PAIK documents only cross-reference each other).
     paik_abs = os.path.normpath(paik_dir)
@@ -252,10 +278,10 @@ def validate_dir(paik_dir, validators, report):
                     report.error(rel, f"{field} entry {r!r} resolves outside the paik/ folder - PAIK documents must only reference other PAIK documents")
                 elif status == "missing":
                     report.error(rel, f"{field} entry {r!r} does not resolve to a file")
-                elif target_fm is not None and target_fm.get("kind") != expected_kind:
+                elif target_fm is not None and TYPE_TO_KIND.get(target_fm.get("type")) != expected_kind:
                     report.error(
                         rel,
-                        f"{field} entry {r!r} points at a {target_fm.get('kind')!r} document, expected {expected_kind!r}",
+                        f"{field} entry {r!r} points at a {target_fm.get('type')!r} document, expected 'paik-{expected_kind}'",
                     )
 
         for i, link in enumerate(fm.get("links") or []):
@@ -275,7 +301,7 @@ def validate_dir(paik_dir, validators, report):
             if envq is not None and envq not in environment_docs:
                 report.error(rel, f"links[{i}] environment {envq!r} is not a known environment id")
 
-        if fm.get("kind") == "environment":
+        if TYPE_TO_KIND.get(fm.get("type")) == "environment":
             for i, dbentry in enumerate(fm.get("databases") or []):
                 if not isinstance(dbentry, dict):
                     continue
@@ -305,7 +331,7 @@ def validate_dir(paik_dir, validators, report):
     component_ids = set(component_docs.keys())
     graph = {}
     for rel, fm in docs.items():
-        if fm.get("kind") != "component":
+        if TYPE_TO_KIND.get(fm.get("type")) != "component":
             continue
         cid = fm.get("id")
         deps = fm.get("depends_on") or []

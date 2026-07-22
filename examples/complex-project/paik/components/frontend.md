@@ -1,13 +1,13 @@
 ---
-paik: "0.3"
-kind: component
+paik: "0.4"
+type: paik-component
 id: frontend
-name: Frontend
+title: Frontend
 lifecycle: active
 owner:
   name: Frontend team
   ref: https://nimbus-commerce.example/directory/teams/frontend
-type: service
+component_type: service
 links:
   - kind: repository
     provider: github

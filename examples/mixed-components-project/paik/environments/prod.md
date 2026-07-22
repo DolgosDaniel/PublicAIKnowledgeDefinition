@@ -1,8 +1,8 @@
 ---
-paik: "0.3"
-kind: environment
+paik: "0.4"
+type: paik-environment
 id: prod
-name: Production
+title: Production
 lifecycle: active
 purpose: production - serves ingest-api, runs the nightly-etl job, and hosts reporting-dashboard
 app_url: https://ingest.dataforge.example

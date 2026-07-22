@@ -1,13 +1,13 @@
 ---
-paik: "0.3"
-kind: component
+paik: "0.4"
+type: paik-component
 id: ingest-api
-name: Ingest API
+title: Ingest API
 lifecycle: active
 owner:
   name: Data platform team
   ref: https://dataforge.example/wiki/spaces/DATA/pages/1/Data+Platform+Team
-type: service
+component_type: service
 links:
   - kind: repository
     provider: github

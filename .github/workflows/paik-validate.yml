@@ -30,3 +30,16 @@ jobs:
           examples/mixed-components-project/paik
           examples/monorepo-project/paik
           examples/operations-ready-project/paik
+          examples/okf-compatible-project/paik
+      - name: Verify every example is an OKF v0.1 bundle
+        run: >
+          python tools/check_okf_conformance.py
+          examples/simple-project/paik
+          examples/complex-project/paik
+          examples/external-dependencies-project/paik
+          examples/cross-functional-product/paik
+          examples/minimal-planning-project/paik
+          examples/mixed-components-project/paik
+          examples/monorepo-project/paik
+          examples/operations-ready-project/paik
+          examples/okf-compatible-project/paik

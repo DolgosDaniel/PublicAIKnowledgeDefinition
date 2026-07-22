@@ -1,8 +1,8 @@
 ---
-paik: "0.3"
-kind: environment
+paik: "0.4"
+type: paik-environment
 id: prod-us
-name: Production — US
+title: Production — US
 lifecycle: active
 owner:
   name: SRE & QA

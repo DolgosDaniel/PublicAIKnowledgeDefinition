@@ -1,8 +1,8 @@
 ---
-paik: "0.3"
-kind: environment
+paik: "0.4"
+type: paik-environment
 id: <env-slug>
-name: <Environment Name>
+title: <Environment Name>
 lifecycle: active
 purpose: <e.g. "developer integration testing" / "customer-facing production, EU region">
 app_url: https://<env>.example.com

@@ -1,8 +1,8 @@
 ---
-paik: "0.3"
-kind: project
+paik: "0.4"
+type: paik-project
 id: <project-slug>
-name: <Project Name>
+title: <Project Name>
 lifecycle: planning # planning | active | maintenance | sunset
 owner:
   name: <Owning team name>

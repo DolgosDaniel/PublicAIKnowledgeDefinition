@@ -1,13 +1,13 @@
 ---
-paik: "0.3"
-kind: component
+paik: "0.4"
+type: paik-component
 id: orders-api
-name: Orders API
+title: Orders API
 lifecycle: active
 owner:
   name: Orders team
   ref: https://nimbus-commerce.example/directory/teams/orders
-type: service
+component_type: service
 links:
   - kind: repository
     provider: github

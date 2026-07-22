@@ -1,13 +1,13 @@
 ---
-paik: "0.3"
-kind: component
+paik: "0.4"
+type: paik-component
 id: fleet-service
-name: Fleet Service
+title: Fleet Service
 lifecycle: active
 owner:
   name: Fleet team
   ref: https://aurora-logistics.example/directory/teams/fleet
-type: service
+component_type: service
 links:
   - kind: repository
     provider: github

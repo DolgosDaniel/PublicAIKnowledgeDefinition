@@ -1,8 +1,8 @@
 ---
-paik: "0.3"
-kind: environment
+paik: "0.4"
+type: paik-environment
 id: dev
-name: Development
+title: Development
 lifecycle: active
 owner:
   name: SRE & QA

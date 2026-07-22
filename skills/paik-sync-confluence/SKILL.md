@@ -24,7 +24,7 @@ Verify (not mirror) the knowledge-base pointers in a PAIK project.
    only handles `kind: confluence` links; a project's `notion`/`sharepoint`/other wiki links need
    their own MCP integration and are out of scope here.
 3. Do not fetch or store the page's actual content — PAIK links point to knowledge, they don't
-   duplicate it (see `paik-spec/SPEC.md` section 3).
+   duplicate it (see `paik-spec/SPEC.md` section 4).
 4. If a space or page has moved, propose the corrected `url` to the user rather than editing
    silently. If it's gone entirely, flag it rather than guessing a replacement.
 5. Report: link status (OK / moved / broken) per entry, and anything you'd update.

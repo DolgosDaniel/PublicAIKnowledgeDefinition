@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://paik.dev/schema/common.schema.json",
   "title": "PAIK Common Frontmatter",
-  "description": "Fields shared by every PAIK document, plus the reusable owner/link building blocks every document draws on. See SPEC.md section 2.",
+  "description": "Fields shared by every PAIK document, plus the reusable owner/link building blocks every document draws on. Aligned with the Open Knowledge Format (OKF) v0.1 base frontmatter (type/title/description) - see SPEC.md section 2 and the 'Relationship to Open Knowledge Format' section.",
   "type": "object",
   "$defs": {
     "owner": {
@@ -24,7 +24,7 @@
     },
     "link": {
       "type": "object",
-      "description": "A single typed pointer to an external system or resource. `kind` is the only enforced key, on purpose - one shape covers ticketing, wikis, API specs, repos, external services, secrets locations, dashboards, runbooks, on-call, and anything else. See SPEC.md section 3 for common `kind` values. Fields beyond `kind` are intentionally open (unlike the rest of a PAIK document), since the whole point of `links` is not needing a new schema per system.",
+      "description": "A single typed pointer to an external system or resource. `kind` is the only enforced key, on purpose - one shape covers ticketing, wikis, API specs, repos, external services, secrets locations, dashboards, runbooks, on-call, and anything else. See SPEC.md section 4 for common `kind` values. Fields beyond `kind` are intentionally open (unlike the rest of a PAIK document), since the whole point of `links` is not needing a new schema per system. This `kind` is unrelated to a document's own top-level `type` (OKF concept type) - it's a nested, PAIK-only field.",
       "properties": {
         "kind": {
           "type": "string",
@@ -64,22 +64,27 @@
     }
   },
   "properties": {
+    "type": {
+      "type": "string",
+      "description": "OKF concept type - the one field the Open Knowledge Format itself requires, non-empty, on every concept document. Each PAIK document kind gives this a fixed value: paik-project, paik-component, or paik-environment (enforced by that kind's own schema, not here)."
+    },
+    "title": {
+      "type": "string",
+      "description": "Human-readable name (OKF's `title` field)"
+    },
+    "description": {
+      "type": "string",
+      "description": "OKF-recommended single-sentence summary. Optional at the common level; individual kinds may require or refine it (project.md requires a richer one - see project.schema.json)."
+    },
     "paik": {
       "type": "string",
-      "const": "0.3",
+      "const": "0.4",
       "description": "PAIK spec version this document conforms to"
-    },
-    "kind": {
-      "type": "string",
-      "enum": ["project", "component", "environment"]
     },
     "id": {
       "type": "string",
       "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$",
-      "description": "Stable kebab-case slug, unique within the project"
-    },
-    "name": {
-      "type": "string"
+      "description": "Stable kebab-case slug, unique within the project. Distinct from OKF's own concept identity, which is always the document's file path with the .md suffix removed - the two commonly agree (a file named orders-api.md with id: orders-api) but are not the same mechanism, and PAIK's id is what the rest of this spec (depends_on, component/environment qualifiers, ...) actually resolves against."
     },
     "lifecycle": {
       "type": "string",
@@ -95,5 +100,5 @@
       "description": "Free-form, namespaced fields for org-specific needs that don't belong in the core schema, e.g. \"company.hu/data-owner\": \"finance\". Namespace keys as domain/key to avoid collisions; this is intentionally not validated further."
     }
   },
-  "required": ["paik", "kind", "id", "name", "lifecycle"]
+  "required": ["paik", "type", "id", "title", "lifecycle"]
 }

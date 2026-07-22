@@ -2,8 +2,10 @@
 """Unit tests for tools/paik_validate.py.
 
 Builds a tiny valid fixture paik/ folder, confirms it validates clean, then applies one
-mutation at a time (each corresponding to a real gap the reviewed v0.3 validator missed) and
-asserts the mutated copy is now flagged. Run with: python -m unittest tools.test_paik_validate
+mutation at a time and asserts the mutated copy is now flagged - both PAIK-profile mutations
+(a gap the v0.3 validator was found to miss) and the two OKF-base-conformance layer checks
+(missing `type`, unrecognized `type`) introduced with the v0.4 OKF alignment.
+Run with: python -m unittest tools.test_paik_validate
 """
 import copy
 import os
@@ -16,10 +18,10 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import paik_validate as pv
 
 PROJECT_MD = """---
-paik: "0.3"
-kind: project
+type: paik-project
+paik: "0.4"
 id: fixture
-name: Fixture
+title: Fixture
 lifecycle: active
 owner:
   name: Fixture team
@@ -37,14 +39,14 @@ environments:
 """
 
 COMPONENT_A_MD = """---
-paik: "0.3"
-kind: component
+type: paik-component
+paik: "0.4"
 id: a
-name: A
+title: A
 lifecycle: active
 owner:
   name: Fixture team
-type: service
+component_type: service
 links:
   - kind: repository
     provider: github
@@ -57,10 +59,10 @@ depends_on: []
 """
 
 ENVIRONMENT_DEV_MD = """---
-paik: "0.3"
-kind: environment
+type: paik-environment
+paik: "0.4"
 id: dev
-name: Dev
+title: Dev
 lifecycle: active
 purpose: fixture dev environment
 app_url: https://dev.fixture.example
@@ -104,6 +106,28 @@ class ValidatorTests(unittest.TestCase):
         report = self.run_validate()
         self.assertEqual(report.errors, [])
 
+    def test_missing_type_field_is_rejected(self):
+        files = copy.deepcopy(self.files)
+        files["components/a.md"] = files["components/a.md"].replace("type: paik-component\n", "", 1)
+        self.write(files)
+        report = self.run_validate()
+        self.assertTrue(
+            any("OKF base conformance" in e and "'type'" in e for e in report.errors),
+            f"expected an OKF base-conformance error, got: {report.errors}",
+        )
+
+    def test_unrecognized_type_value_is_rejected(self):
+        files = copy.deepcopy(self.files)
+        files["components/a.md"] = files["components/a.md"].replace(
+            "type: paik-component\n", "type: some-other-okf-concept\n", 1
+        )
+        self.write(files)
+        report = self.run_validate()
+        self.assertTrue(
+            any("unrecognized PAIK type" in e for e in report.errors),
+            f"expected an unrecognized-type error, got: {report.errors}",
+        )
+
     def test_component_and_environment_sharing_an_id_is_rejected(self):
         files = copy.deepcopy(self.files)
         files["components/a.md"] = files["components/a.md"].replace("id: a\n", "id: dev\n", 1)
@@ -122,8 +146,8 @@ class ValidatorTests(unittest.TestCase):
         self.write(files)
         report = self.run_validate()
         self.assertTrue(
-            any("expected 'component'" in e for e in report.errors),
-            f"expected a kind-mismatch error, got: {report.errors}",
+            any("expected 'paik-component'" in e for e in report.errors),
+            f"expected a type-mismatch error, got: {report.errors}",
         )
 
     def test_component_missing_from_project_components_is_rejected(self):

@@ -36,6 +36,6 @@ Use it to describe where a project actually is, not to gate anything.
 
 ## What "done" doesn't mean
 None of this requires a new component/environment or a heavier schema — every checkbox above is
-satisfied with fields the v0.3 schemas already have room for. If you find yourself wanting a
-field that doesn't fit anywhere, that's `SPEC.md` section 9 (deferred work) or
+satisfied with fields the v0.4 schemas already have room for. If you find yourself wanting a
+field that doesn't fit anywhere, that's `SPEC.md` section 10 (deferred work) or
 `paik-spec/LINKS.md` (a new `kind`), not a reason to add a new document type.

@@ -1,8 +1,8 @@
 ---
-paik: "0.3"
-kind: environment
+paik: "0.4"
+type: paik-environment
 id: dev
-name: Development
+title: Development
 lifecycle: active
 purpose: developer integration testing, auto-deployed from main on every merge
 app_url: https://rewards-app-dev.onrender.com

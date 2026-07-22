@@ -1,8 +1,8 @@
 ---
-paik: "0.3"
-kind: project
+paik: "0.4"
+type: paik-project
 id: dataforge-analytics
-name: DataForge Analytics
+title: DataForge Analytics
 lifecycle: active
 owner:
   name: Data platform team

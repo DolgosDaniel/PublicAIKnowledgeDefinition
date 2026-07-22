@@ -1,8 +1,8 @@
 ---
-paik: "0.3"
-kind: project
+paik: "0.4"
+type: paik-project
 id: vertex-platform
-name: Vertex Platform
+title: Vertex Platform
 lifecycle: active
 owner:
   name: Platform team

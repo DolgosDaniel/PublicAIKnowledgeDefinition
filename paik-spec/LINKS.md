@@ -1,13 +1,13 @@
 # PAIK Link-Kind Cookbook
 
 This document is **non-normative** — it doesn't add anything to `paik-spec/schema/` and nothing
-here is enforced beyond what `SPEC.md` section 3 already requires (`kind` is the only mandatory
+here is enforced beyond what `SPEC.md` section 4 already requires (`kind` is the only mandatory
 field on a `links[]` entry). What follows is a set of recommendations for the fields worth
 including on the `kind` values that show up repeatedly in practice, so that two PAIK projects
 authored by different teams end up shaping the same `kind` the same way, without a schema forcing
 either of them to.
 
-If you need a `kind` that isn't here, invent one — see SPEC.md section 3's own note that the list
+If you need a `kind` that isn't here, invent one — see SPEC.md section 4's own note that the list
 there is illustrative, not exhaustive. If it turns out to be broadly useful, it's worth proposing
 an addition to this file.
 
@@ -16,7 +16,7 @@ an addition to this file.
 - **Recommended fields** are what a link of that `kind` typically needs to be useful to a reader
   or a tool — not a requirement. `kind` alone is always valid; everything past it is a judgment
   call about what's actually worth writing down.
-- `component` / `environment` (see SPEC.md section 3) apply to *any* `kind`, whenever the
+- `component` / `environment` (see SPEC.md section 4) apply to *any* `kind`, whenever the
   document carrying the link is shared across more than one component or environment. They're
   omitted from the per-kind tables below since they're not specific to any one kind.
 - `purpose` also applies to any `kind` and is omitted from the tables for the same reason — use
@@ -55,7 +55,7 @@ a `participants`-shaped kind.
 ## Operations
 
 There is no dedicated "operations" document kind - all of the following are `links[]` entries on
-a `component.md` or `environment.md`, tagged with `component`/`environment` per SPEC.md section 3
+a `component.md` or `environment.md`, tagged with `component`/`environment` per SPEC.md section 4
 whenever the document is shared. See `examples/operations-ready-project` for all of these used
 together on one environment shared by two components.
 
@@ -76,4 +76,4 @@ Adding a row here should never require a spec or schema change - that's the enti
 `links[]` being open. If a `kind` needs a *required* field or cross-document validation beyond
 what a recommendation can express, that's a sign it might deserve a first-class field instead
 (the way `component`/`environment`/`depends_on` graduated out of being link-only conventions) -
-raise it against `SPEC.md` section 9, not by trying to force `links[]` items closed.
+raise it against `SPEC.md` section 10, not by trying to force `links[]` items closed.

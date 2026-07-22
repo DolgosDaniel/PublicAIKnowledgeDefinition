@@ -1,8 +1,8 @@
 ---
-paik: "0.3"
-kind: environment
+paik: "0.4"
+type: paik-environment
 id: prod
-name: Production
+title: Production
 lifecycle: active
 purpose: customer-facing production
 app_url: https://taskflow.example

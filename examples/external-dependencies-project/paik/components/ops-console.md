@@ -1,13 +1,13 @@
 ---
-paik: "0.3"
-kind: component
+paik: "0.4"
+type: paik-component
 id: ops-console
-name: Ops Console
+title: Ops Console
 lifecycle: active
 owner:
   name: Frontend team
   ref: https://aurora-logistics.example/directory/teams/frontend
-type: service
+component_type: service
 links:
   - kind: repository
     provider: github

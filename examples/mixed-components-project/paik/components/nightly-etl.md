@@ -1,13 +1,13 @@
 ---
-paik: "0.3"
-kind: component
+paik: "0.4"
+type: paik-component
 id: nightly-etl
-name: Nightly ETL
+title: Nightly ETL
 lifecycle: active
 owner:
   name: Data platform team
   ref: https://dataforge.example/wiki/spaces/DATA/pages/1/Data+Platform+Team
-type: job
+component_type: job
 links:
   - kind: repository
     provider: github

@@ -1,13 +1,13 @@
 ---
-paik: "0.3"
-kind: component
+paik: "0.4"
+type: paik-component
 id: <component-slug>
-name: <Component Name>
+title: <Component Name>
 lifecycle: active
 owner:
   name: <Owning team name>
   ref: <optional link to the team in your org's own directory/wiki>
-type: service # service | library | job | other
+component_type: service # service | library | job | other
 links:
   - kind: repository
     provider: github # or gitlab, bitbucket, ...

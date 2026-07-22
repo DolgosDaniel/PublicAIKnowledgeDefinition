@@ -1,13 +1,13 @@
 ---
-paik: "0.3"
-kind: component
+paik: "0.4"
+type: paik-component
 id: payments-api
-name: Payments API
+title: Payments API
 lifecycle: active
 owner:
   name: Payments team
   ref: https://helios-payments.example/wiki/spaces/PAY/pages/1/Payments+Team
-type: service
+component_type: service
 links:
   - kind: repository
     provider: github

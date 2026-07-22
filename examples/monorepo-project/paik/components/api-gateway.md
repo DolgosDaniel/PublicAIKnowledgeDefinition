@@ -1,13 +1,13 @@
 ---
-paik: "0.3"
-kind: component
+paik: "0.4"
+type: paik-component
 id: api-gateway
-name: API Gateway
+title: API Gateway
 lifecycle: active
 owner:
   name: Platform team
   ref: https://vertex-robotics.example/wiki/spaces/PLATFORM/pages/1/Platform+Team
-type: service
+component_type: service
 links:
   - kind: repository
     provider: github

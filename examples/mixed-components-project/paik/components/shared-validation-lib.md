@@ -1,13 +1,13 @@
 ---
-paik: "0.3"
-kind: component
+paik: "0.4"
+type: paik-component
 id: shared-validation-lib
-name: Shared Validation Library
+title: Shared Validation Library
 lifecycle: active
 owner:
   name: Data platform team
   ref: https://dataforge.example/wiki/spaces/DATA/pages/1/Data+Platform+Team
-type: library
+component_type: library
 links:
   - kind: repository
     provider: github

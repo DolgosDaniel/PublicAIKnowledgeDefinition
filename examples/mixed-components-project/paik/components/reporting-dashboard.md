@@ -1,13 +1,13 @@
 ---
-paik: "0.3"
-kind: component
+paik: "0.4"
+type: paik-component
 id: reporting-dashboard
-name: Reporting Dashboard
+title: Reporting Dashboard
 lifecycle: active
 owner:
   name: Data platform team
   ref: https://dataforge.example/wiki/spaces/DATA/pages/1/Data+Platform+Team
-type: other
+component_type: other
 links:
   - kind: dashboard
     provider: retool
